@@ -346,34 +346,19 @@ async function startGame(level) {
 }
 
 /**
- * Enhanced Audio Fetching: Local Assets -> IndexedDB -> Cloud (OpenAI)
- * This automatically "copies" remote audio to local storage on first play.
+ * Enhanced Audio Fetching: IndexedDB (Cache) -> Cloud (OpenAI TTS) -> Local Assets
+ * ユーザーの録音データよりも高品質なAIボイスを優先的に使用するように設定しました。
  */
 async function getAudioBlob(word, type = 'orig') {
-    const cacheKey = `static_${type}_${word}`;
+    // 以前の低品質キャッシュを使わないよう、キーを「v3_」に更新
+    const prefix = (type === 'rev') ? 'v3_rev_' : `v3_${type}_`;
+    const cacheKey = `${prefix}${word}`;
     
-    // 1. Try Local Assets First (.wav first for recordings, then .mp3)
-    const extensions = ['wav', 'mp3'];
-    for (const ext of extensions) {
-        let localPath;
-        if (type === 'parts' || type === 'words') {
-            localPath = `assets/audio/${type}/${word}.${ext}`;
-        } else {
-            const level = word.length;
-            localPath = `assets/audio/${level}/${word}_${type}.${ext}`;
-        }
-
-        try {
-            const response = await fetch(localPath);
-            if (response.ok) return await response.blob();
-        } catch (e) { /* Check next extension or fallback */ }
-    }
-
-    // 2. Try IndexedDB (Persistent Copy)
+    // 1. IndexedDBキャッシュをまず探す (二回目以降の高速化とコスト節約)
     const cachedBlob = await getCachedAudio(cacheKey);
     if (cachedBlob) return cachedBlob;
 
-    // 3. Cloud Fallback (OpenAI TTS) & Save to Local Copy
+    // 2. クラウド優先 (OpenAI TTS) - 高品質なAIボイスを取得
     try {
         const textToSpeak = (type === 'rev') ? word : word.split('').join('  ');
         const response = await fetch('https://api.openai.com/v1/audio/speech', {
@@ -389,14 +374,34 @@ async function getAudioBlob(word, type = 'orig') {
                 speed: SPEECH_RATE
             })
         });
-        if (!response.ok) throw new Error('Cloud TTS Error');
-        const blob = await response.blob();
-        await saveCachedAudio(cacheKey, blob);
-        return blob;
+
+        if (response.ok) {
+            const blob = await response.blob();
+            await saveCachedAudio(cacheKey, blob);
+            return blob;
+        }
     } catch (e) {
-        console.error("Audio fetch failed:", e);
-        return null;
+        console.warn("Cloud TTS failed, falling back to local files", e);
     }
+
+    // 3. 最終手段: ローカルアセット（以前の録音データ）
+    const extensions = ['wav', 'mp3'];
+    for (const ext of extensions) {
+        let localPath;
+        if (type === 'parts' || type === 'words') {
+            localPath = `assets/audio/${type}/${word}.${ext}`;
+        } else {
+            const level = word.length;
+            localPath = `assets/audio/${level}/${word}_${type}.${ext}`;
+        }
+
+        try {
+            const response = await fetch(localPath);
+            if (response.ok) return await response.blob();
+        } catch (e) { /* ignore */ }
+    }
+
+    return null;
 }
 
 async function preloadAudios(questions) {
