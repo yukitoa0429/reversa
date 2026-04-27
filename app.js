@@ -350,8 +350,8 @@ async function startGame(level) {
  * ユーザーの録音データよりも高品質なAIボイスを優先的に使用するように設定しました。
  */
 async function getAudioBlob(word, type = 'orig') {
-    // 以前の低品質キャッシュを使わないよう、キーを「v3_」に更新
-    const prefix = (type === 'rev') ? 'v3_rev_' : `v3_${type}_`;
+    // 以前の低品質キャッシュを使わないよう、キーを「v5_」に更新
+    const prefix = (type === 'rev') ? 'v5_rev_' : `v5_${type}_`;
     const cacheKey = `${prefix}${word}`;
     
     // 1. IndexedDBキャッシュをまず探す (二回目以降の高速化とコスト節約)
@@ -389,10 +389,10 @@ async function getAudioBlob(word, type = 'orig') {
     for (const ext of extensions) {
         let localPath;
         if (type === 'parts' || type === 'words') {
-            localPath = `assets/audio/${type}/${word}.${ext}`;
+            localPath = `assets/audio/${type}/${word}.${ext}?v=5`;
         } else {
             const level = word.length;
-            localPath = `assets/audio/${level}/${word}_${type}.${ext}`;
+            localPath = `assets/audio/${level}/${word}_${type}.${ext}?v=5`;
         }
 
         try {
