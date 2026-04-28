@@ -1,79 +1,43 @@
 /**
- * Reversa Question Database (Fixed Word Pool)
+ * Reversa Question Database (Theme Based)
  * Format:
- * [level]: [
- *   { word: "単語", ruby: "よみがな", reverse: "よみがな逆順", phonemes: "参考発音" },
+ * [theme]: [
+ *   { word: "単語", ruby: ["よ", "み", "が", "な"], reverse: "ながみよ", bg: "背景画像のファイル名" },
  *   ...
  * ]
  */
 const QUESTION_DATABASE = {
-    3: [
-        { word: "からす", ruby: "からす", reverse: "すらか" },
-        { word: "めだか", ruby: "めだか", reverse: "かだめ" },
-        { word: "すずめ", ruby: "すずめ", reverse: "めずす" },
-        { word: "さくら", ruby: "さくら", reverse: "らくさ" },
-        { word: "かもめ", ruby: "かもめ", reverse: "めもか" },
-        { word: "ひかり", ruby: "ひかり", reverse: "りかひ" },
-        { word: "みらい", ruby: "みらい", reverse: "いらみ" },
-        { word: "くるま", ruby: "くるま", reverse: "まるく" },
-        { word: "こころ", ruby: "こころ", reverse: "ろここ" },
-        { word: "いのち", ruby: "いのち", reverse: "ちのい" },
-        { word: "きずな", ruby: "きずな", reverse: "なずき" },
-        { word: "あした", ruby: "あした", reverse: "たしあ" },
-        { word: "みづき", ruby: "みづき", reverse: "きづみ" },
-        { word: "ほたる", ruby: "ほたる", reverse: "るたほ" },
-        { word: "きつね", ruby: "きつね", reverse: "ねつき" },
-        { word: "たぬき", ruby: "たぬき", reverse: "きぬた" },
-        { word: "うさぎ", ruby: "うさぎ", reverse: "ぎさう" },
-        { word: "すもも", ruby: "すもも", reverse: "ももす" },
-        { word: "りんご", ruby: "りんご", reverse: "ごんり" },
-        { word: "いちご", ruby: "いちご", reverse: "ごちい" }
+    beginner: [
+        // 背景1: 桜とキツネ
+        { word: "きつね", ruby: ["き", "つ", "ね"], reverse: "ねつき", bg: "bg_beginner_1.png" },
+        { word: "さくら", ruby: ["さ", "く", "ら"], reverse: "らくさ", bg: "bg_beginner_1.png" },
+        
+        // 背景2: 三日月と灯篭
+        { word: "みかづき", ruby: ["み", "か", "づ", "き"], reverse: "きづかみ", bg: "bg_beginner_2.png" },
+        { word: "とうろう", ruby: ["と", "う", "ろ", "う"], reverse: "うろうと", bg: "bg_beginner_2.png" },
+        
+        // 背景3: 杉の木と橋と幻想
+        { word: "すぎのき", ruby: ["す", "ぎ", "の", "き"], reverse: "きのぎす", bg: "bg_beginner_3.png" },
+        { word: "はし", ruby: ["は", "し"], reverse: "しは", bg: "bg_beginner_3.png" },
+        { word: "げんそう", ruby: ["げ", "ん", "そ", "う"], reverse: "うそんげ", bg: "bg_beginner_3.png" }
     ],
-    4: [
-        { word: "ひこうき", ruby: "ひこうき", reverse: "きうこひ" },
-        { word: "ひまわり", ruby: "ひまわり", reverse: "りわまひ" },
-        { word: "あさがお", ruby: "あさがお", reverse: "おがさあ" },
-        { word: "うぐいす", ruby: "うぐいす", reverse: "すいぐう" },
-        { word: "かたつむり", ruby: "かたつむり", reverse: "りむつたか" }, // 5文字だが4文字目以降も扱い可能
-        { word: "ほしぞら", ruby: "ほしぞら", reverse: "らぞしほ" },
-        { word: "ゆうやけ", ruby: "ゆうやけ", reverse: "けやうゆ" },
-        { word: "すべりだい", ruby: "すべりだい", reverse: "いだりべす" },
-        { word: "ぶらんこ", ruby: "ぶらんこ", reverse: "こんらぶ" },
-        { word: "おにぎり", ruby: "おにぎり", reverse: "りぎにお" }
+    intermediate: [
+        { word: "ひまわり", ruby: ["ひ", "ま", "わ", "り"], reverse: "りわまひ", bg: "default" },
+        { word: "あさがお", ruby: ["あ", "さ", "が", "お"], reverse: "おがさあ", bg: "default" },
+        { word: "うぐいす", ruby: ["う", "ぐ", "い", "す"], reverse: "すいぐう", bg: "default" },
+        { word: "ゆうやけ", ruby: ["ゆ", "う", "や", "け"], reverse: "けやうゆ", bg: "default" }
     ],
-    5: [
-        { word: "なつやすみ", ruby: "なつやすみ", reverse: "みすやつな" },
-        { word: "しあわせな", ruby: "しあわせな", reverse: "なせわいし" },
-        { word: "おくりもの", ruby: "おくりもの", reverse: "のもりくお" },
-        { word: "あさごはん", ruby: "あさごはん", reverse: "んはござあ" },
-        { word: "あきまつり", ruby: "あきまつり", reverse: "りつまきあ" },
-        { word: "ぼうけんに", ruby: "ぼうけんに", reverse: "にんけうぼ" },
-        { word: "こんにちは", ruby: "こんにちは", reverse: "はちにんこ" },
-        { word: "さようなら", ruby: "さようなら", reverse: "らなうよさ" },
-        { word: "ありがとう", ruby: "ありがとう", reverse: "うとがりあ" },
-        { word: "だいじょうぶ", ruby: "だいじょうぶ", reverse: "ぶうじょいだ" }
-    ],
-    // 6文字〜8文字なども順次追加可能な構造
-    6: [
-        { word: "しんぶんし", ruby: "しんぶんし", reverse: "しんぶんし" }, // 回文
-        { word: "あいうえおか", ruby: "あいうえおか", reverse: "かおえういあ" },
-        { word: "わごむでっぽう", ruby: "わごむでっぽう", reverse: "うぽっでむごわ" }
-    ],
-    7: [
-        { word: "だいとうりょう", ruby: "だいとうりょう", reverse: "うよんりうとういだ" },
-        { word: "あいうえおかき", ruby: "あいうえおかき", reverse: "きかおえういあ" },
-        { word: "おもちゃのピアノ", ruby: "おもちゃのぴあの", reverse: "のあぴのゃもちお" }
-    ],
-    8: [
-        { word: "あいうえおかきく", ruby: "あいうえおかきく", reverse: "くきかおえういあ" },
-        { word: "てんさいかがくしゃ", ruby: "てんさいかがくしゃ", reverse: "ゃくがかいせんて" },
-        { word: "しんかんせんのぞみ", ruby: "しんかんせんのぞみ", reverse: "みぞのんせんかんし" }
+    advanced: [
+        { word: "なつやすみ", ruby: ["な", "つ", "や", "す", "み"], reverse: "みすやつな", bg: "default" },
+        { word: "しあわせな", ruby: ["し", "あ", "わ", "せ", "な"], reverse: "なせわあし", bg: "default" }, // 修正: あ→あ
+        { word: "あきまつり", ruby: ["あ", "き", "ま", "つ", "り"], reverse: "りつまきあ", bg: "default" },
+        { word: "こんにちは", ruby: ["こ", "ん", "に", "ち", "は"], reverse: "はちにんこ", bg: "default" }
     ]
 };
 
-// 単語のみのリスト（互換性用）
+// 互換性・デバッグ用のリスト
 const SAMPLE_WORDS = {
-    3: QUESTION_DATABASE[3].map(q => q.word),
-    4: QUESTION_DATABASE[4].map(q => q.word),
-    5: QUESTION_DATABASE[5].map(q => q.word)
+    beginner: QUESTION_DATABASE.beginner.map(q => q.word),
+    intermediate: QUESTION_DATABASE.intermediate.map(q => q.word),
+    advanced: QUESTION_DATABASE.advanced.map(q => q.word)
 };

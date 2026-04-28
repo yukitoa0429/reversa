@@ -11,7 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260408_0945">
+    <link rel="stylesheet" href="style.css?v=20260428_1530">
 </head>
 
 <body>
@@ -21,6 +21,8 @@
     </div>
 
     <div class="background">
+        <!-- Dynamic Background Layer -->
+        <div id="dynamic-bg" class="dynamic-bg"></div>
         <div class="circle circle-1"></div>
         <div class="circle circle-2"></div>
     </div>
@@ -38,8 +40,19 @@
                     文字数を選択してください。<br>
                     <small>1セット3問です。</small>
                 </h2>
-                <div class="level-grid" id="level-options">
-                    <!-- Levels 3 to 8 -->
+                <div class="theme-grid" id="theme-options">
+                    <button class="theme-card beginner-card" onclick="startGame('beginner')">
+                        <h3>初級編</h3>
+                        <p>和の幻想</p>
+                    </button>
+                    <button class="theme-card intermediate-card" onclick="startGame('intermediate')">
+                        <h3>中級編</h3>
+                        <p>日常と自然</p>
+                    </button>
+                    <button class="theme-card advanced-card" onclick="startGame('advanced')">
+                        <h3>上級編</h3>
+                        <p>長い言葉</p>
+                    </button>
                 </div>
                 <div class="mode-settings">
                     <div class="toggle-container">
@@ -225,9 +238,9 @@
     </main>
 
     <!-- Configure Secrets -->
-    <script src="questions.js?v=20260410_1400"></script>
-    <script src="config.js?v=20260410_1400"></script>
-    <script src="app.js?v=20260410_1400"></script>
+    <script src="questions.js?v=20260428_1530"></script>
+    <script src="config.js?v=20260428_1530"></script>
+    <script src="app.js?v=20260428_1535"></script>
 </body>
 
 </html>
