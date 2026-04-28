@@ -889,8 +889,10 @@ function submitAnswer(rawAnswer) {
         playSE('correct'); // ピンポン♪
         currentState.score++;
         if(elements.feedbackBadge) {
-            elements.feedbackBadge.textContent = '◯';
-            elements.feedbackBadge.className = 'feedback-badge badge-success minimal-badge';
+            elements.feedbackBadge.textContent = '見事';
+            elements.feedbackBadge.className = 'feedback-badge minimal-badge hanko-stamp';
+            void elements.feedbackBadge.offsetWidth; // Force reflow
+            elements.feedbackBadge.classList.add('animate');
         }
         if (vapiInstance) {
             vapiInstance.send({
@@ -902,7 +904,9 @@ function submitAnswer(rawAnswer) {
         playSE('wrong'); // ブブー
         if(elements.feedbackBadge) {
             elements.feedbackBadge.textContent = '✕';
-            elements.feedbackBadge.className = 'feedback-badge badge-error minimal-badge';
+            elements.feedbackBadge.className = 'feedback-badge minimal-badge wrong-stamp';
+            void elements.feedbackBadge.offsetWidth; // Force reflow
+            elements.feedbackBadge.classList.add('animate');
         }
         if (vapiInstance) {
             vapiInstance.send({
