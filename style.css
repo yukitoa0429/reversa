@@ -1276,3 +1276,32 @@ input:checked + .slider:before {
 .dynamic-bg.active {
     opacity: 1;
 }
+
+/* === Minimal UI Overrides === */
+.feedback-badge.minimal-badge {
+    font-size: 5rem;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 20px 0;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+.feedback-badge.badge-success.minimal-badge {
+    color: var(--accent-yellow);
+}
+.feedback-badge.badge-error.minimal-badge {
+    color: #ff6b6b;
+}
+
+.comparison-grid.minimal {
+    display: flex;
+    justify-content: center;
+    background: transparent;
+    box-shadow: none;
+}
+.large-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+}

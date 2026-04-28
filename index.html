@@ -99,7 +99,6 @@
 
                 <!-- Status: Recording (Whisper) -->
                 <div id="recording-container" class="recognition-container hidden">
-                    <h3>逆順に発声してください</h3>
                     <div id="mic-area" class="mic-area">
                         <span class="mic-icon-mini animate-pulse-red">🎤</span>
                     </div>
@@ -120,25 +119,11 @@
                 <div id="feedback-panel" class="feedback-panel hidden">
                     <div id="feedback-badge" class="feedback-badge">正解</div>
 
-                    <div class="comparison-grid">
+                    <div class="comparison-grid minimal">
                         <div class="comparison-item">
-                            <label>問題 (正順)</label>
-                            <span id="display-original">-</span>
-                        </div>
-                        <div class="comparison-item">
-                            <label>正解 (逆順)</label>
-                            <div class="answer-row">
-                                <span id="display-correct-reverse" class="text-success">-</span>
-                                <button id="btn-play-master" class="mini-action-button" title="お手本を聞く">🔊 お手本</button>
-                            </div>
-                        </div>
-                        <div class="comparison-item">
-                            <label>あなたの回答</label>
-                            <span id="display-user-answer">-</span>
+                            <span id="display-correct-reverse" class="text-success large-text">-</span>
                         </div>
                     </div>
-
-                    <p id="feedback-text"></p>
                     <button id="btn-next" class="primary-button">次へ</button>
                 </div>
             </div>
@@ -237,10 +222,11 @@
         </section>
     </main>
 
-    <!-- Configure Secrets -->
-    <script src="questions.js?v=20260428_1530"></script>
-    <script src="config.js?v=20260428_1530"></script>
-    <script src="app.js?v=20260428_1535"></script>
+    <!-- Configure Secrets & Dependencies -->
+    <script src="assets/js/vapi.js"></script>
+    <script src="questions.js?v=20260428_1540"></script>
+    <script src="config.js?v=20260428_1545"></script>
+    <script src="app.js?v=20260428_1545"></script>
 </body>
 
 </html>

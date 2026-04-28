@@ -67,6 +67,53 @@ function getPlaybackContext() {
     return GLOBAL_PLAYER.audioCtx;
 }
 
+// --- Sound Effects (SE) ---
+function playSE(type) {
+    try {
+        const ctx = getPlaybackContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        const now = ctx.currentTime;
+        if (type === 'start') {
+            // ポンッ (出題前)
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(300, now + 0.1);
+            gain.gain.setValueAtTime(0.5, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            osc.start(now);
+            osc.stop(now + 0.1);
+        } else if (type === 'correct') {
+            // ピンポン♪ (正解)
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(880, now); // A5
+            osc.frequency.setValueAtTime(1108.73, now + 0.15); // C#6
+            
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.5, now + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            
+            osc.start(now);
+            osc.stop(now + 0.4);
+        } else if (type === 'wrong') {
+            // ブブー (不正解)
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, now);
+            
+            gain.gain.setValueAtTime(0.5, now);
+            gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+            
+            osc.start(now);
+            osc.stop(now + 0.3);
+        }
+    } catch (e) {
+        console.warn("SE Playback failed:", e);
+    }
+}
+
 // --- Database Configuration (IndexedDB) ---
 const DB_NAME = 'ReversaAudioDB';
 const DB_VERSION = 1;
@@ -93,6 +140,8 @@ let currentState = {
     questionSet: [],
     isSilent: false
 };
+
+let vapiInstance = null;
 
 // --- DOM Elements ---
 const screens = {
@@ -191,7 +240,9 @@ async function init() {
     elements.btnStopRecord.onclick = stopRecording;
     elements.btnExportLog.onclick = exportLogs;
     elements.btnSkipQuestion.onclick = skipQuestion;
-    elements.btnPlayMaster.onclick = playMasterAudio;
+    if (elements.btnPlayMaster) {
+        elements.btnPlayMaster.onclick = playMasterAudio;
+    }
     elements.btnRetryRecord.onclick = () => {
         elements.recordingContainer.classList.add('hidden');
         elements.voiceIndicator.classList.remove('hidden');
@@ -301,10 +352,15 @@ function showScreen(screenId) {
     });
     currentState.screen = screenId;
     
-    // ホーム画面に戻る時は背景を消す
+    // ホーム画面に戻る時は背景を消し、VAPIを切断する
     if (screenId === 'home') {
         const dynamicBg = document.getElementById('dynamic-bg');
         if (dynamicBg) dynamicBg.classList.remove('active');
+        
+        if (vapiInstance) {
+            vapiInstance.stop();
+            vapiInstance = null;
+        }
     }
 }
 
@@ -326,6 +382,31 @@ async function startGame(theme) {
     currentState.currentQuestion = 0;
     currentState.score = 0;
     currentState.logs = [];
+
+    // VAPIの初期化と開始
+    if (!vapiInstance && window.Vapi) {
+        try {
+            vapiInstance = new window.Vapi(CONFIG.VAPI_PUBLIC_KEY);
+            vapiInstance.start({
+                model: {
+                    provider: "openai",
+                    model: "gpt-4o-mini",
+                    messages: [
+                        {
+                            role: "system",
+                            content: "あなたは脳トレアプリReversaのトレーナーです。アプリが効果音で判定を行うので、あなたはシステムメッセージを受け取った時だけ「ナイス！」「おしい！」など一言だけで相槌を打ってください。ユーザーの声に直接返答したり、長い説明をしたりするのは絶対に禁止です。"
+                        }
+                    ]
+                },
+                voice: {
+                    provider: "openai",
+                    voiceId: "shimmer" // 優しい女性の声
+                }
+            });
+        } catch (e) {
+            console.error("VAPI initialization failed", e);
+        }
+    }
 
     // Decide questions for this turn
     currentState.allSequences = [];
@@ -483,6 +564,7 @@ async function readSequence(textOrArray) {
 
     elements.gameStatus.textContent = currentState.isSilent ? '文字を記憶してください...' : '読み上げ中...';
     await sleep(800);
+    playSE('start');
 
     // 2. Execution Phase: Play with strict timing
     try {
@@ -804,21 +886,35 @@ function submitAnswer(rawAnswer) {
     const isCorrect = (cleanedAnswer === normalizedCorrect) && (cleanedAnswer.length === normalizedCorrect.length);
 
     if (isCorrect) {
+        playSE('correct'); // ピンポン♪
         currentState.score++;
-        elements.feedbackBadge.textContent = 'おめでとうございます！正解です';
-        elements.feedbackBadge.className = 'feedback-badge badge-success';
-        elements.feedbackText.textContent = ''; 
+        if(elements.feedbackBadge) {
+            elements.feedbackBadge.textContent = '◯';
+            elements.feedbackBadge.className = 'feedback-badge badge-success minimal-badge';
+        }
+        if (vapiInstance) {
+            vapiInstance.send({
+                type: "add-message",
+                message: { role: "system", content: "ユーザーが正解しました！一言で褒めてください。" }
+            });
+        }
     } else {
-        elements.feedbackBadge.textContent = 'おしい！不正解です。';
-        elements.feedbackBadge.className = 'feedback-badge badge-error';
-        elements.feedbackText.textContent = ''; 
+        playSE('wrong'); // ブブー
+        if(elements.feedbackBadge) {
+            elements.feedbackBadge.textContent = '✕';
+            elements.feedbackBadge.className = 'feedback-badge badge-error minimal-badge';
+        }
+        if (vapiInstance) {
+            vapiInstance.send({
+                type: "add-message",
+                message: { role: "system", content: `ユーザーが不正解でした（正解は ${currentState.correctAnswer}）。一言で励ましてください。` }
+            });
+        }
     }
-    elements.displayOriginal.textContent = katakanaToHiragana(currentState.originalWord);
-    elements.displayCorrectReverse.textContent = katakanaToHiragana(currentState.correctAnswer);
     
-    // Display the CLEANED answer so "Answer is..." garbage doesn't ruin the UI
-    elements.displayUserAnswer.textContent = katakanaToHiragana(cleanedAnswer || '(聞き取れませんでした)');
-    elements.displayUserAnswer.className = isCorrect ? 'text-success' : 'text-error';
+    if(elements.displayCorrectReverse) {
+        elements.displayCorrectReverse.textContent = katakanaToHiragana(currentState.correctAnswer);
+    }
 
     saveLog({ 
         level: currentState.currentLevel, 
