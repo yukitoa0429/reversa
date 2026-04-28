@@ -54,7 +54,7 @@ def main():
             # ほんの少し伸ばすために長音符を付与し、長すぎないようにspeedを少し上げる
             response = client.audio.speech.create(
                 model="tts-1",
-                voice="nova",
+                voice="onyx",
                 input=f"{char}ー",
                 speed=1.2,
                 response_format="wav"

@@ -35,7 +35,7 @@ const SPEECH_RATE = 0.95;
 const READ_REPEAT = 2;
 const MAX_RECORDING_TIME = 20000; // 20s Recording limit
 const WAIT_FOR_START_TIME = 15000; // 15s Waiting limit for manual start
-const RHYTHM_BEAT_MS = 1000; // Slower tempo: 1000ms per beat
+const RHYTHM_BEAT_MS = 750; // Slower tempo: 750ms per beat
 
 // --- Global Audio State ---
 let GLOBAL_PLAYER = {
@@ -350,8 +350,8 @@ async function startGame(theme) {
  * ユーザーの録音データよりも高品質なAIボイスを優先的に使用するように設定しました。
  */
 async function getAudioBlob(word, type = 'orig') {
-    // 以前の低品質キャッシュを使わないよう、キーを「v5_」に更新
-    const prefix = (type === 'rev') ? 'v5_rev_' : `v5_${type}_`;
+    // 以前の低品質キャッシュを使わないよう、キーを「v6_」に更新
+    const prefix = (type === 'rev') ? 'v6_rev_' : `v6_${type}_`;
     const cacheKey = `${prefix}${word}`;
     
     // 1. IndexedDBキャッシュをまず探す (二回目以降の高速化とコスト節約)
@@ -370,7 +370,7 @@ async function getAudioBlob(word, type = 'orig') {
             body: JSON.stringify({
                 model: 'tts-1',
                 input: textToSpeak,
-                voice: TTS_VOICE,
+                voice: "onyx",
                 speed: SPEECH_RATE
             })
         });
@@ -578,7 +578,7 @@ async function speakAI(text, cacheKey) {
         body: JSON.stringify({
             model: 'tts-1',
             input: text,
-            voice: TTS_VOICE,
+            voice: "onyx",
             speed: SPEECH_RATE
         })
     });
