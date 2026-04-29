@@ -30,7 +30,7 @@ function numberToPhonetic(src) {
     return src.toString().split('').map(c => map[c] || c).join('、');
 }
 
-const QUESTIONS_PER_TURN = 3;
+const QUESTIONS_PER_TURN = 10;
 const SPEECH_RATE = 0.95; 
 const READ_REPEAT = 2;
 const MAX_RECORDING_TIME = 20000; // 20s Recording limit
@@ -138,7 +138,10 @@ let currentState = {
     currentAudioBlob: null,
     activeAudio: null, // Keep track of currently playing audio
     questionSet: [],
-    isSilent: false
+    turnLogs: [], // 1ターン内の一時的な履歴保存
+    recentQuestions: [], // 直近の出題履歴（重複回避用）
+    isSilent: false,
+    isBlind: false
 };
 
 let vapiInstance = null;
@@ -160,12 +163,12 @@ const elements = {
     voiceIndicator: document.getElementById('voice-indicator'),
     recordingContainer: document.getElementById('recording-container'),
     recordingStatus: document.getElementById('recording-status'),
-    btnStopRecord: document.getElementById('btn-stop-record'),
     feedbackPanel: document.getElementById('feedback-panel'),
     feedbackBadge: document.getElementById('feedback-badge'),
     displayOriginal: document.getElementById('display-original'),
     displayCorrectReverse: document.getElementById('display-correct-reverse'),
     displayUserAnswer: document.getElementById('display-user-answer'),
+    userAnswerContainer: document.getElementById('user-answer-container'),
     feedbackText: document.getElementById('feedback-text'),
     btnNext: document.getElementById('btn-next'),
     btnRestart: document.getElementById('btn-restart'),
@@ -185,10 +188,10 @@ const elements = {
     countdownArea: document.getElementById('countdown-area'),
     countdownArea: document.getElementById('countdown-area'),
     recordingCountdown: document.getElementById('recording-countdown'),
-    recordingCountdownLabel: document.getElementById('recording-countdown-label'),
     btnPlayMaster: document.getElementById('btn-play-master'),
     btnStartRecord: document.getElementById('btn-start-record'),
     checkSilent: document.getElementById('check-silent'),
+    checkBlind: document.getElementById('check-blind'),
     // Flash
     flashContainer: document.getElementById('flash-container'),
     flashCharacter: document.getElementById('flash-character'),
@@ -237,7 +240,6 @@ async function init() {
 
     elements.btnNext.onclick = nextQuestion;
     elements.btnRestart.onclick = () => showScreen('home');
-    elements.btnStopRecord.onclick = stopRecording;
     elements.btnExportLog.onclick = exportLogs;
     elements.btnSkipQuestion.onclick = skipQuestion;
     if (elements.btnPlayMaster) {
@@ -255,11 +257,15 @@ async function init() {
         startQuestion();
     };
 
-    elements.btnStartRecord.onclick = startRecording;
     // Global Listeners
     if (elements.checkSilent) {
         elements.checkSilent.onchange = (e) => {
             currentState.isSilent = e.target.checked;
+        };
+    }
+    if (elements.checkBlind) {
+        elements.checkBlind.onchange = (e) => {
+            currentState.isBlind = e.target.checked;
         };
     }
 
@@ -371,8 +377,25 @@ function showScreen(screenId) {
 function getNextQuestion(theme) {
     const pool = QUESTION_DATABASE[theme] || [];
     if (pool.length > 0) {
-        const randomIndex = Math.floor(Math.random() * pool.length);
-        return pool[randomIndex];
+        // 重複回避: recentQuestions に含まれない問題をフィルタリング
+        let availablePool = pool.filter(q => !currentState.recentQuestions.includes(q.word));
+        
+        // もし全て出尽くしてしまっていたらリセット
+        if (availablePool.length === 0) {
+            availablePool = pool;
+            currentState.recentQuestions = [];
+        }
+
+        const randomIndex = Math.floor(Math.random() * availablePool.length);
+        const selectedQuestion = availablePool[randomIndex];
+
+        // 履歴を更新（最大5件）
+        currentState.recentQuestions.push(selectedQuestion.word);
+        if (currentState.recentQuestions.length > 5) {
+            currentState.recentQuestions.shift();
+        }
+
+        return selectedQuestion;
     }
     return null;
 }
@@ -382,6 +405,7 @@ async function startGame(theme) {
     currentState.currentQuestion = 0;
     currentState.score = 0;
     currentState.logs = [];
+    currentState.turnLogs = [];
 
     // VAPIの初期化と開始
     if (!vapiInstance && window.Vapi) {
@@ -574,7 +598,7 @@ async function readSequence(textOrArray) {
             const blob = blobs[i];
             
             // Sync Visual
-            elements.flashCharacter.textContent = unit;
+            elements.flashCharacter.textContent = currentState.isBlind ? '🔊' : unit;
             elements.flashCharacter.classList.remove('active');
             void elements.flashCharacter.offsetWidth; // Force reflow
             elements.flashCharacter.classList.add('active');
@@ -694,7 +718,6 @@ function prepareRecordingStart() {
     
     let timeLeft = WAIT_FOR_START_TIME / 1000;
     elements.recordingCountdown.textContent = timeLeft;
-    elements.recordingCountdownLabel.textContent = '開始まで';
 
     if (currentState.countdownInterval) clearInterval(currentState.countdownInterval);
     currentState.countdownInterval = setInterval(() => {
@@ -723,7 +746,18 @@ async function startRecording() {
         currentState.mediaRecorder.ondataavailable = (event) => currentState.audioChunks.push(event.data);
         currentState.mediaRecorder.onstop = async () => {
             const audioBlob = new Blob(currentState.audioChunks, { type: 'audio/webm' });
-            processAudio(audioBlob);
+            
+            if (currentState.cancelProcess) {
+                elements.recordingStatus.textContent = '音声が検知できませんでした。もう一度お願いします！';
+                elements.recordingStatus.classList.add('shake-text');
+                setTimeout(() => {
+                    elements.recordingStatus.classList.remove('shake-text');
+                    startRecording();
+                }, 2000);
+            } else {
+                processAudio(audioBlob);
+            }
+            
             stream.getTracks().forEach(track => track.stop());
             
             // VADのクリーンアップ
@@ -742,7 +776,6 @@ async function startRecording() {
         
         setUIPhase('RECORDING');
         elements.gameStatus.textContent = "あなたの声を聞いています...";
-        elements.recordingCountdownLabel.textContent = '自動停止まで';
         
         // VAD (Voice Activity Detection) セットアップ
         currentState.vadContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -755,8 +788,9 @@ async function startRecording() {
         
         let isSpeaking = false;
         let silenceStart = Date.now();
-        const SILENCE_THRESHOLD_MS = 3000; // 3秒間の無音で終了
+        const SILENCE_THRESHOLD_MS = 2000; // 2秒間の無音で終了
         const VOLUME_THRESHOLD = 10; // 音量しきい値 (0-255)
+        const NO_SPEECH_TIMEOUT_MS = 5000; // 5秒間一度も発声がない場合のタイムアウト
         
         elements.recordingCountdown.textContent = SILENCE_THRESHOLD_MS / 1000;
         
@@ -770,6 +804,8 @@ async function startRecording() {
             }
             let average = sum / currentState.vadDataArray.length;
             
+            let silenceDuration = Date.now() - silenceStart;
+            
             if (average > VOLUME_THRESHOLD) {
                 // 発話中
                 isSpeaking = true;
@@ -780,7 +816,6 @@ async function startRecording() {
                 // 無音
                 elements.voiceIndicator.classList.remove('active');
                 if (isSpeaking) {
-                    let silenceDuration = Date.now() - silenceStart;
                     let timeLeft = Math.max(0, Math.ceil((SILENCE_THRESHOLD_MS - silenceDuration) / 1000));
                     elements.recordingCountdown.textContent = timeLeft;
                     
@@ -788,6 +823,13 @@ async function startRecording() {
                         console.log("Silence detected, stopping recording auto.");
                         stopRecording();
                         return; // ループ終了
+                    }
+                } else {
+                    // まだ一度も発声していない場合
+                    if (silenceDuration > NO_SPEECH_TIMEOUT_MS) {
+                        console.log("No speech detected for 5 seconds.");
+                        stopRecording(true); // cancelProcessフラグを立てて終了
+                        return;
                     }
                 }
             }
@@ -805,8 +847,9 @@ async function startRecording() {
     }
 }
 
-function stopRecording() {
+function stopRecording(cancelProcess = false) {
     if (currentState.mediaRecorder && currentState.isRecording) {
+        currentState.cancelProcess = cancelProcess;
         currentState.mediaRecorder.stop();
         currentState.isRecording = false;
         if (currentState.recordingTimer) clearTimeout(currentState.recordingTimer);
@@ -818,6 +861,7 @@ function stopRecording() {
 }
 
 async function processAudio(audioBlob) {
+    currentState.currentAudioBlob = audioBlob; // 録音データを結果画面用に保持
     try {
         const formData = new FormData();
         formData.append('file', audioBlob, 'answer.wav');
@@ -838,17 +882,38 @@ async function processAudio(audioBlob) {
         const data = await response.json();
         const transcription = data.text.trim();
 
-        if (!transcription || transcription.length < 1) {
-            setUIPhase('RETRY');
-            elements.recordingStatus.textContent = 'うまく聞き取れませんでした...';
+        // 幻覚（Hallucination）の検知: Whisperが勝手に補完しがちな言葉
+        const cleanedAnswer = normalizeText(transcription);
+        const correctLen = currentState.correctAnswer.length;
+        const answerLen = cleanedAnswer.length;
+        
+        const hallucinations = ['視聴', 'チャンネル', '登録', 'お疲れ', '字幕', '評価', '高評価'];
+        const isHallucination = hallucinations.some(word => transcription.includes(word)) || answerLen > 20;
+
+        // 文字数ベースの判定: 正解の文字数との差が2文字以上の場合はリトライ
+        const isLengthError = Math.abs(correctLen - answerLen) >= 2;
+
+        if (answerLen < 1 || isHallucination || isLengthError) {
+            elements.recordingStatus.textContent = 'うまく聞き取れませんでした。もう一度お願いします！';
+            elements.recordingStatus.classList.add('shake-text');
+            
+            setTimeout(() => {
+                elements.recordingStatus.classList.remove('shake-text');
+                startRecording();
+            }, 2000);
             return;
         }
 
         submitAnswer(transcription);
     } catch (err) {
         console.error('Processing error:', err);
-        setUIPhase('RETRY');
-        elements.recordingStatus.textContent = '通信エラーが発生しました。';
+        elements.recordingStatus.textContent = '通信エラーが発生しました。もう一度試します。';
+        elements.recordingStatus.classList.add('shake-text');
+        
+        setTimeout(() => {
+            elements.recordingStatus.classList.remove('shake-text');
+            startRecording();
+        }, 2000);
     }
 }
 
@@ -900,6 +965,9 @@ function submitAnswer(rawAnswer) {
                 message: { role: "system", content: "ユーザーが正解しました！一言で褒めてください。" }
             });
         }
+        if (elements.userAnswerContainer) {
+            elements.userAnswerContainer.classList.add('hidden');
+        }
     } else {
         playSE('wrong'); // ブブー
         if(elements.feedbackBadge) {
@@ -914,6 +982,12 @@ function submitAnswer(rawAnswer) {
                 message: { role: "system", content: `ユーザーが不正解でした（正解は ${currentState.correctAnswer}）。一言で励ましてください。` }
             });
         }
+        if (elements.userAnswerContainer) {
+            elements.userAnswerContainer.classList.remove('hidden');
+        }
+        if (elements.displayUserAnswer) {
+            elements.displayUserAnswer.textContent = cleanedAnswer || '(無音・認識不能)';
+        }
     }
     
     if(elements.displayCorrectReverse) {
@@ -926,6 +1000,18 @@ function submitAnswer(rawAnswer) {
         correct: katakanaToHiragana(currentState.correctAnswer), 
         user_answer: katakanaToHiragana(cleanedAnswer||''), 
         is_correct: isCorrect 
+    });
+
+    // 1ターン内の履歴として保持（録音再生用）
+    let audioUrl = null;
+    if (currentState.currentAudioBlob) {
+        audioUrl = URL.createObjectURL(currentState.currentAudioBlob);
+    }
+    currentState.turnLogs.push({
+        original: katakanaToHiragana(currentState.originalWord),
+        user_answer: katakanaToHiragana(cleanedAnswer || '(無音/スキップ)'),
+        is_correct: isCorrect,
+        audioUrl: audioUrl
     });
     
     elements.labelScore.textContent = `Score: ${currentState.score}`;
@@ -950,6 +1036,40 @@ function showResult() {
     elements.accuracyPath.style.strokeDasharray = `${accuracy}, 100`;
     let msg = accuracy === 100 ? '全問正解！🎉' : accuracy >= 80 ? '素晴らしい！✨' : accuracy >= 50 ? 'ナイス！' : '継続は力なり💤';
     elements.resultMessage.textContent = msg;
+
+    // 履歴リストの生成
+    const listEl = document.getElementById('result-history-list');
+    if (listEl) {
+        listEl.innerHTML = '';
+        currentState.turnLogs.forEach(log => {
+            const item = document.createElement('div');
+            item.className = 'history-item';
+            
+            const leftDiv = document.createElement('div');
+            leftDiv.className = 'history-item-left';
+            leftDiv.innerHTML = `
+                <span class="history-icon ${log.is_correct ? 'correct' : 'wrong'}">${log.is_correct ? '◯' : '✕'}</span>
+                <div class="history-text">
+                    <span class="history-word">${log.original}</span>
+                    <span class="history-answer">${log.user_answer}</span>
+                </div>
+            `;
+            item.appendChild(leftDiv);
+
+            if (log.audioUrl) {
+                const btn = document.createElement('button');
+                btn.className = 'btn-history-play';
+                btn.innerHTML = '▶';
+                btn.title = '自分の録音を聞く';
+                btn.onclick = () => {
+                    const audio = new Audio(log.audioUrl);
+                    audio.play();
+                };
+                item.appendChild(btn);
+            }
+            listEl.appendChild(item);
+        });
+    }
 }
 
 function skipQuestion() {
