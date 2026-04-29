@@ -752,7 +752,10 @@ async function startRecording() {
                 elements.recordingStatus.classList.add('shake-text');
                 setTimeout(() => {
                     elements.recordingStatus.classList.remove('shake-text');
-                    startRecording();
+                    setUIPhase('READING');
+                    elements.gameStatus.textContent = '読み上げ直しています...';
+                    currentState.isReading = false;
+                    readSequence(currentState.originalSequence);
                 }, 2000);
             } else {
                 processAudio(audioBlob);
@@ -862,6 +865,7 @@ function stopRecording(cancelProcess = false) {
 
 async function processAudio(audioBlob) {
     currentState.currentAudioBlob = audioBlob; // 録音データを結果画面用に保持
+    elements.recordingStatus.textContent = '音声を解析中...';
     try {
         const formData = new FormData();
         formData.append('file', audioBlob, 'answer.wav');
@@ -884,22 +888,37 @@ async function processAudio(audioBlob) {
 
         // 幻覚（Hallucination）の検知: Whisperが勝手に補完しがちな言葉
         const cleanedAnswer = normalizeText(transcription);
-        const correctLen = currentState.correctAnswer.length;
-        const answerLen = cleanedAnswer.length;
+        
+        // 正解のモーラ数（音の数）を取得
+        const correctMoraCount = Array.isArray(currentState.correctAnswer) 
+            ? currentState.correctAnswer.length 
+            : getMoraCount(currentState.correctAnswer);
+            
+        const answerMoraCount = getMoraCount(transcription);
+        
+        console.log(`[Retry Check] transcription: "${transcription}", cleaned: "${cleanedAnswer}"`);
+        console.log(`[Retry Check] answerMoraCount: ${answerMoraCount}, correctMoraCount: ${correctMoraCount}`);
         
         const hallucinations = ['視聴', 'チャンネル', '登録', 'お疲れ', '字幕', '評価', '高評価'];
-        const isHallucination = hallucinations.some(word => transcription.includes(word)) || answerLen > 20;
+        const isHallucination = hallucinations.some(word => transcription.includes(word)) || answerMoraCount > 20;
 
         // 文字数ベースの判定: 正解の文字数との差が2文字以上の場合はリトライ
-        const isLengthError = Math.abs(correctLen - answerLen) >= 2;
+        const diff = Math.abs(correctMoraCount - answerMoraCount);
+        const isLengthError = diff >= 2;
+        
+        console.log(`[Retry Check] diff: ${diff}, isLengthError: ${isLengthError}, isHallucination: ${isHallucination}`);
 
-        if (answerLen < 1 || isHallucination || isLengthError) {
+        if (answerMoraCount < 1 || isHallucination || isLengthError) {
+            console.log("Triggering auto-retry...");
             elements.recordingStatus.textContent = 'うまく聞き取れませんでした。もう一度お願いします！';
             elements.recordingStatus.classList.add('shake-text');
             
             setTimeout(() => {
                 elements.recordingStatus.classList.remove('shake-text');
-                startRecording();
+                setUIPhase('READING');
+                elements.gameStatus.textContent = '読み上げ直しています...';
+                currentState.isReading = false;
+                readSequence(currentState.originalSequence);
             }, 2000);
             return;
         }
@@ -937,9 +956,25 @@ function normalizeText(text) {
     res = res.replace(/[〇一二三四五六七八九]/g, m => kanjiMap[m]);
     res = res.replace(/[０-９]/g, m => String.fromCharCode(m.charCodeAt(0) - 0xFEE0));
     res = res.replace(/[、。！?？\s\-・,._]/g, "");
-    res = res.replace(/[ァ-ン]/g, m => String.fromCharCode(m.charCodeAt(0) - 0x60));
-    res = res.replace(/ー/g, ""); 
+    res = res.replace(/[^\u3041-\u3096a-z0-9]/g, ""); // ひらがな、英数字以外を徹底削除
+    res = res.replace(/[^\u3041-\u30960-9]/g, ""); // ひらがなと数字以外を徹底削除
     return res;
+}
+
+/**
+ * 日本語の音の数（モーラ数）を正確にカウントする
+ * 「きょう」→ 2音、「きよう」→ 3音
+ */
+function getMoraCount(text) {
+    if (!text) return 0;
+    // 1. カタカナをひらがなに変換
+    let hira = katakanaToHiragana(text);
+    // 2. 余計な記号を削除
+    hira = normalizeText(hira);
+    // 3. 小書き文字（ゃゅょ、およびカタカナの ァィゥェォ）と「ー」を考慮
+    // 基本的に小書き文字は前の文字とセットで1音なので、カウントから除外する
+    const smallChars = /[ゃゅょぁぃぅぇぉ]/g;
+    return hira.length - (hira.match(smallChars) || []).length;
 }
 
 function submitAnswer(rawAnswer) {
@@ -1048,6 +1083,7 @@ function showResult() {
             const leftDiv = document.createElement('div');
             leftDiv.className = 'history-item-left';
             leftDiv.innerHTML = `
+                <span class="history-index">${index + 1}.</span>
                 <span class="history-icon ${log.is_correct ? 'correct' : 'wrong'}">${log.is_correct ? '◯' : '✕'}</span>
                 <div class="history-text">
                     <span class="history-word">${log.original}</span>

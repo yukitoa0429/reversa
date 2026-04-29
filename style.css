@@ -1456,6 +1456,14 @@ input:checked + .slider:before {
     flex-grow: 1;
 }
 
+.history-index {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.5);
+    min-width: 20px;
+    text-align: right;
+}
+
 .history-icon {
     font-size: 1.5rem;
     font-weight: bold;
