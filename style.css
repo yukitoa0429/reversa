@@ -125,13 +125,24 @@ h1 {
 .glass-card {
     width: 100%;
     background: var(--glass-bg);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 28px;
+    padding: 30px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card {
+    min-height: 480px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .glass-card h2 {
@@ -194,12 +205,17 @@ h1 {
 
 /* Voice Indicator */
 .voice-indicator {
-    height: 150px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
+    z-index: 5;
 }
 
 .wave {
@@ -225,12 +241,26 @@ h1 {
 
 /* Recognition status */
 .recognition-container {
-    height: 180px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    z-index: 5;
+    box-sizing: border-box;
+}
+
+.mic-area {
+    flex: 1; /* Take up all available space to center waveform */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    width: 100%;
 }
 
 .mic-icon-mini {
@@ -262,6 +292,68 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* Listening Animation */
+.recording-status.listening {
+    animation: listening-pulse 2s infinite ease-in-out;
+}
+
+@keyframes listening-pulse {
+    0%, 100% { opacity: 0.7; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1.02); }
+}
+
+.recording-visualizer {
+    position: relative;
+    width: 280px; /* Wider for waveform */
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.game-waveform {
+    position: absolute;
+    width: 100%;
+    height: 120px; /* Increased height */
+    z-index: 0;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 12px var(--accent-glow));
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.recording-container.active .pulse-ring {
+    animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { opacity: 0.3; }
+    100% { transform: scale(2); opacity: 0; }
+}
+
+.mic-icon {
+    display: none; /* Hide mic as requested */
+}
+
+.recording-container.active .mic-icon {
+    animation: mic-float 3s infinite ease-in-out;
+}
+
+@keyframes mic-float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.1); }
+}
+
 /* Stop Button for Whisper */
 .stop-button {
     background: #ff4d4d;
@@ -282,65 +374,50 @@ h1 {
     box-shadow: 0 6px 20px rgba(255, 77, 77, 0.6);
 }
 
-.recording-timer {
-    width: 200px;
-    height: 4px;
+.recording-timer-group {
+    margin-top: auto; /* Push to bottom */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.recording-timer-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.recording-timer-bar-bg {
+    width: 240px;
+    height: 6px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    margin-top: 20px;
+    border-radius: 3px;
     overflow: hidden;
     position: relative;
 }
 
-.recording-timer::after {
+.recording-timer-bar-bg::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background: #ff4d4d;
+    background: linear-gradient(90deg, #ff4d4d, #f43f5e);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 15s linear;
+    transition: transform 20s linear;
 }
 
-.recording-container.active .recording-timer::after {
+.recording-container.active .recording-timer-bar-bg::after {
     transform: scaleX(1);
 }
 
 /* Feedback Layout */
-.comparison-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-    margin: 25px 0;
-    text-align: left;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 25px;
-}
-
-.comparison-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.comparison-item label {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    font-weight: 300;
-}
-
-.comparison-item span {
-    font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
+/* Overwritten by UI Components section below */
 
 .text-success { color: var(--success-color); }
 .text-error { color: var(--error-color); }
@@ -692,7 +769,7 @@ footer {
 }
 
 .flash-character {
-    font-size: 20rem;
+    font-size: 12rem; /* Reduced from 20rem (approx 1/2) */
     font-weight: 800;
     color: white;
     font-family: 'Outfit', sans-serif;
@@ -1026,25 +1103,40 @@ footer {
 
 /* UI Components */
 .feedback-panel {
-    text-align: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Top, Middle, Bottom stack */
     align-items: center;
+    padding: 40px 20px;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+.feedback-badge-container {
+    margin-top: 10px;
 }
 
 .comparison-grid {
-    width: 100%;
-    margin: 20px 0;
+    flex: 1; /* Center grid in available space */
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     gap: 20px;
+    overflow: hidden;
 }
 
 .comparison-item {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding-left: 15%; /* Slight offset from left for balance */
+    align-items: center;
+    padding: 0;
 }
 
 .comparison-item label {
@@ -1333,20 +1425,20 @@ input:checked + .slider:before {
     box-shadow: none;
 }
 .large-text {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.05em;
 }
 
 /* === Hanko Stamp Animation === */
 .feedback-badge.minimal-badge {
     /* Reset from previous state */
-    font-size: 5rem;
+    font-size: 3.5rem; /* Reduced from 5rem to avoid overlap */
     font-weight: bold;
     background: transparent;
     border: none;
     padding: 0;
-    margin: 20px auto;
+    margin: 0;
     text-shadow: none;
     display: flex;
     align-items: center;
@@ -1356,14 +1448,18 @@ input:checked + .slider:before {
 
 /* 正解スタンプ（判子風） */
 .hanko-stamp {
-    width: 150px;
-    height: 150px;
-    border: 8px solid #d32f2f;
+    width: 110px;
+    height: 110px;
+    border: 6px solid #d32f2f;
     border-radius: 50%;
     color: #d32f2f;
-    font-family: "Yu Mincho", "MS Mincho", serif; /* 和風フォント */
+    font-family: "Yu Mincho", "MS Mincho", serif;
     font-weight: 900;
-    font-size: 3rem;
+    font-size: 1.8rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-shadow: 1px 1px 2px rgba(211, 47, 47, 0.4);
     box-shadow: inset 0 0 10px rgba(211, 47, 47, 0.2);
     /* かすれ効果 (mask-image) を入れるとよりリアルですが、シンプルに */

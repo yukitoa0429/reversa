@@ -25,6 +25,13 @@ function katakanaToHiragana(src) {
     });
 }
 
+function hiraganaToKatakana(src) {
+    return src.replace(/[\u3041-\u3096]/g, function(match) {
+        var chr = match.charCodeAt(0) + 0x60;
+        return String.fromCharCode(chr);
+    });
+}
+
 function numberToPhonetic(src) {
     const map = { '0': 'まる', '1': 'いち', '2': 'に', '3': 'さん', '4': 'よん', '5': 'ご', '6': 'ろく', '7': 'なな', '8': 'はち', '9': 'きゅう' };
     return src.toString().split('').map(c => map[c] || c).join('、');
@@ -141,7 +148,7 @@ let currentState = {
     turnLogs: [], // 1ターン内の一時的な履歴保存
     recentQuestions: [], // 直近の出題履歴（重複回避用）
     isSilent: false,
-    isBlind: false
+    isBlind: true
 };
 
 let vapiInstance = null;
@@ -191,6 +198,7 @@ const elements = {
     btnPlayMaster: document.getElementById('btn-play-master'),
     btnStartRecord: document.getElementById('btn-start-record'),
     checkSilent: document.getElementById('check-silent'),
+    gameWaveformCanvas: document.getElementById('game-waveform-canvas'),
     checkBlind: document.getElementById('check-blind'),
     // Flash
     flashContainer: document.getElementById('flash-container'),
@@ -292,7 +300,8 @@ async function init() {
         'btn-test-ha': 'はひふへほ',
         'btn-test-ma': 'まみむめも',
         'btn-test-ya': 'やゆよ',
-        'btn-test-wa': 'わをん'
+        'btn-test-wa': 'わをん',
+        'btn-test-hashi': 'はし'
     };
     Object.entries(testCases).forEach(([id, text]) => {
         const btn = document.getElementById(id);
@@ -456,7 +465,7 @@ async function startGame(theme) {
  */
 async function getAudioBlob(word, type = 'orig') {
     // 以前の低品質キャッシュを使わないよう、キーを「v6_」に更新
-    const prefix = (type === 'rev') ? 'v6_rev_' : `v6_${type}_`;
+    const prefix = (type === 'rev') ? 'v7_rev_' : `v7_${type}_`;
     const cacheKey = `${prefix}${word}`;
     
     // 1. IndexedDBキャッシュをまず探す (二回目以降の高速化とコスト節約)
@@ -465,7 +474,10 @@ async function getAudioBlob(word, type = 'orig') {
 
     // 2. クラウド優先 (OpenAI TTS) - 高品質なAIボイスを取得
     try {
-        const textToSpeak = (type === 'rev') ? word : word.split('').join('  ');
+        let textToSpeak = (type === 'rev') ? word : word.split('').join('  ');
+        // ひらがなだと「は」を「わ」と読むことがあるため、カタカナに変換して発音を固定する
+        textToSpeak = hiraganaToKatakana(textToSpeak);
+        
         const response = await fetch('https://api.openai.com/v1/audio/speech', {
             method: 'POST',
             headers: {
@@ -778,20 +790,35 @@ async function startRecording() {
         currentState.isRecording = true;
         
         setUIPhase('RECORDING');
-        elements.gameStatus.textContent = "あなたの声を聞いています...";
+        elements.gameStatus.textContent = "";
         
         // VAD (Voice Activity Detection) セットアップ
-        currentState.vadContext = new (window.AudioContext || window.webkitAudioContext)();
-        currentState.vadAnalyser = currentState.vadContext.createAnalyser();
-        currentState.vadAnalyser.fftSize = 512;
-        currentState.vadSource = currentState.vadContext.createMediaStreamSource(stream);
+        if (!GLOBAL_PLAYER.audioCtx) {
+            GLOBAL_PLAYER.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const audioCtx = GLOBAL_PLAYER.audioCtx;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        currentState.vadAnalyser = audioCtx.createAnalyser();
+        currentState.vadAnalyser.fftSize = 2048; // Smooth waveform
+        currentState.vadSource = audioCtx.createMediaStreamSource(stream);
         currentState.vadSource.connect(currentState.vadAnalyser);
         
         currentState.vadDataArray = new Uint8Array(currentState.vadAnalyser.frequencyBinCount);
+        currentState.vadTimeDataArray = new Uint8Array(currentState.vadAnalyser.fftSize);
+        
+        const canvas = elements.gameWaveformCanvas;
+        const ctx = canvas.getContext('2d');
+        
+        // Canvasのサイズを親要素に合わせる（遅延実行で確実に取得）
+        setTimeout(() => {
+            canvas.width = canvas.offsetWidth || 280;
+            canvas.height = canvas.offsetHeight || 80;
+        }, 50);
         
         let isSpeaking = false;
         let silenceStart = Date.now();
-        const SILENCE_THRESHOLD_MS = 2000; // 2秒間の無音で終了
+        const SILENCE_THRESHOLD_MS = 1000; // 1.0秒間の無音で終了
         const VOLUME_THRESHOLD = 10; // 音量しきい値 (0-255)
         const NO_SPEECH_TIMEOUT_MS = 5000; // 5秒間一度も発声がない場合のタイムアウト
         
@@ -800,6 +827,7 @@ async function startRecording() {
         function detectSilence() {
             if (!currentState.isRecording) return;
             
+            drawGameWaveform();
             currentState.vadAnalyser.getByteFrequencyData(currentState.vadDataArray);
             let sum = 0;
             for (let i = 0; i < currentState.vadDataArray.length; i++) {
@@ -839,6 +867,45 @@ async function startRecording() {
             
             currentState.vadInterval = requestAnimationFrame(detectSilence);
         }
+
+        function drawGameWaveform() {
+            const canvas = elements.gameWaveformCanvas;
+            if (!canvas || !currentState.vadAnalyser || !currentState.vadTimeDataArray) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const analyser = currentState.vadAnalyser;
+            const dataArray = currentState.vadTimeDataArray;
+
+            analyser.getByteTimeDomainData(dataArray);
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.lineWidth = 6;
+            ctx.strokeStyle = '#a855f7'; // Neon Purple
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#a855f7';
+            ctx.beginPath();
+
+            const sliceWidth = width * 1.0 / dataArray.length;
+            let x = 0;
+
+            for (let i = 0; i < dataArray.length; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = v * height / 2;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+
+                x += sliceWidth;
+            }
+
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.stroke();
+        }
         
         detectSilence(); // ループ開始
 
@@ -865,7 +932,8 @@ function stopRecording(cancelProcess = false) {
 
 async function processAudio(audioBlob) {
     currentState.currentAudioBlob = audioBlob; // 録音データを結果画面用に保持
-    elements.recordingStatus.textContent = '音声を解析中...';
+    elements.recordingStatus.textContent = '';
+    elements.recordingStatus.classList.add('listening');
     try {
         const formData = new FormData();
         formData.append('file', audioBlob, 'answer.wav');
@@ -989,7 +1057,7 @@ function submitAnswer(rawAnswer) {
         playSE('correct'); // ピンポン♪
         currentState.score++;
         if(elements.feedbackBadge) {
-            elements.feedbackBadge.textContent = '見事';
+            elements.feedbackBadge.textContent = 'お見事';
             elements.feedbackBadge.className = 'feedback-badge minimal-badge hanko-stamp';
             void elements.feedbackBadge.offsetWidth; // Force reflow
             elements.feedbackBadge.classList.add('animate');
@@ -1076,7 +1144,7 @@ function showResult() {
     const listEl = document.getElementById('result-history-list');
     if (listEl) {
         listEl.innerHTML = '';
-        currentState.turnLogs.forEach(log => {
+        currentState.turnLogs.forEach((log, index) => {
             const item = document.createElement('div');
             item.className = 'history-item';
             
@@ -1086,8 +1154,8 @@ function showResult() {
                 <span class="history-index">${index + 1}.</span>
                 <span class="history-icon ${log.is_correct ? 'correct' : 'wrong'}">${log.is_correct ? '◯' : '✕'}</span>
                 <div class="history-text">
-                    <span class="history-word">${log.original}</span>
-                    <span class="history-answer">${log.user_answer}</span>
+                    <span class="history-word" style="white-space: nowrap;">${log.original}</span>
+                    <span class="history-answer" style="white-space: nowrap;">${log.user_answer}</span>
                 </div>
             `;
             item.appendChild(leftDiv);
@@ -1657,6 +1725,7 @@ function setUIPhase(phase) {
     });
     
     if (elements.recordingContainer) elements.recordingContainer.classList.remove('active');
+    if (elements.recordingStatus) elements.recordingStatus.classList.remove('listening');
 
     // 3. Apply phase-specific display logic
     switch(phase) {
@@ -1680,7 +1749,8 @@ function setUIPhase(phase) {
             if (elements.micArea) elements.micArea.classList.remove('hidden');
             if (elements.countdownArea) elements.countdownArea.classList.remove('hidden');
             if (elements.recordingStatus) {
-                elements.recordingStatus.textContent = '逆唱を録音中...';
+                elements.recordingStatus.textContent = '';
+                elements.recordingStatus.classList.add('listening');
                 elements.recordingStatus.classList.remove('hidden');
             }
             if (elements.btnStopRecord) elements.btnStopRecord.classList.remove('hidden');

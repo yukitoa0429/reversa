@@ -65,7 +65,7 @@
                     <div class="toggle-container">
                         <span class="toggle-label">🙈 文字を隠す (聴覚のみモード)</span>
                         <label class="switch">
-                            <input type="checkbox" id="check-blind">
+                            <input type="checkbox" id="check-blind" checked>
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -101,20 +101,23 @@
                     <div class="wave"></div>
                     <div class="wave"></div>
                     <div class="wave"></div>
-                    <p id="game-status">読み上げ中...</p>
+                    <p id="game-status" class="hidden"></p>
                 </div>
 
                 <!-- Status: Recording (Whisper) -->
                 <div id="recording-container" class="recognition-container hidden">
                     <div id="mic-area" class="mic-area">
                         <div class="recording-visualizer">
+                            <canvas id="game-waveform-canvas" class="game-waveform"></canvas>
                             <div class="pulse-ring"></div>
                             <div class="mic-icon" id="voice-indicator">🎤</div>
                         </div>
                     </div>
-                    <p class="recording-status" id="recording-status">逆唱を録音中...</p>
-                    <p class="recording-timer" id="recording-timer-text">自動停止まで：<span id="recording-countdown">3</span>秒</p>
-                    <div class="recording-timer" id="recording-timer-bar"></div>
+                    <p class="recording-status" id="recording-status">準備ができたら開始してください</p>
+                    <div class="recording-timer-group">
+                        <p class="recording-timer-text" id="recording-timer-text">自動停止まで：<span id="recording-countdown">3</span>秒</p>
+                        <div class="recording-timer-bar-bg" id="recording-timer-bar"></div>
+                    </div>
 
                     <div id="action-choice-group" class="action-choice-group hidden">
                         <button id="btn-retry-record" class="choice-button primary">🎙️ 音声を聞き直して答える</button>
@@ -124,7 +127,9 @@
 
                 <!-- Status: Feedback -->
                 <div id="feedback-panel" class="feedback-panel hidden">
-                    <div id="feedback-badge" class="feedback-badge">正解</div>
+                    <div class="feedback-badge-container">
+                        <div id="feedback-badge" class="feedback-badge">正解</div>
+                    </div>
 
                     <div class="comparison-grid minimal">
                         <div class="comparison-item">
@@ -227,6 +232,7 @@
                                 <button id="btn-test-ma" class="tool-button">まみむめも 🔊</button>
                                 <button id="btn-test-ya" class="tool-button">やゆよ 🔊</button>
                                 <button id="btn-test-wa" class="tool-button">わをん 🔊</button>
+                                <button id="btn-test-hashi" class="tool-button">はし 🔊</button>
                             </div>
                             <p id="dev-status" class="status-msg">リストから文字を選んでください</p>
                         </div>
