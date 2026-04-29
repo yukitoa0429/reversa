@@ -1,5 +1,6 @@
 {
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "build": 3,
   "dependencies": {
     "@vapi-ai/web": "^2.5.2"
   }
