@@ -260,7 +260,7 @@ async function init() {
         elements.voiceIndicator.classList.remove('hidden');
         elements.gameStatus.textContent = '読み上げ直しています...';
         currentState.isReading = false; // Force reset for retry
-        readSequence(currentState.originalSequence);
+        readSequence(currentState.originalSequence, currentState.originalWord);
     };
     elements.btnStartAfterLoad.onclick = () => {
         showScreen('game');
@@ -1817,3 +1817,6 @@ function setUIPhase(phase) {
             break;
     }
 }
+
+// Start the application
+init();
