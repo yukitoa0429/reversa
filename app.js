@@ -913,10 +913,10 @@ async function startRecording() {
             analyser.getByteTimeDomainData(dataArray);
 
             ctx.clearRect(0, 0, width, height);
-            ctx.lineWidth = 6;
-            ctx.strokeStyle = '#a855f7'; // Neon Purple
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = '#a855f7';
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)'; // Chalk White
+            ctx.shadowBlur = 4;
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.3)';
             ctx.beginPath();
 
             const sliceWidth = width * 1.0 / dataArray.length;
@@ -1107,7 +1107,7 @@ function submitAnswer(rawAnswer) {
         setTimeout(() => {
             if(elements.feedbackBadge) {
                 elements.feedbackBadge.textContent = 'お見事';
-                elements.feedbackBadge.className = 'feedback-badge minimal-badge hanko-stamp';
+                elements.feedbackBadge.className = 'feedback-badge hanko-stamp';
                 void elements.feedbackBadge.offsetWidth; 
                 elements.feedbackBadge.classList.add('animate');
             }
@@ -1121,7 +1121,7 @@ function submitAnswer(rawAnswer) {
         setTimeout(() => {
             if(elements.feedbackBadge) {
                 elements.feedbackBadge.textContent = '✕';
-                elements.feedbackBadge.className = 'feedback-badge minimal-badge wrong-stamp';
+                elements.feedbackBadge.className = 'feedback-badge wrong-stamp';
                 void elements.feedbackBadge.offsetWidth; 
                 elements.feedbackBadge.classList.add('animate');
             }
