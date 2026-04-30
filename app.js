@@ -38,7 +38,7 @@ function numberToPhonetic(src) {
 }
 
 const QUESTIONS_PER_TURN = 10;
-const SPEECH_RATE = 0.95; 
+const SPEECH_RATE = 0.85; 
 const READ_REPEAT = 2;
 const MAX_RECORDING_TIME = 20000; // 20s Recording limit
 const WAIT_FOR_START_TIME = 15000; // 15s Waiting limit for manual start
@@ -148,7 +148,8 @@ let currentState = {
     turnLogs: [], // 1ターン内の一時的な履歴保存
     recentQuestions: [], // 直近の出題履歴（重複回避用）
     isSilent: false,
-    isBlind: true
+    isBlind: true,
+    useNaturalVoice: true
 };
 
 
@@ -200,6 +201,7 @@ const elements = {
     checkSilent: document.getElementById('check-silent'),
     gameWaveformCanvas: document.getElementById('game-waveform-canvas'),
     checkBlind: document.getElementById('check-blind'),
+    checkNatural: document.getElementById('check-natural'),
     // Flash
     flashContainer: document.getElementById('flash-container'),
     flashCharacter: document.getElementById('flash-character'),
@@ -410,6 +412,11 @@ async function startGame(theme) {
     currentState.score = 0;
     currentState.logs = [];
     currentState.turnLogs = [];
+    
+    // UIの設定を反映
+    currentState.isSilent = elements.checkSilent ? elements.checkSilent.checked : false;
+    currentState.isBlind = elements.checkBlind ? elements.checkBlind.checked : true;
+    currentState.useNaturalVoice = elements.checkNatural ? elements.checkNatural.checked : true;
 
     // Decide questions for this turn
     currentState.allSequences = [];
@@ -435,8 +442,8 @@ async function startGame(theme) {
  * ユーザーの録音データよりも高品質なAIボイスを優先的に使用するように設定しました。
  */
 async function getAudioBlob(word, type = 'orig') {
-    // 以前の不完全な発音キャッシュを使わないよう、キーを「v8_」に更新
-    const prefix = (type === 'rev') ? 'v8_rev_' : `v8_${type}_`;
+    // 以前の不完全な発音キャッシュを使わないよう、キーを「v13_」に更新
+    const prefix = (type === 'rev') ? 'v13_rev_' : `v13_${type}_`;
     const cacheKey = `${prefix}${word}`;
     
     // 1. IndexedDBキャッシュをまず探す
@@ -445,11 +452,19 @@ async function getAudioBlob(word, type = 'orig') {
 
     // 2. クラウド優先 (OpenAI TTS)
     try {
-        let textToSpeak = (type === 'rev') ? word : word.split('').join('  ');
+        // 【修正】orig（連続音）の場合は分解せず、そのまま自然に発音させる
+        let textToSpeak = (type === 'rev' || type === 'orig') ? word : word.split('').join('  ');
         
         // 【発音改善】「ん」一文字だとAIが無視してしまうことがあるため、少し伸ばす
         if (textToSpeak.trim() === 'ん' || textToSpeak.trim() === 'ン') {
             textToSpeak = 'んー';
+        }
+        
+        // 【キンキン音対策】単音（parts）の場合は少し速度を落とし、語尾に読点を加えて落ち着かせる
+        let currentSpeed = SPEECH_RATE;
+        if (type === 'parts') {
+            currentSpeed = 0.95; // わずかに低速化して安定させる
+            if (!textToSpeak.includes('、')) textToSpeak += '、';
         }
         
         // カタカナに変換して発音を安定させる
@@ -465,18 +480,23 @@ async function getAudioBlob(word, type = 'orig') {
                 model: 'tts-1',
                 input: textToSpeak,
                 voice: "onyx",
-                speed: SPEECH_RATE
+                speed: currentSpeed
             })
         });
 
-        if (response.ok) {
-            const blob = await response.blob();
-            await saveCachedAudio(cacheKey, blob);
-            return blob;
-        }
+        if (!response.ok) throw new Error(`OpenAI API error: ${response.status}`);
+
+        const blob = await response.blob();
+        
+        // キャッシュに保存
+        await saveCachedAudio(cacheKey, blob);
+        
+        return blob;
     } catch (e) {
-        console.warn("Cloud TTS failed, falling back to local files", e);
+        console.warn("Cloud TTS failed, falling back to local/other", e);
+        return null;
     }
+}
 
     // 3. 最終手段: ローカルアセット（以前の録音データ）
     const extensions = ['wav', 'mp3'];
@@ -559,56 +579,84 @@ function startQuestion() {
     }, 1200);
 }
 
-async function readSequence(textOrArray) {
+async function readSequence(rubyArray, fullWord) {
     if (currentState.isReading) return;
+    
+    if (!fullWord && rubyArray === currentState.originalSequence) {
+        fullWord = currentState.originalWord;
+    }
+    
     currentState.isReading = true;
-    
-    // Convert string to mora array if needed
-    const sequence = Array.isArray(textOrArray) ? textOrArray : textOrArray.split('');
-    
-    // Clear flash area BEFORE showing container to avoid ghosts
+
     elements.flashCharacter.textContent = '';
     elements.flashContainer.classList.remove('hidden');
-    elements.gameStatus.textContent = currentState.isSilent ? '文字を記憶してください...' : '音声データを読み込み中...';
+    elements.gameStatus.textContent = currentState.isSilent ? '記憶してください...' : '準備中...';
 
-    // 1. Preload Phase: Load all blobs first to prevent network race conditions
+    if (currentState.useNaturalVoice && !currentState.isSilent) {
+        await readSequenceNatural(fullWord);
+    } else {
+        await readSequenceRhythm(rubyArray);
+    }
+
+    finishReading();
+}
+
+async function readSequenceNatural(word) {
+    try {
+        const blob = await getAudioBlob(word, 'orig');
+        elements.gameStatus.textContent = '読み上げ中...';
+        playSE('start');
+        await sleep(500);
+
+        elements.flashCharacter.textContent = currentState.isBlind ? '🔊' : word;
+        elements.flashCharacter.classList.add('active');
+
+        if (blob) {
+            await playBlob(blob);
+            await sleep(500);
+        } else {
+            throw new Error("Natural voice blob is null");
+        }
+    } catch (err) {
+        console.error("Natural reading error:", err);
+        await readSequenceRhythm(currentState.originalSequence);
+    }
+}
+
+async function readSequenceRhythm(rubyArray) {
+    const sequence = Array.isArray(rubyArray) ? rubyArray : rubyArray.split('');
     const blobs = [];
     for (let unit of sequence) {
         const b = await getAudioBlob(unit, 'parts');
         blobs.push(b);
     }
-
-    elements.gameStatus.textContent = currentState.isSilent ? '文字を記憶してください...' : '読み上げ中...';
+    elements.gameStatus.textContent = '読み上げ中...';
     await sleep(800);
     playSE('start');
-
-    // 2. Execution Phase: Play with strict timing
     try {
         for (let i = 0; i < sequence.length; i++) {
             if (!currentState.isReading) break;
             const unit = sequence[i];
             const blob = blobs[i];
-            
-            // Sync Visual
             elements.flashCharacter.textContent = currentState.isBlind ? '🔊' : unit;
             elements.flashCharacter.classList.remove('active');
-            void elements.flashCharacter.offsetWidth; // Force reflow
+            void elements.flashCharacter.offsetWidth;
             elements.flashCharacter.classList.add('active');
-
-            // Fixed Beat: Play only if NOT silent
             if (!currentState.isSilent && blob) {
                 playBlob(blob);
             }
             await sleep(RHYTHM_BEAT_MS); 
         }
     } catch (err) {
-        console.error("Read sequence error:", err);
-    } finally {
-        currentState.isReading = false;
-        elements.flashContainer.classList.add('hidden');
-        elements.gameStatus.textContent = 'あなたの声を聞いています...';
-        startRecording();
+        console.error("Rhythm reading error:", err);
     }
+}
+
+function finishReading() {
+    currentState.isReading = false;
+    elements.flashContainer.classList.add('hidden');
+    elements.gameStatus.textContent = 'あなたの声を聞いています...';
+    startRecording();
 }
 
 async function playBlob(blob, fadeTime = 0.015) {
@@ -624,36 +672,40 @@ async function playBlob(blob, fadeTime = 0.015) {
 
 function playBuffer(audioBuffer, fadeTime = 0.015) {
     const ctx = getPlaybackContext();
-    try {
-        const source = ctx.createBufferSource();
-        source.buffer = audioBuffer;
-        
-        const gainNode = ctx.createGain();
-        source.connect(gainNode);
-        gainNode.connect(ctx.destination);
-        
-        const now = ctx.currentTime;
-        
-        // Envelope: Fade In
-        gainNode.gain.setValueAtTime(0, now);
-        gainNode.gain.linearRampToValueAtTime(1, now + fadeTime);
-        
-        // Envelope: Fade Out
-        const duration = audioBuffer.duration;
-        if (duration > fadeTime * 2) {
-            gainNode.gain.setValueAtTime(1, now + duration - fadeTime);
-            gainNode.gain.linearRampToValueAtTime(0, now + duration);
+    return new Promise((resolve) => {
+        try {
+            const source = ctx.createBufferSource();
+            source.buffer = audioBuffer;
+            
+            const gainNode = ctx.createGain();
+            source.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            
+            const now = ctx.currentTime;
+            
+            // Envelope: Fade In
+            gainNode.gain.setValueAtTime(0, now);
+            gainNode.gain.linearRampToValueAtTime(1, now + fadeTime);
+            
+            // Envelope: Fade Out
+            const duration = audioBuffer.duration;
+            if (duration > fadeTime * 2) {
+                gainNode.gain.setValueAtTime(1, now + duration - fadeTime);
+                gainNode.gain.linearRampToValueAtTime(0, now + duration);
+            }
+            
+            source.start(now);
+            GLOBAL_PLAYER.activeSources.push(source);
+            
+            source.onended = () => {
+                GLOBAL_PLAYER.activeSources = GLOBAL_PLAYER.activeSources.filter(s => s !== source);
+                resolve();
+            };
+        } catch (err) {
+            console.error("playBuffer error:", err);
+            resolve();
         }
-        
-        source.start(now);
-        GLOBAL_PLAYER.activeSources.push(source);
-        
-        source.onended = () => {
-            GLOBAL_PLAYER.activeSources = GLOBAL_PLAYER.activeSources.filter(s => s !== source);
-        };
-    } catch (err) {
-        console.error("playBuffer error:", err);
-    }
+    });
 }
 // Function to stop all currently playing debug/test sounds
 function stopAllPlayback() {
@@ -694,7 +746,7 @@ async function speakAI(text, cacheKey) {
 function repeatLastSpeech() {
     const q = currentState.allSequences[currentState.currentQuestion - 1];
     if (q) {
-        readSequence(q.ruby);
+        readSequence(q.ruby, q.word);
     }
 }
 
@@ -915,12 +967,12 @@ async function processAudio(audioBlob) {
     currentState.currentAudioBlob = audioBlob; 
     currentState.preparedAudioBuffer = null; // リセット
 
-    // 【事前デコード】Whisper解析中に裏で再生準備を済ませておく
+    // 【事前デコード & トリミング】Whisper解析中に裏で再生準備を済ませておく
     audioBlob.arrayBuffer().then(ab => {
         return getPlaybackContext().decodeAudioData(ab);
     }).then(buffer => {
-        currentState.preparedAudioBuffer = buffer;
-    }).catch(err => console.warn("Pre-decoding failed:", err));
+        currentState.preparedAudioBuffer = trimAudioBuffer(buffer);
+    }).catch(err => console.warn("Pre-decoding/Trimming failed:", err));
 
     elements.recordingStatus.textContent = '';
     elements.recordingStatus.classList.add('listening');
@@ -1114,7 +1166,7 @@ function submitAnswer(rawAnswer) {
     elements.labelScore.textContent = `Score: ${currentState.score}`;
     elements.btnNext.textContent = currentState.currentQuestion >= QUESTIONS_PER_TURN ? '結果を見る' : '次へ';
     
-    // Auto-advance after 3.9 seconds (3.4s + 0.5s)
+    // Auto-advance after 3.9 seconds
     if (currentState.autoAdvanceTimer) clearTimeout(currentState.autoAdvanceTimer);
     currentState.autoAdvanceTimer = setTimeout(() => {
         nextQuestion();
