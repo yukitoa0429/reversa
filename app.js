@@ -435,18 +435,24 @@ async function startGame(theme) {
  * ユーザーの録音データよりも高品質なAIボイスを優先的に使用するように設定しました。
  */
 async function getAudioBlob(word, type = 'orig') {
-    // 以前の低品質キャッシュを使わないよう、キーを「v6_」に更新
-    const prefix = (type === 'rev') ? 'v7_rev_' : `v7_${type}_`;
+    // 以前の不完全な発音キャッシュを使わないよう、キーを「v8_」に更新
+    const prefix = (type === 'rev') ? 'v8_rev_' : `v8_${type}_`;
     const cacheKey = `${prefix}${word}`;
     
-    // 1. IndexedDBキャッシュをまず探す (二回目以降の高速化とコスト節約)
+    // 1. IndexedDBキャッシュをまず探す
     const cachedBlob = await getCachedAudio(cacheKey);
     if (cachedBlob) return cachedBlob;
 
-    // 2. クラウド優先 (OpenAI TTS) - 高品質なAIボイスを取得
+    // 2. クラウド優先 (OpenAI TTS)
     try {
         let textToSpeak = (type === 'rev') ? word : word.split('').join('  ');
-        // ひらがなだと「は」を「わ」と読むことがあるため、カタカナに変換して発音を固定する
+        
+        // 【発音改善】「ん」一文字だとAIが無視してしまうことがあるため、少し伸ばす
+        if (textToSpeak.trim() === 'ん' || textToSpeak.trim() === 'ン') {
+            textToSpeak = 'んー';
+        }
+        
+        // カタカナに変換して発音を安定させる
         textToSpeak = hiraganaToKatakana(textToSpeak);
         
         const response = await fetch('https://api.openai.com/v1/audio/speech', {
@@ -547,7 +553,10 @@ function startQuestion() {
     setUIPhase('READING');
     elements.gameStatus.textContent = '準備中...';
     
-    readSequence(q.ruby);
+    // 次の問題の読み上げ開始前に「間」を置く
+    setTimeout(() => {
+        readSequence(q.ruby);
+    }, 1200);
 }
 
 async function readSequence(textOrArray) {
@@ -604,11 +613,18 @@ async function readSequence(textOrArray) {
 
 async function playBlob(blob, fadeTime = 0.015) {
     const ctx = getPlaybackContext();
-    
     try {
         const arrayBuffer = await blob.arrayBuffer();
         const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
-        
+        return playBuffer(audioBuffer, fadeTime);
+    } catch (err) {
+        console.error("playBlob error:", err);
+    }
+}
+
+function playBuffer(audioBuffer, fadeTime = 0.015) {
+    const ctx = getPlaybackContext();
+    try {
         const source = ctx.createBufferSource();
         source.buffer = audioBuffer;
         
@@ -622,33 +638,23 @@ async function playBlob(blob, fadeTime = 0.015) {
         gainNode.gain.setValueAtTime(0, now);
         gainNode.gain.linearRampToValueAtTime(1, now + fadeTime);
         
-        // Envelope: Fade Out (schedule at the end of the buffer)
+        // Envelope: Fade Out
         const duration = audioBuffer.duration;
         if (duration > fadeTime * 2) {
             gainNode.gain.setValueAtTime(1, now + duration - fadeTime);
             gainNode.gain.linearRampToValueAtTime(0, now + duration);
         }
         
-        // UI Feedback
-        elements.voiceIndicator.classList.add('active');
-        source.onended = () => {
-            elements.voiceIndicator.classList.remove('active');
-            // Clean up
-            GLOBAL_PLAYER.activeSources = GLOBAL_PLAYER.activeSources.filter(s => s !== source);
-        };
-        
         source.start(now);
         GLOBAL_PLAYER.activeSources.push(source);
         
-        // Return a promise that resolves when the sound mostly finishes
-        return new Promise(resolve => {
-            setTimeout(resolve, Math.max(0, (duration * 1000) - 10));
-        });
+        source.onended = () => {
+            GLOBAL_PLAYER.activeSources = GLOBAL_PLAYER.activeSources.filter(s => s !== source);
+        };
     } catch (err) {
-        console.error("Playback error:", err);
+        console.error("playBuffer error:", err);
     }
 }
-
 // Function to stop all currently playing debug/test sounds
 function stopAllPlayback() {
     GLOBAL_PLAYER.activeSources.forEach(source => {
@@ -906,7 +912,16 @@ function stopRecording(cancelProcess = false) {
 }
 
 async function processAudio(audioBlob) {
-    currentState.currentAudioBlob = audioBlob; // 録音データを結果画面用に保持
+    currentState.currentAudioBlob = audioBlob; 
+    currentState.preparedAudioBuffer = null; // リセット
+
+    // 【事前デコード】Whisper解析中に裏で再生準備を済ませておく
+    audioBlob.arrayBuffer().then(ab => {
+        return getPlaybackContext().decodeAudioData(ab);
+    }).then(buffer => {
+        currentState.preparedAudioBuffer = buffer;
+    }).catch(err => console.warn("Pre-decoding failed:", err));
+
     elements.recordingStatus.textContent = '';
     elements.recordingStatus.classList.add('listening');
     try {
@@ -1023,7 +1038,13 @@ function getMoraCount(text) {
 function submitAnswer(rawAnswer) {
     setUIPhase('FEEDBACK');
     
-    // Use cleaned text for both comparison AND display to remove "Answer is..."
+    // 【最速再生】デコード済みのバッファがあれば即座に再生
+    if (currentState.preparedAudioBuffer) {
+        playBuffer(currentState.preparedAudioBuffer);
+    } else if (currentState.currentAudioBlob) {
+        playBlob(currentState.currentAudioBlob);
+    }
+    
     const cleanedAnswer = normalizeText(rawAnswer);
     const normalizedCorrect = normalizeText(currentState.correctAnswer);
     const isCorrect = (cleanedAnswer === normalizedCorrect) && (cleanedAnswer.length === normalizedCorrect.length);
@@ -1031,23 +1052,29 @@ function submitAnswer(rawAnswer) {
     if (isCorrect) {
         playSE('correct'); // ピンポン♪
         currentState.score++;
-        if(elements.feedbackBadge) {
-            elements.feedbackBadge.textContent = 'お見事';
-            elements.feedbackBadge.className = 'feedback-badge minimal-badge hanko-stamp';
-            void elements.feedbackBadge.offsetWidth; // Force reflow
-            elements.feedbackBadge.classList.add('animate');
-        }
+        // 以前のベストなタイミングに戻す (150ms)
+        setTimeout(() => {
+            if(elements.feedbackBadge) {
+                elements.feedbackBadge.textContent = 'お見事';
+                elements.feedbackBadge.className = 'feedback-badge minimal-badge hanko-stamp';
+                void elements.feedbackBadge.offsetWidth; 
+                elements.feedbackBadge.classList.add('animate');
+            }
+        }, 150);
         if (elements.userAnswerContainer) {
             elements.userAnswerContainer.classList.add('hidden');
         }
     } else {
         playSE('wrong'); // ブブー
-        if(elements.feedbackBadge) {
-            elements.feedbackBadge.textContent = '✕';
-            elements.feedbackBadge.className = 'feedback-badge minimal-badge wrong-stamp';
-            void elements.feedbackBadge.offsetWidth; // Force reflow
-            elements.feedbackBadge.classList.add('animate');
-        }
+        // 以前のベストなタイミングに戻す (150ms)
+        setTimeout(() => {
+            if(elements.feedbackBadge) {
+                elements.feedbackBadge.textContent = '✕';
+                elements.feedbackBadge.className = 'feedback-badge minimal-badge wrong-stamp';
+                void elements.feedbackBadge.offsetWidth; 
+                elements.feedbackBadge.classList.add('animate');
+            }
+        }, 150);
         if (elements.userAnswerContainer) {
             elements.userAnswerContainer.classList.remove('hidden');
         }
@@ -1056,14 +1083,13 @@ function submitAnswer(rawAnswer) {
         }
     }
     
-    if(elements.displayCorrectReverse) {
-        elements.displayCorrectReverse.textContent = katakanaToHiragana(currentState.correctAnswer);
-    }
-
-    // 正解の音声（単語全体）を再生
-    getAudioBlob(currentState.correctAnswer, 'rev').then(blob => {
-        if (blob) playBlob(blob);
-    });
+    // 正解文字の表示も音声と合わせる (150ms)
+    setTimeout(() => {
+        if(elements.displayCorrectReverse) {
+            elements.displayCorrectReverse.textContent = katakanaToHiragana(currentState.correctAnswer);
+        }
+    }, 150);
+    
 
     saveLog({ 
         level: currentState.currentLevel, 
@@ -1088,11 +1114,11 @@ function submitAnswer(rawAnswer) {
     elements.labelScore.textContent = `Score: ${currentState.score}`;
     elements.btnNext.textContent = currentState.currentQuestion >= QUESTIONS_PER_TURN ? '結果を見る' : '次へ';
     
-    // Auto-advance after 3 seconds for fully hands-free experience
+    // Auto-advance after 3.9 seconds (3.4s + 0.5s)
     if (currentState.autoAdvanceTimer) clearTimeout(currentState.autoAdvanceTimer);
     currentState.autoAdvanceTimer = setTimeout(() => {
         nextQuestion();
-    }, 3000);
+    }, 3900);
 }
 
 function nextQuestion() {
