@@ -163,7 +163,7 @@ const screens = {
 };
 
 const elements = {
-    levelOptions: document.getElementById('level-options'),
+    levelOptions: document.getElementById('theme-options'),
     labelLevel: document.getElementById('label-level'),
     labelProgress: document.getElementById('label-progress'),
     labelScore: document.getElementById('label-score'),
@@ -173,11 +173,9 @@ const elements = {
     recordingStatus: document.getElementById('recording-status'),
     feedbackPanel: document.getElementById('feedback-panel'),
     feedbackBadge: document.getElementById('feedback-badge'),
-    displayOriginal: document.getElementById('display-original'),
     displayCorrectReverse: document.getElementById('display-correct-reverse'),
     displayUserAnswer: document.getElementById('display-user-answer'),
     userAnswerContainer: document.getElementById('user-answer-container'),
-    feedbackText: document.getElementById('feedback-text'),
     btnNext: document.getElementById('btn-next'),
     btnRestart: document.getElementById('btn-restart'),
     btnExportLog: document.getElementById('btn-export-log'),
@@ -193,8 +191,7 @@ const elements = {
     btnSkipQuestion: document.getElementById('btn-skip-question'),
     actionChoiceGroup: document.getElementById('action-choice-group'),
     micArea: document.getElementById('mic-area'),
-    countdownArea: document.getElementById('countdown-area'),
-    countdownArea: document.getElementById('countdown-area'),
+    countdownArea: document.getElementById('recording-timer-text'),
     recordingCountdown: document.getElementById('recording-countdown'),
     btnPlayMaster: document.getElementById('btn-play-master'),
     btnStartRecord: document.getElementById('btn-start-record'),
@@ -248,24 +245,28 @@ async function init() {
 
     // レベルボタン生成はHTML側に移行したため削除
 
-    elements.btnNext.onclick = nextQuestion;
-    elements.btnRestart.onclick = () => showScreen('home');
-    elements.btnExportLog.onclick = exportLogs;
-    elements.btnSkipQuestion.onclick = skipQuestion;
+    if (elements.btnNext) elements.btnNext.onclick = nextQuestion;
+    if (elements.btnRestart) elements.btnRestart.onclick = () => showScreen('home');
+    if (elements.btnExportLog) elements.btnExportLog.onclick = exportLogs;
+    if (elements.btnSkipQuestion) elements.btnSkipQuestion.onclick = skipQuestion;
     if (elements.btnPlayMaster) {
         elements.btnPlayMaster.onclick = playMasterAudio;
     }
-    elements.btnRetryRecord.onclick = () => {
-        elements.recordingContainer.classList.add('hidden');
-        elements.voiceIndicator.classList.remove('hidden');
-        elements.gameStatus.textContent = '読み上げ直しています...';
-        currentState.isReading = false; // Force reset for retry
-        readSequence(currentState.originalSequence, currentState.originalWord);
-    };
-    elements.btnStartAfterLoad.onclick = () => {
-        showScreen('game');
-        startQuestion();
-    };
+    if (elements.btnRetryRecord) {
+        elements.btnRetryRecord.onclick = () => {
+            if (elements.recordingContainer) elements.recordingContainer.classList.add('hidden');
+            if (elements.voiceIndicator) elements.voiceIndicator.classList.remove('hidden');
+            elements.gameStatus.textContent = '読み上げ直しています...';
+            currentState.isReading = false; // Force reset for retry
+            readSequence(currentState.originalSequence, currentState.originalWord);
+        };
+    }
+    if (elements.btnStartAfterLoad) {
+        elements.btnStartAfterLoad.onclick = () => {
+            showScreen('game');
+            startQuestion();
+        };
+    }
 
     // Global Listeners
     if (elements.checkSilent) {
@@ -494,9 +495,7 @@ async function getAudioBlob(word, type = 'orig') {
         return blob;
     } catch (e) {
         console.warn("Cloud TTS failed, falling back to local/other", e);
-        return null;
     }
-}
 
     // 3. 最終手段: ローカルアセット（以前の録音データ）
     const extensions = ['wav', 'mp3'];
@@ -1746,7 +1745,7 @@ function visualizeDevWaveform(stream) {
     draw();
 }
 
-window.onload = init;
+
 
 /**
  * Manage UI Phases and ensure timers are cleared
@@ -1816,6 +1815,37 @@ function setUIPhase(phase) {
             // All hidden
             break;
     }
+}
+
+/**
+ * 音声データの冒頭にある無音部分をカットする
+ */
+function trimAudioBuffer(audioBuffer) {
+    const threshold = 0.02; // 無音判定しきい値
+    const samples = audioBuffer.getChannelData(0);
+    let start = 0;
+    for (let i = 0; i < samples.length; i++) {
+        if (Math.abs(samples[i]) > threshold) {
+            start = i;
+            break;
+        }
+    }
+    if (start === 0) return audioBuffer;
+
+    const trimmedLength = audioBuffer.length - start;
+    const ctx = getPlaybackContext();
+    const trimmedBuffer = ctx.createBuffer(
+        audioBuffer.numberOfChannels,
+        trimmedLength,
+        audioBuffer.sampleRate
+    );
+
+    for (let channel = 0; channel < audioBuffer.numberOfChannels; channel++) {
+        const oldData = audioBuffer.getChannelData(channel);
+        const newData = trimmedBuffer.getChannelData(channel);
+        newData.set(oldData.subarray(start));
+    }
+    return trimmedBuffer;
 }
 
 // Start the application
