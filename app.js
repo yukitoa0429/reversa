@@ -1060,6 +1060,11 @@ function submitAnswer(rawAnswer) {
         elements.displayCorrectReverse.textContent = katakanaToHiragana(currentState.correctAnswer);
     }
 
+    // 正解の音声（単語全体）を再生
+    getAudioBlob(currentState.correctAnswer, 'rev').then(blob => {
+        if (blob) playBlob(blob);
+    });
+
     saveLog({ 
         level: currentState.currentLevel, 
         original: katakanaToHiragana(currentState.originalWord), 
