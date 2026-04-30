@@ -151,7 +151,7 @@ let currentState = {
     isBlind: true
 };
 
-let vapiInstance = null;
+
 
 // --- DOM Elements ---
 const screens = {
@@ -367,15 +367,10 @@ function showScreen(screenId) {
     });
     currentState.screen = screenId;
     
-    // ホーム画面に戻る時は背景を消し、VAPIを切断する
+    // ホーム画面に戻る時は背景のアニメーションを停止する
     if (screenId === 'home') {
         const dynamicBg = document.getElementById('dynamic-bg');
         if (dynamicBg) dynamicBg.classList.remove('active');
-        
-        if (vapiInstance) {
-            vapiInstance.stop();
-            vapiInstance = null;
-        }
     }
 }
 
@@ -416,31 +411,6 @@ async function startGame(theme) {
     currentState.logs = [];
     currentState.turnLogs = [];
 
-    // VAPIの初期化と開始
-    if (!vapiInstance && window.Vapi) {
-        try {
-            vapiInstance = new window.Vapi(CONFIG.VAPI_PUBLIC_KEY);
-            vapiInstance.start({
-                model: {
-                    provider: "openai",
-                    model: "gpt-4o-mini",
-                    messages: [
-                        {
-                            role: "system",
-                            content: "あなたは脳トレアプリReversaのトレーナーです。アプリが効果音で判定を行うので、あなたはシステムメッセージを受け取った時だけ「ナイス！」「おしい！」など一言だけで相槌を打ってください。ユーザーの声に直接返答したり、長い説明をしたりするのは絶対に禁止です。"
-                        }
-                    ]
-                },
-                voice: {
-                    provider: "openai",
-                    voiceId: "shimmer" // 優しい女性の声
-                }
-            });
-        } catch (e) {
-            console.error("VAPI initialization failed", e);
-        }
-    }
-
     // Decide questions for this turn
     currentState.allSequences = [];
     const pool = QUESTION_DATABASE[theme] || [];
@@ -449,6 +419,7 @@ async function startGame(theme) {
         showScreen('home');
         return;
     }
+
 
     for (let i = 0; i < QUESTIONS_PER_TURN; i++) {
         const q = getNextQuestion(theme);
@@ -818,7 +789,11 @@ async function startRecording() {
         
         let isSpeaking = false;
         let silenceStart = Date.now();
-        const SILENCE_THRESHOLD_MS = 1000; // 1.0秒間の無音で終了
+        let silenceThreshold = 1500; // 初級: 1.5s
+        if (currentState.currentLevel === 'intermediate') silenceThreshold = 2500; // 中級: 2.5s
+        else if (currentState.currentLevel === 'advanced') silenceThreshold = 3500; // 上級: 3.5s
+        
+        const SILENCE_THRESHOLD_MS = silenceThreshold;
         const VOLUME_THRESHOLD = 10; // 音量しきい値 (0-255)
         const NO_SPEECH_TIMEOUT_MS = 5000; // 5秒間一度も発声がない場合のタイムアウト
         
@@ -940,8 +915,8 @@ async function processAudio(audioBlob) {
         formData.append('model', 'whisper-1');
         formData.append('language', 'ja');
         
-        // STRICT PROMPT: Focus on word only, forbid extra comments
-        const hint = `余計な説明（「答えは」など）や句読点は削り、聞いた言葉「${currentState.correctAnswer}」のみをそのままひらがなで出力してください。`;
+        // KEYWORD BOOSTING: Whisperのpromptは「単語リスト」を渡すと認識率が劇的に上がります
+        const hint = `逆暗唱, ${currentState.correctAnswer}, ${currentState.originalWord}`;
         formData.append('prompt', hint);
         
         const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
@@ -1062,12 +1037,6 @@ function submitAnswer(rawAnswer) {
             void elements.feedbackBadge.offsetWidth; // Force reflow
             elements.feedbackBadge.classList.add('animate');
         }
-        if (vapiInstance) {
-            vapiInstance.send({
-                type: "add-message",
-                message: { role: "system", content: "ユーザーが正解しました！一言で褒めてください。" }
-            });
-        }
         if (elements.userAnswerContainer) {
             elements.userAnswerContainer.classList.add('hidden');
         }
@@ -1078,12 +1047,6 @@ function submitAnswer(rawAnswer) {
             elements.feedbackBadge.className = 'feedback-badge minimal-badge wrong-stamp';
             void elements.feedbackBadge.offsetWidth; // Force reflow
             elements.feedbackBadge.classList.add('animate');
-        }
-        if (vapiInstance) {
-            vapiInstance.send({
-                type: "add-message",
-                message: { role: "system", content: `ユーザーが不正解でした（正解は ${currentState.correctAnswer}）。一言で励ましてください。` }
-            });
         }
         if (elements.userAnswerContainer) {
             elements.userAnswerContainer.classList.remove('hidden');
