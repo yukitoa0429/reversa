@@ -114,7 +114,7 @@ h1 {
 /* Blackboard Card (Simplified from Glass) */
 .glass-card {
     background: transparent;
-    border: 2px dashed rgba(255, 255, 255, 0.4);
+    border: none;
     border-radius: 0;
     padding: 30px;
     box-shadow: none;
@@ -215,8 +215,24 @@ h1 {
     justify-content: space-between;
     font-size: 1.1rem;
     color: var(--chalk-yellow);
-    border-bottom: 1px dashed rgba(255,255,255,0.3);
+    border-bottom: none; /* Remove horizontal line */
     padding-bottom: 10px;
+}
+
+.status-bar span {
+    border: none !important; /* Remove any potential vertical lines */
+    position: relative;
+    flex: 1;
+    text-align: center;
+}
+
+.status-bar span:first-child { text-align: left; }
+.status-bar span:last-child { text-align: right; }
+
+/* Remove any pseudo-elements that might be causing vertical lines */
+.status-bar span::before,
+.status-bar span::after {
+    display: none !important;
 }
 
 /* Voice Indicator */
@@ -528,14 +544,33 @@ h1 {
 
 /* Flash Character */
 .flash-container {
-    background: rgba(0,0,0,0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    background: transparent;
 }
 
 .flash-character {
-    font-size: 15rem;
+    font-size: 8rem;
     color: var(--chalk-white);
     font-family: 'Kiwi Maru', serif;
     text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    animation: speakerVibrate 0.3s infinite ease-in-out;
+}
+
+@keyframes speakerVibrate {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.05) rotate(2deg); }
+    50% { transform: scale(1) rotate(0deg); }
+    75% { transform: scale(1.05) rotate(-2deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
 /* Developer Mode (Chalk Retro) */
