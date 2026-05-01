@@ -1,16 +1,24 @@
-// Reversa - Audio Engine (TTS, Database, Playback)
+// Reversa - オーディオエンジン
+// 音声合成（TTS）、データベース（IndexedDB）への保存、再生制御を担当します。
 
+/**
+ * Web Audio API のコンテキストを取得または作成します。
+ */
 function getPlaybackContext() {
     if (!GLOBAL_PLAYER.audioCtx) {
         GLOBAL_PLAYER.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
+    // ブラウザの制限を回避するため、必要に応じて再開
     if (GLOBAL_PLAYER.audioCtx.state === 'suspended') {
         GLOBAL_PLAYER.audioCtx.resume();
     }
     return GLOBAL_PLAYER.audioCtx;
 }
 
-// --- Sound Effects (SE) ---
+// --- 効果音 (SE) ---
+/**
+ * 指定されたタイプの効果音を生成・再生します。
+ */
 function playSE(type) {
     try {
         const ctx = getPlaybackContext();
@@ -142,7 +150,11 @@ function stopAllPlayback() {
     GLOBAL_PLAYER.activeSources = [];
 }
 
-// --- TTS ---
+// --- 音声合成 (TTS) ---
+/**
+ * 指定された単語の音声Blobを取得します。
+ * キャッシュがあればそれを返し、なければOpenAI APIで生成します。
+ */
 async function getAudioBlob(word, type = 'orig') {
     const prefix = (type === 'rev') ? 'v13_rev_' : `v13_${type}_`;
     const cacheKey = `${prefix}${word}`;
@@ -162,6 +174,7 @@ async function getAudioBlob(word, type = 'orig') {
         
         textToSpeak = hiraganaToKatakana(textToSpeak);
         
+        // OpenAI TTS API へのリクエスト
         const response = await fetch('https://api.openai.com/v1/audio/speech', {
             method: 'POST',
             headers: {
@@ -169,9 +182,9 @@ async function getAudioBlob(word, type = 'orig') {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'tts-1',
+                model: 'tts-1',    // 高速な音声合成モデル
                 input: textToSpeak,
-                voice: "onyx",
+                voice: "onyx",     // 自然な男性ボイスを採用
                 speed: currentSpeed
             })
         });

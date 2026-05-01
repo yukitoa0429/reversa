@@ -1,10 +1,17 @@
-// Reversa - Core Game Logic
+// Reversa - ゲームコアロジック
+// 音声認識、ゲームループ、VAD（発話検知）の制御を担当します。
 
+/**
+ * 問題データベースから次の問題を取得します。
+ * 直近に出題された問題と重複しないようにフィルタリングを行います。
+ */
 function getNextQuestion(theme) {
     const pool = QUESTION_DATABASE[theme] || [];
     if (pool.length > 0) {
+        // 最近出題された5問に含まれないものを抽出
         let availablePool = pool.filter(q => !currentState.recentQuestions.includes(q.word));
         if (availablePool.length === 0) {
+            // 全て出題済みの場合は履歴をリセット
             availablePool = pool;
             currentState.recentQuestions = [];
         }
@@ -17,16 +24,21 @@ function getNextQuestion(theme) {
     return null;
 }
 
+/**
+ * ゲームを開始し、初期状態をセットアップします。
+ */
 async function startGame(theme) {
     currentState.currentLevel = theme;
     currentState.currentQuestion = 0;
     currentState.score = 0;
     currentState.turnLogs = [];
     
+    // UIの設定状態（無音、ブラインド、自然な音声モード）を取得
     currentState.isSilent = elements.checkSilent ? elements.checkSilent.checked : false;
     currentState.isBlind = elements.checkBlind ? elements.checkBlind.checked : true;
     currentState.useNaturalVoice = elements.checkNatural ? elements.checkNatural.checked : true;
 
+    // 1ターンの全問題（通常5問）を事前に決定
     currentState.allSequences = [];
     for (let i = 0; i < QUESTIONS_PER_TURN; i++) {
         const q = getNextQuestion(theme);
@@ -34,9 +46,13 @@ async function startGame(theme) {
     }
 
     showScreen('loading');
+    // 快適なプレイのため、音声データを一括で事前生成・キャッシュ
     await preloadAudios(currentState.allSequences);
 }
 
+/**
+ * 決定された全問題の音声データを事前に取得・キャッシュします。
+ */
 async function preloadAudios(questions) {
     const total = questions.length;
     elements.loadingSpinner.classList.remove('hidden');
@@ -57,6 +73,9 @@ async function preloadAudios(questions) {
     elements.btnStartAfterLoad.classList.remove('hidden');
 }
 
+/**
+ * 各問題の開始処理を行います。
+ */
 function startQuestion() {
     currentState.currentQuestion++;
     elements.labelProgress.textContent = `${currentState.currentQuestion} / ${QUESTIONS_PER_TURN}`;
@@ -71,6 +90,7 @@ function startQuestion() {
     currentState.originalSequence = q.ruby;
     currentState.correctAnswer = q.reverse;
     
+    // 難易度に応じたダイナミック背景の適用
     const dynamicBg = document.getElementById('dynamic-bg');
     if (dynamicBg && q.bg && q.bg !== 'default') {
         dynamicBg.style.backgroundImage = `url('assets/images/${q.bg}')`;
@@ -82,9 +102,14 @@ function startQuestion() {
     setUIPhase('READING');
     elements.gameStatus.textContent = '準備中...';
     
+    // 画面が切り替わってから少し待ってから読み上げ開始
     setTimeout(() => readSequence(q.ruby), 1200);
 }
 
+/**
+ * 問題の読み上げシーケンスを制御します。
+ * 設定に応じて「自然な読み上げ」または「リズム読み上げ」に分岐します。
+ */
 async function readSequence(rubyArray, fullWord) {
     if (currentState.isReading) return;
     if (!fullWord && rubyArray === currentState.originalSequence) fullWord = currentState.originalWord;
@@ -95,8 +120,10 @@ async function readSequence(rubyArray, fullWord) {
     elements.gameStatus.textContent = currentState.isSilent ? '記憶してください...' : '準備中...';
 
     if (currentState.useNaturalVoice && !currentState.isSilent) {
+        // OpenAI TTSによる自然な発音モード
         await readSequenceNatural(fullWord);
     } else {
+        // 一音ずつリズムに合わせて発音するモード
         await readSequenceRhythm(rubyArray);
     }
     finishReading();
@@ -120,22 +147,36 @@ async function readSequenceNatural(word) {
     }
 }
 
+/**
+ * 一音ずつ一定の間隔（リズム）で読み上げます。
+ */
 async function readSequenceRhythm(rubyArray) {
     const sequence = Array.isArray(rubyArray) ? rubyArray : rubyArray.split('');
     const blobs = [];
+    // 事前に全パーツの音声Blobを取得
     for (let unit of sequence) blobs.push(await getAudioBlob(unit, 'parts'));
+    
     elements.gameStatus.textContent = '読み上げ中...';
     await sleep(800);
     playSE('start');
+    
     for (let i = 0; i < sequence.length; i++) {
         if (!currentState.isReading) break;
         const unit = sequence[i];
         const blob = blobs[i];
+        
+        // 文字の表示（ブラインドモードなら「?」を表示）
         elements.flashCharacter.textContent = currentState.isBlind ? '?' : unit;
+        
+        // CSSアニメーションのリセットと発火
         elements.flashCharacter.classList.remove('active');
-        void elements.flashCharacter.offsetWidth;
+        void elements.flashCharacter.offsetWidth; // リフロー発生
         elements.flashCharacter.classList.add('active');
+        
+        // 音声再生（無音モードでなければ）
         if (!currentState.isSilent && blob) playBlob(blob);
+        
+        // 設定されたリズム（BPM）に合わせて待機
         await sleep(RHYTHM_BEAT_MS); 
     }
 }
@@ -147,6 +188,9 @@ function finishReading() {
     startRecording();
 }
 
+/**
+ * ユーザーの音声を録音します。
+ */
 async function startRecording() {
     if (currentState.isRecording) return;
     if (currentState.countdownInterval) clearInterval(currentState.countdownInterval);
@@ -155,10 +199,13 @@ async function startRecording() {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         currentState.mediaRecorder = new MediaRecorder(stream);
         currentState.audioChunks = [];
+        
         currentState.mediaRecorder.ondataavailable = (e) => currentState.audioChunks.push(e.data);
         currentState.mediaRecorder.onstop = async () => {
             const audioBlob = new Blob(currentState.audioChunks, { type: 'audio/webm' });
+            
             if (currentState.cancelProcess) {
+                // 録音がスキップまたはエラーで中止された場合の処理
                 elements.recordingStatus.textContent = '音声が検知できませんでした。もう一度お願いします！';
                 elements.recordingStatus.classList.add('shake-text');
                 setTimeout(() => {
@@ -169,19 +216,26 @@ async function startRecording() {
                     readSequence(currentState.originalSequence);
                 }, 2000);
             } else {
+                // Whisper APIによる文字起こし処理へ
                 processAudio(audioBlob);
             }
+            
+            // ストリームの停止とVADリソースの解放
             stream.getTracks().forEach(track => track.stop());
             if (currentState.vadInterval) cancelAnimationFrame(currentState.vadInterval);
             if (currentState.vadContext) currentState.vadContext.close();
             elements.voiceIndicator.classList.remove('active');
         };
+
         currentState.mediaRecorder.start();
         currentState.isRecording = true;
         setUIPhase('RECORDING');
         elements.gameStatus.textContent = "";
         
+        // VAD（発話区間検出）を開始
         setupVAD(stream);
+        
+        // 最大録音時間での強制終了タイマー（安全策）
         currentState.recordingTimer = setTimeout(() => { if (currentState.isRecording) stopRecording(); }, MAX_RECORDING_TIME);
     } catch (err) {
         console.error('Microphone access denied:', err);
@@ -189,6 +243,10 @@ async function startRecording() {
     }
 }
 
+/**
+ * VAD（Voice Activity Detection：発話区間検出）をセットアップします。
+ * 無音状態が一定時間続くと自動で録音を停止します。
+ */
 function setupVAD(stream) {
     const audioCtx = getPlaybackContext();
     currentState.vadAnalyser = audioCtx.createAnalyser();
@@ -198,6 +256,7 @@ function setupVAD(stream) {
     currentState.vadDataArray = new Uint8Array(currentState.vadAnalyser.frequencyBinCount);
     currentState.vadTimeDataArray = new Uint8Array(currentState.vadAnalyser.fftSize);
     
+    // 波形表示用のキャンバスサイズ設定
     setTimeout(() => {
         elements.gameWaveformCanvas.width = elements.gameWaveformCanvas.offsetWidth || 280;
         elements.gameWaveformCanvas.height = elements.gameWaveformCanvas.offsetHeight || 80;
@@ -205,27 +264,35 @@ function setupVAD(stream) {
 
     let isSpeaking = false;
     let silenceStart = Date.now();
+    // 難易度（文字数）に応じて無音判定の閾値を動的に変更
     let silenceThreshold = (currentState.currentLevel === 'intermediate') ? 2500 : (currentState.currentLevel === 'advanced') ? 3500 : 1500;
     
     function detectSilence() {
         if (!currentState.isRecording) return;
+        
+        // リアルタイム波形描画
         drawGameWaveform();
+        
         currentState.vadAnalyser.getByteFrequencyData(currentState.vadDataArray);
         let average = currentState.vadDataArray.reduce((a,b)=>a+b, 0) / currentState.vadDataArray.length;
         let silenceDuration = Date.now() - silenceStart;
         
         if (average > 10) {
+            // 発話中
             isSpeaking = true;
             silenceStart = Date.now();
             elements.voiceIndicator.classList.add('active');
             elements.recordingCountdown.textContent = "録音中...";
         } else {
+            // 無音状態
             elements.voiceIndicator.classList.remove('active');
             if (isSpeaking) {
+                // 話し始めた後の無音判定（自動停止までのカウントダウン）
                 let timeLeft = Math.max(0, Math.ceil((silenceThreshold - silenceDuration) / 1000));
                 elements.recordingCountdown.textContent = timeLeft;
                 if (silenceDuration > silenceThreshold) { stopRecording(); return; }
             } else if (silenceDuration > 5000) {
+                // 5秒間全く声が検知されなければスキップとみなす
                 stopRecording(true);
                 return;
             }
@@ -270,19 +337,27 @@ function stopRecording(cancelProcess = false) {
     }
 }
 
+/**
+ * 録音された音声を OpenAI Whisper API で文字起こしし、結果を判定します。
+ */
 async function processAudio(audioBlob) {
     currentState.currentAudioBlob = audioBlob; 
+    
+    // 即座に再生できるよう、事前にデコードを試みる
     audioBlob.arrayBuffer().then(ab => getPlaybackContext().decodeAudioData(ab))
         .then(buffer => currentState.preparedAudioBuffer = trimAudioBuffer(buffer))
         .catch(err => console.warn("Pre-decoding failed:", err));
 
     elements.recordingStatus.textContent = '';
     elements.recordingStatus.classList.add('listening');
+    
     try {
         const formData = new FormData();
         formData.append('file', audioBlob, 'answer.wav');
         formData.append('model', 'whisper-1');
         formData.append('language', 'ja');
+        
+        // Whisperの精度を上げるためのヒント（プロンプト）を付与
         formData.append('prompt', `逆暗唱, ${currentState.correctAnswer}, ${currentState.originalWord}`);
         
         const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
@@ -294,12 +369,16 @@ async function processAudio(audioBlob) {
         if (!response.ok) throw new Error('Whisper API Error');
         const data = await response.json();
         const transcription = data.text.trim();
-        const cleanedAnswer = normalizeText(transcription);
+        
+        // モーラ数（音拍）の計算
         const correctMoraCount = getMoraCount(currentState.correctAnswer);
         const answerMoraCount = getMoraCount(transcription);
         
+        // ハルシネーション（APIが勝手に出力する不要な文言）や、明らかに文字数が違う場合の検知
         const isHallucination = ['視聴', 'チャンネル', '登録'].some(w => transcription.includes(w)) || answerMoraCount > 20;
+        
         if (answerMoraCount < 1 || isHallucination || Math.abs(correctMoraCount - answerMoraCount) >= 2) {
+            // 聞き取り失敗としてリトライを促す
             elements.recordingStatus.textContent = 'うまく聞き取れませんでした。もう一度お願いします！';
             elements.recordingStatus.classList.add('shake-text');
             setTimeout(() => {
@@ -310,6 +389,7 @@ async function processAudio(audioBlob) {
             }, 2000);
             return;
         }
+        // 正解判定へ
         submitAnswer(transcription);
     } catch (err) {
         console.error('Processing error:', err);
@@ -318,16 +398,22 @@ async function processAudio(audioBlob) {
     }
 }
 
+/**
+ * 回答を提出し、正解判定とフィードバックを表示します。
+ */
 function submitAnswer(rawAnswer) {
     setUIPhase('FEEDBACK');
+    // 自分の録音した声を再生（フィードバック用）
     if (currentState.preparedAudioBuffer) playBuffer(currentState.preparedAudioBuffer);
     else if (currentState.currentAudioBlob) playBlob(currentState.currentAudioBlob);
     
+    // 回答と正解を正規化（ひらがな化・記号除去等）して比較
     const cleanedAnswer = normalizeText(rawAnswer);
     const normalizedCorrect = normalizeText(currentState.correctAnswer);
     const isCorrect = (cleanedAnswer === normalizedCorrect) && (cleanedAnswer.length === normalizedCorrect.length);
 
     if (isCorrect) {
+        // 正解時の演出
         playSE('correct');
         currentState.score++;
         setTimeout(() => {
@@ -336,6 +422,7 @@ function submitAnswer(rawAnswer) {
         }, 150);
         elements.userAnswerContainer.classList.add('hidden');
     } else {
+        // 不正解時の演出
         playSE('wrong');
         setTimeout(() => {
             elements.feedbackBadge.textContent = '✕';
@@ -345,6 +432,7 @@ function submitAnswer(rawAnswer) {
         elements.displayUserAnswer.textContent = cleanedAnswer || '(無音・認識不能)';
     }
     
+    // 答えの表示（カタカナをひらがなに変換して読みやすく）
     setTimeout(() => elements.displayCorrectReverse.textContent = katakanaToHiragana(currentState.correctAnswer), 150);
     
     saveLog({ 

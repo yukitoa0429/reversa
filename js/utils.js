@@ -1,4 +1,5 @@
-// Reversa - Utility Functions
+// Reversa - ユーティリティ関数
+// 文字列変換、モーラ数計算、WAVエンコードなどの共通処理を行います。
 
 function katakanaToHiragana(src) {
     if (!src) return "";
@@ -24,26 +25,37 @@ function numberToPhonetic(src) {
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 /**
- * Clean up text for both display and comparison
+ * テキストを判定および表示用に正規化（お掃除）します。
  */
 function normalizeText(text) {
     if (!text) return "";
     let res = text.trim().toLowerCase();
     
+    // ① 文頭の不要な言葉を除去（Whisperが勝手に付ける場合があるため）
     res = res.replace(/^(答えは|回答は|単語は|いうのは|それは|正解は)[、。\s:：]*/g, "");
+    
+    // ② 文末の丁寧語を除去
     res = res.replace(/(です|でした|になります)[。\.!\?]*$/g, ""); 
+    
+    // ③ 各種記号を除去
     res = res.replace(/[「」『』（）\(\)\[\]"']/g, ""); 
     
+    // ④ 漢数字・全角数字を半角数字に統一
     const kanjiMap = { '〇': '0', '一': '1', '二': '2', '三': '3', '四': '4', '五': '5', '六': '6', '七': '7', '八': '8', '九': '9' };
     res = res.replace(/[〇一二三四五六七八九]/g, m => kanjiMap[m]);
     res = res.replace(/[０-９]/g, m => String.fromCharCode(m.charCodeAt(0) - 0xFEE0));
+    
+    // ⑤ 句読点、空白、記号を除去
     res = res.replace(/[、。！?？\s\-・,._]/g, "");
+    
+    // ⑥ 最終的に「ひらがな」と「数字」以外の文字（漢字など）を全て除去
     res = res.replace(/[^\u3041-\u30960-9]/g, ""); 
     return res;
 }
 
 /**
- * Count Moras accurately
+ * モーラ数（音の拍数）を正確に計算します。
+ * 拗音（ゃゅょ等）を1拍として数えるための処理を含みます。
  */
 function getMoraCount(text) {
     if (!text) return 0;
@@ -109,7 +121,7 @@ function writeString(view, offset, string) {
 }
 
 /**
- * Trim silence from the beginning of an AudioBuffer
+ * 音声データの冒頭の無音部分をカットします。
  */
 function trimAudioBuffer(audioBuffer) {
     const threshold = 0.02;
