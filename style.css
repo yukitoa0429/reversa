@@ -550,6 +550,7 @@ h1 {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column; /* Stack ? and Listen */
     justify-content: center;
     align-items: center;
     z-index: 100;
@@ -558,17 +559,28 @@ h1 {
 }
 
 .flash-character {
-    font-size: 8rem;
+    font-size: 12rem; /* Larger for ? */
     color: var(--chalk-white);
-    font-family: 'Kiwi Maru', serif;
-    text-shadow: 0 0 20px rgba(255,255,255,0.5);
-    animation: speakerVibrate 0.3s infinite ease-in-out;
+    font-family: 'Frederick the Great', 'Kiwi Maru', serif;
+    text-shadow: 0 0 20px rgba(255,255,255,0.4);
+    animation: questionPing 0.8s infinite cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: rotate(-5deg); /* Slight tilt for style */
 }
 
-@keyframes speakerVibrate {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
+.flash-label {
+    font-size: 2.5rem;
+    color: var(--chalk-white);
+    font-family: 'Kiwi Maru', serif;
+    margin-top: 10px;
+    opacity: 0.8;
+    letter-spacing: 2px;
+}
+
+@keyframes questionPing {
+    0% { transform: scale(1) rotate(-5deg); filter: brightness(1); }
+    10% { transform: scale(1.3) rotate(-5deg); filter: brightness(1.5); }
+    20% { transform: scale(1) rotate(-5deg); filter: brightness(1); }
+    100% { transform: scale(1) rotate(-5deg); filter: brightness(1); }
 }
 
 /* Developer Mode (Chalk Retro) */

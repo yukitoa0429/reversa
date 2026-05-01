@@ -607,7 +607,7 @@ async function readSequenceNatural(word) {
         playSE('start');
         await sleep(500);
 
-        elements.flashCharacter.textContent = currentState.isBlind ? '🔊' : word;
+        elements.flashCharacter.textContent = currentState.isBlind ? '?' : word;
         elements.flashCharacter.classList.add('active');
 
         if (blob) {
@@ -637,7 +637,7 @@ async function readSequenceRhythm(rubyArray) {
             if (!currentState.isReading) break;
             const unit = sequence[i];
             const blob = blobs[i];
-            elements.flashCharacter.textContent = currentState.isBlind ? '🔊' : unit;
+            elements.flashCharacter.textContent = currentState.isBlind ? '?' : unit;
             elements.flashCharacter.classList.remove('active');
             void elements.flashCharacter.offsetWidth;
             elements.flashCharacter.classList.add('active');
