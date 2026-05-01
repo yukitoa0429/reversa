@@ -1,0 +1,94 @@
+:root {
+    --chalk-white: #ffffff;
+    --chalk-yellow: #ffffd4;
+    --chalk-green: #d4ffd4;
+    --chalk-pink: #ffadad;
+    --chalk-blue: #ade8ff;
+    --blackboard-border: #ffffff;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.85);
+    --success-color: var(--chalk-green);
+    --error-color: var(--chalk-pink);
+    --board-width: 960px; /* Base width for landscape */
+    --board-height: 540px; /* 16:9 ratio */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Kiwi Maru', 'Noto Sans JP', serif;
+    background: #1a1a1a;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Lock viewport */
+}
+
+/* Utilities */
+.hidden { display: none !important; }
+.text-success { color: var(--chalk-green); }
+.text-error { color: var(--chalk-pink); }
+.text-wrong-label { color: var(--chalk-pink); }
+.text-wrong { color: var(--chalk-pink); }
+.strikethrough {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+.large-text { font-size: 2.2rem; font-weight: 500; }
+.medium-text { font-size: 1.4rem; }
+
+/* Animations */
+@keyframes wipeIn {
+    from { opacity: 0; filter: blur(5px); }
+    to { opacity: 1; filter: blur(0); }
+}
+
+@keyframes wave-chalk {
+    0%, 100% { transform: scaleY(1); opacity: 0.6; }
+    50% { transform: scaleY(10); opacity: 1; background: var(--chalk-yellow); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .7; transform: scale(1.1); }
+}
+
+@keyframes pulse-red {
+    0%, 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 77, 77, 0.5)); }
+    50% { opacity: .7; transform: scale(1.2); filter: drop-shadow(0 0 15px rgba(255, 77, 77, 0.8)); }
+}
+
+@keyframes listening-pulse {
+    0%, 100% { opacity: 0.7; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1.02); }
+}
+
+@keyframes pulse-ring {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { opacity: 0.3; }
+    100% { transform: scale(2); opacity: 0; }
+}
+
+@keyframes mic-float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.1); }
+}
+
+@keyframes shake-head {
+    0% { transform: translateX(0); opacity: 0; }
+    20% { transform: translateX(-20px); opacity: 1; }
+    40% { transform: translateX(20px); opacity: 1; }
+    60% { transform: translateX(-10px); opacity: 1; }
+    80% { transform: translateX(10px); opacity: 1; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

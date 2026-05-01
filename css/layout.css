@@ -1,0 +1,83 @@
+/* Blackboard Base */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url('../assets/blackboard_bg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.background::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+}
+
+/* Landscape Screen Container */
+.container {
+    width: 95vw;
+    height: 95vh;
+    max-width: var(--board-width);
+    max-height: var(--board-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border: 6px double rgba(255, 255, 255, 0.8); /* Chalk Double Line */
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.2);
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    box-sizing: border-box;
+    animation: wipeIn 0.6s ease-out forwards;
+    position: relative;
+}
+
+.screen.active {
+    display: flex;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 500;
+    color: var(--chalk-white);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 4px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--chalk-yellow);
+    margin-top: 10px;
+}
+
+/* Responsive adjustments for 16:9 Screen */
+@media (max-aspect-ratio: 1/1) {
+    .container {
+        width: 95vw;
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+    h1 { font-size: 2.5rem; }
+}

@@ -1,0 +1,57 @@
+.home-instruction {
+    font-size: 1.1rem !important;
+    font-weight: 400 !important;
+    color: var(--text-primary);
+}
+
+.home-instruction small {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Level Grid */
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.level-button {
+    background: transparent;
+    border: 2px solid var(--chalk-white);
+    border-radius: 4px;
+    padding: 24px;
+    color: var(--chalk-white);
+    font-size: 1.5rem;
+    font-family: 'Kiwi Maru', serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+.level-button::before {
+    content: '';
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    border: 1px solid rgba(255,255,255,0.1);
+    pointer-events: none;
+}
+
+.level-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+    color: var(--chalk-yellow);
+    border-color: var(--chalk-yellow);
+}
+
+.level-button.active {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--chalk-yellow);
+    color: var(--chalk-yellow);
+}

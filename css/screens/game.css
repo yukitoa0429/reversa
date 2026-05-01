@@ -1,0 +1,267 @@
+.game-card {
+    min-height: 380px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Game Status */
+.status-bar {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    color: var(--chalk-yellow);
+    padding-bottom: 10px;
+}
+
+.status-bar span {
+    flex: 1;
+    text-align: center;
+}
+
+.status-bar span:first-child { text-align: left; }
+.status-bar span:last-child { text-align: right; }
+
+/* Voice Indicator */
+.voice-indicator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+}
+
+.wave {
+    display: inline-block;
+    width: 80px;
+    height: 4px;
+    background: var(--chalk-white);
+    margin: 0 4px;
+    border-radius: 2px;
+    opacity: 0.8;
+}
+
+.voice-indicator.active .wave {
+    animation: wave-chalk 1.2s infinite ease-in-out;
+}
+
+/* Recognition container */
+.recognition-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    z-index: 5;
+    box-sizing: border-box;
+}
+
+.mic-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.stop-button {
+    border-color: var(--chalk-pink);
+    color: var(--chalk-pink);
+}
+
+.stop-button:hover {
+    background: rgba(255, 173, 173, 0.1);
+    color: #ffcccc;
+    border-color: #ffcccc;
+}
+
+.interim-result {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--chalk-yellow);
+    min-height: 1.5em;
+    margin-bottom: 20px;
+}
+
+.recording-visualizer {
+    position: relative;
+    width: 280px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.game-waveform {
+    position: absolute;
+    width: 100%;
+    height: 140px;
+    z-index: 0;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: var(--chalk-pink);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.recording-container.active .pulse-ring {
+    animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.recording-timer-group {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.recording-timer-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.recording-timer-bar-bg {
+    width: 240px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.recording-timer-bar-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #ff4d4d, #f43f5e);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 20s linear;
+}
+
+.recording-container.active .recording-timer-bar-bg::after {
+    transform: scaleX(1);
+}
+
+/* Feedback Panel */
+.feedback-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    height: 100%;
+}
+
+.feedback-badge {
+    font-size: 4rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.hanko-stamp {
+    color: var(--chalk-green);
+    border: 4px double var(--chalk-green);
+    padding: 10px 40px;
+    transform: rotate(-5deg);
+    font-size: 3.5rem;
+}
+
+.wrong-stamp {
+    color: var(--chalk-pink);
+    font-size: 5rem;
+}
+
+/* Flash Character Overlay */
+.flash-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    background: transparent;
+}
+
+.flash-character {
+    font-size: 12rem;
+    color: var(--chalk-white);
+    font-family: 'Frederick the Great', 'Kiwi Maru', serif;
+    text-shadow: 0 0 20px rgba(255,255,255,0.4);
+    animation: questionPing 0.8s infinite cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: rotate(-5deg);
+}
+
+.flash-label {
+    font-size: 2.5rem;
+    color: var(--chalk-white);
+    font-family: 'Kiwi Maru', serif;
+    margin-top: 10px;
+    opacity: 0.8;
+    letter-spacing: 2px;
+}
+
+@keyframes questionPing {
+    0% { transform: scale(1) rotate(-5deg); filter: brightness(1); }
+    10% { transform: scale(1.3) rotate(-5deg); filter: brightness(1.5); }
+    20% { transform: scale(1) rotate(-5deg); filter: brightness(1); }
+    100% { transform: scale(1) rotate(-5deg); filter: brightness(1); }
+}
+
+/* Developer Mode */
+.dev-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 30px;
+    height: 100%;
+}
+
+.dev-sidebar {
+    border: 2px solid var(--chalk-white);
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.mora-item {
+    padding: 8px;
+    border-bottom: 1px dashed rgba(255,255,255,0.3);
+    cursor: pointer;
+}
+
+.mora-item.active {
+    color: var(--chalk-yellow);
+    background: rgba(255,255,255,0.1);
+}
