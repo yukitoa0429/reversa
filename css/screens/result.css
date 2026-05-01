@@ -1,5 +1,11 @@
 .result-card {
-    padding: 10px 20px !important;
+    padding: 5px 15px !important;
+}
+
+.result-card h2 {
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 5px;
 }
 
 .result-actions {
@@ -10,9 +16,9 @@
 
 /* Accuracy Chart (Chalk Style) */
 .accuracy-display {
-    width: 140px;
-    height: 140px;
-    margin: 10px auto;
+    width: 100px;
+    height: 100px;
+    margin: 5px auto;
 }
 
 .circle-bg {
@@ -45,10 +51,10 @@
 
 /* === Result History List === */
 .history-list {
-    margin: 10px 0;
-    max-height: 180px;
+    margin: 5px 0;
+    max-height: 140px;
     overflow-y: auto;
-    padding: 8px;
+    padding: 5px;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
