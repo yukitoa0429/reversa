@@ -5,160 +5,1567 @@
  * 上級：7〜10文字
  */
 const QUESTION_DATABASE = {
-    beginner: [
-        {"word": "きつね", "ruby": ["き", "つ", "ね"], "reverse": "ねつき", "bg": "bg_beginner_1.png"},
-        {"word": "さくら", "ruby": ["さ", "く", "ら"], "reverse": "らくさ", "bg": "bg_beginner_1.png"},
-        {"word": "りんご", "ruby": ["り", "ん", "ご"], "reverse": "ごんり", "bg": "bg_beginner_1.png"},
-        {"word": "みかん", "ruby": ["み", "か", "ん"], "reverse": "んかみ", "bg": "bg_beginner_1.png"},
-        {"word": "くるま", "ruby": ["く", "る", "ま"], "reverse": "まるく", "bg": "bg_beginner_1.png"},
-        {"word": "めがね", "ruby": ["め", "が", "ね"], "reverse": "ねがめ", "bg": "bg_beginner_1.png"},
-        {"word": "からす", "ruby": ["か", "ら", "す"], "reverse": "すらか", "bg": "bg_beginner_1.png"},
-        {"word": "すずめ", "ruby": ["す", "ず", "め"], "reverse": "めずす", "bg": "bg_beginner_1.png"},
-        {"word": "うさぎ", "ruby": ["う", "さ", "ぎ"], "reverse": "ぎさう", "bg": "bg_beginner_1.png"},
-        {"word": "くじら", "ruby": ["く", "じ", "ら"], "reverse": "らじく", "bg": "bg_beginner_1.png"},
-        {"word": "ひよこ", "ruby": ["ひ", "よ", "こ"], "reverse": "こよひ", "bg": "bg_beginner_1.png"},
-        {"word": "かえる", "ruby": ["か", "え", "る"], "reverse": "るえか", "bg": "bg_beginner_1.png"},
-        {"word": "めだか", "ruby": ["め", "だ", "か"], "reverse": "かだめ", "bg": "bg_beginner_1.png"},
-        {"word": "さかな", "ruby": ["さ", "か", "な"], "reverse": "なかさ", "bg": "bg_beginner_1.png"},
-        {"word": "ごはん", "ruby": ["ご", "は", "ん"], "reverse": "んはご", "bg": "bg_beginner_1.png"},
-        {"word": "たまご", "ruby": ["た", "ま", "ご"], "reverse": "ごまた", "bg": "bg_beginner_1.png"},
-        {"word": "うどん", "ruby": ["う", "ど", "ん"], "reverse": "んどう", "bg": "bg_beginner_1.png"},
-        {"word": "ぽてと", "ruby": ["ぽ", "て", "と"], "reverse": "とてぽ", "bg": "bg_beginner_1.png"},
-        {"word": "つくえ", "ruby": ["つ", "く", "え"], "reverse": "えくつ", "bg": "bg_beginner_1.png"},
-        {"word": "かばん", "ruby": ["か", "ば", "ん"], "reverse": "んばか", "bg": "bg_beginner_1.png"},
-        {"word": "さいふ", "ruby": ["さ", "い", "ふ"], "reverse": "ふいさ", "bg": "bg_beginner_1.png"},
-        {"word": "いちご", "ruby": ["い", "ち", "ご"], "reverse": "ごちい", "bg": "bg_beginner_1.png"},
-        {"word": "すいか", "ruby": ["す", "い", "か"], "reverse": "かいす", "bg": "bg_beginner_1.png"},
-        {"word": "ばなな", "ruby": ["ば", "な", "な"], "reverse": "ななば", "bg": "bg_beginner_1.png"},
-        {"word": "めろん", "ruby": ["め", "ろ", "ん"], "reverse": "んろめ", "bg": "bg_beginner_1.png"},
-        {"word": "ぶどう", "ruby": ["ぶ", "ど", "う"], "reverse": "うどぶ", "bg": "bg_beginner_1.png"},
-        {"word": "れたす", "ruby": ["れ", "た", "す"], "reverse": "すたれ", "bg": "bg_beginner_1.png"},
-        {"word": "とまと", "ruby": ["と", "ま", "と"], "reverse": "とまと", "bg": "bg_beginner_1.png"},
-        {"word": "なすび", "ruby": ["な", "す", "び"], "reverse": "びすな", "bg": "bg_beginner_1.png"},
-        {"word": "きのこ", "ruby": ["き", "の", "こ"], "reverse": "このき", "bg": "bg_beginner_1.png"},
-        {"word": "たけのこ", "ruby": ["た", "け", "の", "こ"], "reverse": "このけた", "bg": "bg_beginner_1.png"},
-        {"word": "はさみ", "ruby": ["は", "さ", "み"], "reverse": "みさは", "bg": "bg_beginner_1.png"},
-        {"word": "とけい", "ruby": ["と", "け", "い"], "reverse": "いけと", "bg": "bg_beginner_1.png"},
-        {"word": "てれび", "ruby": ["て", "れ", "び"], "reverse": "びれて", "bg": "bg_beginner_1.png"},
-        {"word": "らじお", "ruby": ["ら", "じ", "お"], "reverse": "おじら", "bg": "bg_beginner_1.png"},
-        {"word": "ばいく", "ruby": ["ば", "い", "く"], "reverse": "くいば", "bg": "bg_beginner_1.png"},
-        {"word": "ふねだ", "ruby": ["ふ", "ね", "だ"], "reverse": "だねふ", "bg": "bg_beginner_1.png"},
-        {"word": "そらだ", "ruby": ["そ", "ら", "だ"], "reverse": "だらそ", "bg": "bg_beginner_1.png"},
-        {"word": "うみだ", "ruby": ["う", "み", "だ"], "reverse": "だみう", "bg": "bg_beginner_1.png"},
-        {"word": "やまだ", "ruby": ["や", "ま", "だ"], "reverse": "だまや", "bg": "bg_beginner_1.png"},
-        {"word": "かわだ", "ruby": ["か", "わ", "だ"], "reverse": "だわか", "bg": "bg_beginner_1.png"},
-        {"word": "はなだ", "ruby": ["は", "な", "だ"], "reverse": "だなは", "bg": "bg_beginner_1.png"},
-        {"word": "もりだ", "ruby": ["も", "り", "だ"], "reverse": "だりも", "bg": "bg_beginner_1.png"},
-        {"word": "こめだ", "ruby": ["こ", "め", "だ"], "reverse": "だめこ", "bg": "bg_beginner_1.png"},
-        {"word": "かめだ", "ruby": ["か", "め", "だ"], "reverse": "だめか", "bg": "bg_beginner_1.png"},
-        {"word": "ありだ", "ruby": ["あ", "り", "だ"], "reverse": "だりあ", "bg": "bg_beginner_1.png"},
-        {"word": "むしだ", "ruby": ["む", "し", "だ"], "reverse": "だしむ", "bg": "bg_beginner_1.png"},
-        {"word": "くまき", "ruby": ["く", "ま", "き"], "reverse": "きまく", "bg": "bg_beginner_1.png"},
-        {"word": "しかき", "ruby": ["し", "か", "き"], "reverse": "きかし", "bg": "bg_beginner_1.png"},
-        {"word": "とりき", "ruby": ["と", "り", "き"], "reverse": "きりと", "bg": "bg_beginner_1.png"}
-    ],
-    intermediate: [
-        {"word": "かたつむり", "ruby": ["か", "た", "つ", "む", "り"], "reverse": "りむつたか", "bg": "bg_beginner_1.png"},
-        {"word": "ひまわり", "ruby": ["ひ", "ま", "わ", "り"], "reverse": "りわまひ", "bg": "bg_beginner_1.png"},
-        {"word": "たんぽぽ", "ruby": ["た", "ん", "ぽ", "ぽ"], "reverse": "ぽぽんた", "bg": "bg_beginner_1.png"},
-        {"word": "あさがお", "ruby": ["あ", "さ", "が", "お"], "reverse": "おがさあ", "bg": "bg_beginner_1.png"},
-        {"word": "おにぎり", "ruby": ["お", "に", "ぎ", "り"], "reverse": "りぎにお", "bg": "bg_beginner_1.png"},
-        {"word": "おべんとう", "ruby": ["お", "べ", "ん", "と", "う"], "reverse": "うとんべお", "bg": "bg_beginner_1.png"},
-        {"word": "せんたくき", "ruby": ["せ", "ん", "た", "く", "き"], "reverse": "きくたんせ", "bg": "bg_beginner_1.png"},
-        {"word": "れいぞうこ", "ruby": ["れ", "い", "ぞ", "う", "こ"], "reverse": "こうぞいれ", "bg": "bg_beginner_1.png"},
-        {"word": "どうぶつえん", "ruby": ["ど", "う", "ぶ", "つ", "え", "ん"], "reverse": "んえつぶうど", "bg": "bg_beginner_1.png"},
-        {"word": "しんかんせん", "ruby": ["し", "ん", "か", "ん", "せ", "ん"], "reverse": "んせんかんし", "bg": "bg_beginner_1.png"},
-        {"word": "ひこうき", "ruby": ["ひ", "こ", "う", "き"], "reverse": "きうこひ", "bg": "bg_beginner_1.png"},
-        {"word": "じどうしゃ", "ruby": ["じ", "ど", "う", "しゃ"], "reverse": "しゃうどじ", "bg": "bg_beginner_1.png"},
-        {"word": "おーとばい", "ruby": ["お", "ー", "と", "ば", "い"], "reverse": "いばとーお", "bg": "bg_beginner_1.png"},
-        {"word": "としょかん", "ruby": ["と", "しょ", "か", "ん"], "reverse": "んかしょと", "bg": "bg_beginner_1.png"},
-        {"word": "びょういん", "ruby": ["びょ", "う", "い", "ん"], "reverse": "んいうびょ", "bg": "bg_beginner_1.png"},
-        {"word": "がっこう", "ruby": ["が", "っ", "こ", "う"], "reverse": "うこっが", "bg": "bg_beginner_1.png"},
-        {"word": "こうえん", "ruby": ["こ", "う", "え", "ん"], "reverse": "んえうこ", "bg": "bg_beginner_1.png"},
-        {"word": "すべりだい", "ruby": ["す", "べ", "り", "だ", "い"], "reverse": "いだりべす", "bg": "bg_beginner_1.png"},
-        {"word": "ぶらんこ", "ruby": ["ぶ", "ら", "ん", "こ"], "reverse": "こんらぶ", "bg": "bg_beginner_1.png"},
-        {"word": "すいぞくかん", "ruby": ["す", "い", "ぞ", "く", "か", "ん"], "reverse": "んかくぞいす", "bg": "bg_beginner_1.png"},
-        {"word": "はくぶつかん", "ruby": ["は", "く", "ぶ", "つ", "か", "ん"], "reverse": "んかつぶくは", "bg": "bg_beginner_1.png"},
-        {"word": "びじゅつかん", "ruby": ["び", "じゅ", "つ", "か", "ん"], "reverse": "んかつじゅび", "bg": "bg_beginner_1.png"},
-        {"word": "たいよう", "ruby": ["た", "い", "よ", "う"], "reverse": "うよいた", "bg": "bg_beginner_1.png"},
-        {"word": "おつきさま", "ruby": ["お", "つ", "き", "さ", "ま"], "reverse": "まさきつお", "bg": "bg_beginner_1.png"},
-        {"word": "おほしさま", "ruby": ["お", "ほ", "し", "さま"], "reverse": "まさしほお", "bg": "bg_beginner_1.png"},
-        {"word": "あまのがわ", "ruby": ["あ", "ま", "の", "が", "わ"], "reverse": "わがのまあ", "bg": "bg_beginner_1.png"},
-        {"word": "なつやすみ", "ruby": ["な", "つ", "や", "す", "み"], "reverse": "みすやつな", "bg": "bg_beginner_1.png"},
-        {"word": "ふゆやすみ", "ruby": ["ふ", "ゆ", "や", "す", "み"], "reverse": "みすゆゆふ", "bg": "bg_beginner_1.png"},
-        {"word": "あめふり", "ruby": ["あ", "め", "ふ", "り"], "reverse": "りふめあ", "bg": "bg_beginner_1.png"},
-        {"word": "ゆきだるま", "ruby": ["ゆ", "き", "だ", "る", "ま"], "reverse": "まるだきゆ", "bg": "bg_beginner_1.png"},
-        {"word": "かみなり", "ruby": ["か", "み", "な", "り"], "reverse": "りなみか", "bg": "bg_beginner_1.png"},
-        {"word": "かぼちゃ", "ruby": ["か", "ぼ", "ちゃ"], "reverse": "ちゃぼか", "bg": "bg_beginner_1.png"},
-        {"word": "きゅうり", "ruby": ["きゅ", "う", "り"], "reverse": "りうきゅ", "bg": "bg_beginner_1.png"},
-        {"word": "にんじん", "ruby": ["に", "ん", "じ", "ん"], "reverse": "んじんに", "bg": "bg_beginner_1.png"},
-        {"word": "ぴーまん", "ruby": ["ぴ", "ー", "ま", "ん"], "reverse": "んまーぴ", "bg": "bg_beginner_1.png"},
-        {"word": "とうもろこし", "ruby": ["と", "う", "も", "ろ", "こ", "し"], "reverse": "しころもうと", "bg": "bg_beginner_1.png"},
-        {"word": "じゃがいも", "ruby": ["じゃ", "が", "い", "も"], "reverse": "もいじゃが", "bg": "bg_beginner_1.png"},
-        {"word": "さつまいも", "ruby": ["さ", "つ", "ま", "い", "も"], "reverse": "もいまつさ", "bg": "bg_beginner_1.png"},
-        {"word": "ほうれんそう", "ruby": ["ほ", "う", "れ", "ん", "そ", "う"], "reverse": "うそんれうほ", "bg": "bg_beginner_1.png"},
-        {"word": "たけのこ", "ruby": ["た", "け", "の", "こ"], "reverse": "このけた", "bg": "bg_beginner_1.png"},
-        {"word": "まつたけ", "ruby": ["ま", "つ", "た", "け"], "reverse": "けたつま", "bg": "bg_beginner_1.png"},
-        {"word": "しいたけ", "ruby": ["し", "い", "た", "け"], "reverse": "けたいし", "bg": "bg_beginner_1.png"},
-        {"word": "えのきだけ", "ruby": ["え", "の", "き", "だ", "け"], "reverse": "けだきおえ", "bg": "bg_beginner_1.png"},
-        {"word": "ぶろっこりー", "ruby": ["ぶ", "ろ", "っ", "こ", "り", "ー"], "reverse": "ーりっころぶ", "bg": "bg_beginner_1.png"},
-        {"word": "きゃべつ", "ruby": ["きゃ", "べ", "つ"], "reverse": "つべきゃ", "bg": "bg_beginner_1.png"},
-        {"word": "はくさい", "ruby": ["は", "く", "さ", "い"], "reverse": "いさくは", "bg": "bg_beginner_1.png"},
-        {"word": "こまつな", "ruby": ["こ", "ま", "つ", "な"], "reverse": "なつまこ", "bg": "bg_beginner_1.png"},
-        {"word": "ちんげんさい", "ruby": ["ち", "ん", "げ", "ん", "さ", "い"], "reverse": "いさんげんち", "bg": "bg_beginner_1.png"},
-        {"word": "れたす", "ruby": ["れ", "た", "す"], "reverse": "すたれ", "bg": "bg_beginner_1.png"},
-        {"word": "とまと", "ruby": ["と", "ま", "と"], "reverse": "とまと", "bg": "bg_beginner_1.png"}
-    ],
-    advanced: [
-        {"word": "じどうはんばいき", "ruby": ["じ", "ど", "う", "は", "ん", "ば", "い", "き"], "reverse": "きいばんはどうじ", "bg": "bg_beginner_1.png"},
-        {"word": "しょうぼうじどうしゃ", "ruby": ["しょ", "う", "ぼ", "う", "じ", "ど", "う", "しゃ"], "reverse": "しゃうどうじぼうしょ", "bg": "bg_beginner_1.png"},
-        {"word": "きゅうきゅうしゃがくる", "ruby": ["きゅ", "う", "きゅ", "う", "しゃ", "が", "く", "る"], "reverse": "るくがしゃうきゅうきゅ", "bg": "bg_beginner_1.png"},
-        {"word": "しんぶんをよむ", "ruby": ["し", "ん", "ぶ", "ん", "を", "よ", "む"], "reverse": "むよをんぶんし", "bg": "bg_beginner_1.png"},
-        {"word": "ごはんをたべる", "ruby": ["ご", "は", "ん", "を", "た", "べ", "る"], "reverse": "るべたをんはご", "bg": "bg_beginner_1.png"},
-        {"word": "おふろにはいる", "ruby": ["お", "ふ", "ろ", "に", "は", "い", "る"], "reverse": "るいはにろふお", "bg": "bg_beginner_1.png"},
-        {"word": "あしたさんぽにいく", "ruby": ["あ", "し", "た", "さ", "ん", "ぽ", "に", "い", "く"], "reverse": "くにぽんさたしあ", "bg": "bg_beginner_1.png"},
-        {"word": "ほんをたくさんよむ", "ruby": ["ほ", "ん", "を", "た", "く", "さ", "ん", "よ", "む"], "reverse": "むよんさくたをんほ", "bg": "bg_beginner_1.png"},
-        {"word": "てにすをしましょう", "ruby": ["て", "に", "す", "を", "し", "ま", "しょ", "う"], "reverse": "うしょましをすにて", "bg": "bg_beginner_1.png"},
-        {"word": "やきゅうをみにいく", "ruby": ["や", "きゅ", "う", "を", "み", "に", "い", "く"], "reverse": "くにみをうきゅうや", "bg": "bg_beginner_1.png"},
-        {"word": "うみをながめる", "ruby": ["う", "み", "を", "な", "が", "め", "る"], "reverse": "るめがなをみう", "bg": "bg_beginner_1.png"},
-        {"word": "たかいやまをのぼる", "ruby": ["た", "か", "い", "や", "ま", "を", "の", "ぼ", "る"], "reverse": "るぼのをまやいかた", "bg": "bg_beginner_1.png"},
-        {"word": "おんがくをきく", "ruby": ["お", "ん", "が", "く", "を", "き", "く"], "reverse": "くきをくがんお", "bg": "bg_beginner_1.png"},
-        {"word": "ぴあのをたのしくひく", "ruby": ["ぴ", "あ", "の", "を", "た", "の", "し", "く", "ひ", "く"], "reverse": "くひくしのたをのあぴ", "bg": "bg_beginner_1.png"},
-        {"word": "ほっかいどうにいく", "ruby": ["ほ", "っ", "か", "い", "ど", "う", "に", "い", "く"], "reverse": "くにうどいかっほ", "bg": "bg_beginner_1.png"},
-        {"word": "せんたくをする", "ruby": ["せ", "ん", "た", "く", "を", "す", "る"], "reverse": "るすをくたんせ", "bg": "bg_beginner_1.png"},
-        {"word": "へやのそうじをする", "ruby": ["へ", "や", "の", "そ", "う", "じ", "を", "す", "る"], "reverse": "るすをじうそのやへ", "bg": "bg_beginner_1.png"},
-        {"word": "かいものにいく", "ruby": ["か", "い", "も", "の", "に", "い", "く"], "reverse": "くににもいか", "bg": "bg_beginner_1.png"},
-        {"word": "りょうりをつくる", "ruby": ["りょ", "う", "り", "を", "つ", "く", "る"], "reverse": "るくつをりりょう", "bg": "bg_beginner_1.png"},
-        {"word": "おかあさんにかけ", "ruby": ["お", "か", "あ", "さ", "ん", "に", "か", "け"], "reverse": "けかにんさあかお", "bg": "bg_beginner_1.png"},
-        {"word": "でんわをかける", "ruby": ["で", "ん", "わ", "を", "か", "け", "る"], "reverse": "るけかをわんで", "bg": "bg_beginner_1.png"},
-        {"word": "てれびをじっとみる", "ruby": ["て", "れ", "び", "を", "じ", "っ", "と", "み", "る"], "reverse": "るみとっじをびれて", "bg": "bg_beginner_1.png"},
-        {"word": "ぱそこんをうつ", "ruby": ["ぱ", "そ", "こ", "ん", "を", "う", "つ"], "reverse": "つうをんこそぱ", "bg": "bg_beginner_1.png"},
-        {"word": "いっしょうけんめい", "ruby": ["い", "っ", "しょ", "う", "け", "ん", "め", "い"], "reverse": "いめんけうしょっい", "bg": "bg_beginner_1.png"},
-        {"word": "まいにちべんきょう", "ruby": ["ま", "い", "に", "ち", "べ", "ん", "きょ", "う"], "reverse": "うきょんべちにいま", "bg": "bg_beginner_1.png"},
-        {"word": "しゅくだいをする", "ruby": ["しゅ", "く", "だ", "い", "を", "す", "る"], "reverse": "るすをいだくしゅ", "bg": "bg_beginner_1.png"},
-        {"word": "しけんをうける", "ruby": ["し", "け", "ん", "を", "う", "け", "る"], "reverse": "るけうをんけし", "bg": "bg_beginner_1.png"},
-        {"word": "うんどうをする", "ruby": ["う", "ん", "ど", "う", "を", "す", "る"], "reverse": "るすをうどんう", "bg": "bg_beginner_1.png"},
-        {"word": "あさのさんぽをする", "ruby": ["あ", "さ", "の", "さ", "ん", "ぽ", "を", "す", "る"], "reverse": "るすをぽんさのさあ", "bg": "bg_beginner_1.png"},
-        {"word": "こうえんであそぶ", "ruby": ["こ", "う", "え", "ん", "で", "あ", "そ", "ぶ"], "reverse": "ぶそあでんうえこ", "bg": "bg_beginner_1.png"},
-        {"word": "おかしをたべる", "ruby": ["お", "か", "し", "を", "た", "べ", "る"], "reverse": "るべたをしかお", "bg": "bg_beginner_1.png"},
-        {"word": "おちゃをのむ", "ruby": ["お", "ちゃ", "を", "の", "む"], "reverse": "むのをちゃお", "bg": "bg_beginner_1.png"},
-        {"word": "あしたははれだ", "ruby": ["あ", "し", "た", "は", "は", "れ", "だ"], "reverse": "だれははたしあ", "bg": "bg_beginner_1.png"},
-        {"word": "おやすみなさい", "ruby": ["お", "や", "す", "み", "な", "さ", "い"], "reverse": "いさなみすやお", "bg": "bg_beginner_1.png"},
-        {"word": "おはようございます", "ruby": ["お", "は", "よ", "う", "ご", "ざ", "い", "ま", "す"], "reverse": "すまいざごうよはお", "bg": "bg_beginner_1.png"},
-        {"word": "こんにちは世界", "ruby": ["こ", "ん", "に", "ち", "は", "せ", "か", "い"], "reverse": "いかせはちにんこ", "bg": "bg_beginner_1.png"},
-        {"word": "ありがとうの花", "ruby": ["あ", "り", "が", "と", "う", "の", "は", "な"], "reverse": "なはのうとがりあ", "bg": "bg_beginner_1.png"},
-        {"word": "ゆめのなかまで", "ruby": ["ゆ", "め", "の", "な", "か", "ま", "で"], "reverse": "でまかなのめゆ", "bg": "bg_beginner_1.png"},
-        {"word": "さよならのうた", "ruby": ["さ", "よ", "な", "ら", "の", "う", "た"], "reverse": "たうのらなよさ", "bg": "bg_beginner_1.png"},
-        {"word": "あかいふうせん", "ruby": ["あ", "か", "い", "ふ", "う", "せ", "ん"], "reverse": "んせうふいかあ", "bg": "bg_beginner_1.png"},
-        {"word": "あおいとりさん", "ruby": ["あ", "お", "い", "と", "り", "さ", "ん"], "reverse": "んさりといおあ", "bg": "bg_beginner_1.png"},
-        {"word": "きいろいお花", "ruby": ["き", "い", "ろ", "い", "お", "は", "な"], "reverse": "なはおいろいき", "bg": "bg_beginner_1.png"},
-        {"word": "しろいくもさん", "ruby": ["し", "ろ", "い", "く", "も", "さ", "ん"], "reverse": "んさもくいろし", "bg": "bg_beginner_1.png"},
-        {"word": "くろいねこさん", "ruby": ["く", "ろ", "い", "ね", "こ", "さ", "ん"], "reverse": "んさこねいろく", "bg": "bg_beginner_1.png"},
-        {"word": "きらきらひかる", "ruby": ["き", "ら", "き", "ら", "ひ", "か", "る"], "reverse": "るかひらきらき", "bg": "bg_beginner_1.png"},
-        {"word": "たのしいおんがく", "ruby": ["た", "の", "し", "い", "お", "ん", "が", "く"], "reverse": "くがんおいした", "bg": "bg_beginner_1.png"},
-        {"word": "おいしいおやつ", "ruby": ["お", "い", "し", "い", "お", "や", "つ"], "reverse": "つやおいしにお", "bg": "bg_beginner_1.png"},
-        {"word": "げんきなこども", "ruby": ["げ", "ん", "き", "な", "こ", "ど", "も"], "reverse": "もどこなきんげ", "bg": "bg_beginner_1.png"},
-        {"word": "やさしいお母さん", "ruby": ["や", "さ", "し", "い", "お", "か", "あ", "さ", "ん"], "reverse": "んさあかおいしさま", "bg": "bg_beginner_1.png"},
-        {"word": "つよいお父さん", "ruby": ["つ", "よ", "い", "お", "と", "う", "さ", "ん"], "reverse": "んさうとおいよつ", "bg": "bg_beginner_1.png"}
-    ]
+        "beginner": [
+                {
+                        "word": "きつね",
+                        "ruby": [
+                                "き",
+                                "つ",
+                                "ね"
+                        ],
+                        "reverse": "ねつき",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "さくら",
+                        "ruby": [
+                                "さ",
+                                "く",
+                                "ら"
+                        ],
+                        "reverse": "らくさ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "りんご",
+                        "ruby": [
+                                "り",
+                                "ん",
+                                "ご"
+                        ],
+                        "reverse": "ごんり",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "みかん",
+                        "ruby": [
+                                "み",
+                                "か",
+                                "ん"
+                        ],
+                        "reverse": "んかみ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "くるま",
+                        "ruby": [
+                                "く",
+                                "る",
+                                "ま"
+                        ],
+                        "reverse": "まるく",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "めがね",
+                        "ruby": [
+                                "め",
+                                "が",
+                                "ね"
+                        ],
+                        "reverse": "ねがめ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "からす",
+                        "ruby": [
+                                "か",
+                                "ら",
+                                "す"
+                        ],
+                        "reverse": "すらか",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "すずめ",
+                        "ruby": [
+                                "す",
+                                "ず",
+                                "め"
+                        ],
+                        "reverse": "めずす",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "うさぎ",
+                        "ruby": [
+                                "う",
+                                "さ",
+                                "ぎ"
+                        ],
+                        "reverse": "ぎさう",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "くじら",
+                        "ruby": [
+                                "く",
+                                "じ",
+                                "ら"
+                        ],
+                        "reverse": "らじく",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ひよこ",
+                        "ruby": [
+                                "ひ",
+                                "よ",
+                                "こ"
+                        ],
+                        "reverse": "こよひ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "かえる",
+                        "ruby": [
+                                "か",
+                                "え",
+                                "る"
+                        ],
+                        "reverse": "るえか",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "めだか",
+                        "ruby": [
+                                "め",
+                                "だ",
+                                "か"
+                        ],
+                        "reverse": "かだめ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "さかな",
+                        "ruby": [
+                                "さ",
+                                "か",
+                                "な"
+                        ],
+                        "reverse": "なかさ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ごはん",
+                        "ruby": [
+                                "ご",
+                                "は",
+                                "ん"
+                        ],
+                        "reverse": "んはご",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "たまご",
+                        "ruby": [
+                                "た",
+                                "ま",
+                                "ご"
+                        ],
+                        "reverse": "ごまた",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "うどん",
+                        "ruby": [
+                                "う",
+                                "ど",
+                                "ん"
+                        ],
+                        "reverse": "んどう",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ぽてと",
+                        "ruby": [
+                                "ぽ",
+                                "て",
+                                "と"
+                        ],
+                        "reverse": "とてぽ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "つくえ",
+                        "ruby": [
+                                "つ",
+                                "く",
+                                "え"
+                        ],
+                        "reverse": "えくつ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "かばん",
+                        "ruby": [
+                                "か",
+                                "ば",
+                                "ん"
+                        ],
+                        "reverse": "んばか",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "さいふ",
+                        "ruby": [
+                                "さ",
+                                "い",
+                                "ふ"
+                        ],
+                        "reverse": "ふいさ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "いちご",
+                        "ruby": [
+                                "い",
+                                "ち",
+                                "ご"
+                        ],
+                        "reverse": "ごちい",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "すいか",
+                        "ruby": [
+                                "す",
+                                "い",
+                                "か"
+                        ],
+                        "reverse": "かいす",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ばなな",
+                        "ruby": [
+                                "ば",
+                                "な",
+                                "な"
+                        ],
+                        "reverse": "ななば",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "めろん",
+                        "ruby": [
+                                "め",
+                                "ろ",
+                                "ん"
+                        ],
+                        "reverse": "んろめ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ぶどう",
+                        "ruby": [
+                                "ぶ",
+                                "ど",
+                                "う"
+                        ],
+                        "reverse": "うどぶ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "れたす",
+                        "ruby": [
+                                "れ",
+                                "た",
+                                "す"
+                        ],
+                        "reverse": "すたれ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "とまと",
+                        "ruby": [
+                                "と",
+                                "ま",
+                                "と"
+                        ],
+                        "reverse": "とまと",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "なすび",
+                        "ruby": [
+                                "な",
+                                "す",
+                                "び"
+                        ],
+                        "reverse": "びすな",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "きのこ",
+                        "ruby": [
+                                "き",
+                                "の",
+                                "こ"
+                        ],
+                        "reverse": "このき",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "たけのこ",
+                        "ruby": [
+                                "た",
+                                "け",
+                                "の",
+                                "こ"
+                        ],
+                        "reverse": "このけた",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "はさみ",
+                        "ruby": [
+                                "は",
+                                "さ",
+                                "み"
+                        ],
+                        "reverse": "みさは",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "とけい",
+                        "ruby": [
+                                "と",
+                                "け",
+                                "い"
+                        ],
+                        "reverse": "いけと",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "てれび",
+                        "ruby": [
+                                "て",
+                                "れ",
+                                "び"
+                        ],
+                        "reverse": "びれて",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "らじお",
+                        "ruby": [
+                                "ら",
+                                "じ",
+                                "お"
+                        ],
+                        "reverse": "おじら",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ばいく",
+                        "ruby": [
+                                "ば",
+                                "い",
+                                "く"
+                        ],
+                        "reverse": "くいば",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ふねだ",
+                        "ruby": [
+                                "ふ",
+                                "ね",
+                                "だ"
+                        ],
+                        "reverse": "だねふ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "そらだ",
+                        "ruby": [
+                                "そ",
+                                "ら",
+                                "だ"
+                        ],
+                        "reverse": "だらそ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "うみだ",
+                        "ruby": [
+                                "う",
+                                "み",
+                                "だ"
+                        ],
+                        "reverse": "だみう",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "やまだ",
+                        "ruby": [
+                                "や",
+                                "ま",
+                                "だ"
+                        ],
+                        "reverse": "だまや",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "かわだ",
+                        "ruby": [
+                                "か",
+                                "わ",
+                                "だ"
+                        ],
+                        "reverse": "だわか",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "はなだ",
+                        "ruby": [
+                                "は",
+                                "な",
+                                "だ"
+                        ],
+                        "reverse": "だなは",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "もりだ",
+                        "ruby": [
+                                "も",
+                                "り",
+                                "だ"
+                        ],
+                        "reverse": "だりも",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "こめだ",
+                        "ruby": [
+                                "こ",
+                                "め",
+                                "だ"
+                        ],
+                        "reverse": "だめこ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "かめだ",
+                        "ruby": [
+                                "か",
+                                "め",
+                                "だ"
+                        ],
+                        "reverse": "だめか",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ありだ",
+                        "ruby": [
+                                "あ",
+                                "り",
+                                "だ"
+                        ],
+                        "reverse": "だりあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "むしだ",
+                        "ruby": [
+                                "む",
+                                "し",
+                                "だ"
+                        ],
+                        "reverse": "だしむ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "くまき",
+                        "ruby": [
+                                "く",
+                                "ま",
+                                "き"
+                        ],
+                        "reverse": "きまく",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "しかき",
+                        "ruby": [
+                                "し",
+                                "か",
+                                "き"
+                        ],
+                        "reverse": "きかし",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "とりき",
+                        "ruby": [
+                                "と",
+                                "り",
+                                "き"
+                        ],
+                        "reverse": "きりと",
+                        "bg": "bg_beginner_1.png"
+                }
+        ],
+        "intermediate": [
+                {
+                        "word": "かたつむり",
+                        "ruby": [
+                                "か",
+                                "た",
+                                "つ",
+                                "む",
+                                "り"
+                        ],
+                        "reverse": "りむつたか",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ひまわり",
+                        "ruby": [
+                                "ひ",
+                                "ま",
+                                "わ",
+                                "り"
+                        ],
+                        "reverse": "りわまひ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "たんぽぽ",
+                        "ruby": [
+                                "た",
+                                "ん",
+                                "ぽ",
+                                "ぽ"
+                        ],
+                        "reverse": "ぽぽんた",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "あさがお",
+                        "ruby": [
+                                "あ",
+                                "さ",
+                                "が",
+                                "お"
+                        ],
+                        "reverse": "おがさあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おにぎり",
+                        "ruby": [
+                                "お",
+                                "に",
+                                "ぎ",
+                                "り"
+                        ],
+                        "reverse": "りぎにお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おべんとう",
+                        "ruby": [
+                                "お",
+                                "べ",
+                                "ん",
+                                "と",
+                                "う"
+                        ],
+                        "reverse": "うとんべお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "せんたくき",
+                        "ruby": [
+                                "せ",
+                                "ん",
+                                "た",
+                                "く",
+                                "き"
+                        ],
+                        "reverse": "きくたんせ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "れいぞうこ",
+                        "ruby": [
+                                "れ",
+                                "い",
+                                "ぞ",
+                                "う",
+                                "こ"
+                        ],
+                        "reverse": "こうぞいれ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "どうぶつえん",
+                        "ruby": [
+                                "ど",
+                                "う",
+                                "ぶ",
+                                "つ",
+                                "え",
+                                "ん"
+                        ],
+                        "reverse": "んえつぶうど",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "しんかんせん",
+                        "ruby": [
+                                "し",
+                                "ん",
+                                "か",
+                                "ん",
+                                "せ",
+                                "ん"
+                        ],
+                        "reverse": "んせんかんし",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ひこうき",
+                        "ruby": [
+                                "ひ",
+                                "こ",
+                                "う",
+                                "き"
+                        ],
+                        "reverse": "きうこひ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "がっこう",
+                        "ruby": [
+                                "が",
+                                "っ",
+                                "こ",
+                                "う"
+                        ],
+                        "reverse": "うこっが",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "こうえん",
+                        "ruby": [
+                                "こ",
+                                "う",
+                                "え",
+                                "ん"
+                        ],
+                        "reverse": "んえうこ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "すべりだい",
+                        "ruby": [
+                                "す",
+                                "べ",
+                                "り",
+                                "だ",
+                                "い"
+                        ],
+                        "reverse": "いだりべす",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ぶらんこ",
+                        "ruby": [
+                                "ぶ",
+                                "ら",
+                                "ん",
+                                "こ"
+                        ],
+                        "reverse": "こんらぶ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "すいぞくかん",
+                        "ruby": [
+                                "す",
+                                "い",
+                                "ぞ",
+                                "く",
+                                "か",
+                                "ん"
+                        ],
+                        "reverse": "んかくぞいす",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "はくぶつかん",
+                        "ruby": [
+                                "は",
+                                "く",
+                                "ぶ",
+                                "つ",
+                                "か",
+                                "ん"
+                        ],
+                        "reverse": "んかつぶくは",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "たいよう",
+                        "ruby": [
+                                "た",
+                                "い",
+                                "よ",
+                                "う"
+                        ],
+                        "reverse": "うよいた",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おつきさま",
+                        "ruby": [
+                                "お",
+                                "つ",
+                                "き",
+                                "さ",
+                                "ま"
+                        ],
+                        "reverse": "まさきつお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おほしさま",
+                        "ruby": [
+                                "お",
+                                "ほ",
+                                "し",
+                                "さま"
+                        ],
+                        "reverse": "さましほお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "あまのがわ",
+                        "ruby": [
+                                "あ",
+                                "ま",
+                                "の",
+                                "が",
+                                "わ"
+                        ],
+                        "reverse": "わがのまあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "なつやすみ",
+                        "ruby": [
+                                "な",
+                                "つ",
+                                "や",
+                                "す",
+                                "み"
+                        ],
+                        "reverse": "みすやつな",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ふゆやすみ",
+                        "ruby": [
+                                "ふ",
+                                "ゆ",
+                                "や",
+                                "す",
+                                "み"
+                        ],
+                        "reverse": "みすやゆふ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "あめふり",
+                        "ruby": [
+                                "あ",
+                                "め",
+                                "ふ",
+                                "り"
+                        ],
+                        "reverse": "りふめあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ゆきだるま",
+                        "ruby": [
+                                "ゆ",
+                                "き",
+                                "だ",
+                                "る",
+                                "ま"
+                        ],
+                        "reverse": "まるだきゆ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "かみなり",
+                        "ruby": [
+                                "か",
+                                "み",
+                                "な",
+                                "り"
+                        ],
+                        "reverse": "りなみか",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "にんじん",
+                        "ruby": [
+                                "に",
+                                "ん",
+                                "じ",
+                                "ん"
+                        ],
+                        "reverse": "んじんに",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "とうもろこし",
+                        "ruby": [
+                                "と",
+                                "う",
+                                "も",
+                                "ろ",
+                                "こ",
+                                "し"
+                        ],
+                        "reverse": "しころもうと",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "さつまいも",
+                        "ruby": [
+                                "さ",
+                                "つ",
+                                "ま",
+                                "い",
+                                "も"
+                        ],
+                        "reverse": "もいまつさ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ほうれんそう",
+                        "ruby": [
+                                "ほ",
+                                "う",
+                                "れ",
+                                "ん",
+                                "そ",
+                                "う"
+                        ],
+                        "reverse": "うそんれうほ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "たけのこ",
+                        "ruby": [
+                                "た",
+                                "け",
+                                "の",
+                                "こ"
+                        ],
+                        "reverse": "このけた",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "まつたけ",
+                        "ruby": [
+                                "ま",
+                                "つ",
+                                "た",
+                                "け"
+                        ],
+                        "reverse": "けたつま",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "しいたけ",
+                        "ruby": [
+                                "し",
+                                "い",
+                                "た",
+                                "け"
+                        ],
+                        "reverse": "けたいし",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "えのきだけ",
+                        "ruby": [
+                                "え",
+                                "の",
+                                "き",
+                                "だ",
+                                "け"
+                        ],
+                        "reverse": "けだきのえ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "はくさい",
+                        "ruby": [
+                                "は",
+                                "く",
+                                "さ",
+                                "い"
+                        ],
+                        "reverse": "いさくは",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "こまつな",
+                        "ruby": [
+                                "こ",
+                                "ま",
+                                "つ",
+                                "な"
+                        ],
+                        "reverse": "なつまこ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ちんげんさい",
+                        "ruby": [
+                                "ち",
+                                "ん",
+                                "げ",
+                                "ん",
+                                "さ",
+                                "い"
+                        ],
+                        "reverse": "いさんげんち",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "れたす",
+                        "ruby": [
+                                "れ",
+                                "た",
+                                "す"
+                        ],
+                        "reverse": "すたれ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "とまと",
+                        "ruby": [
+                                "と",
+                                "ま",
+                                "と"
+                        ],
+                        "reverse": "とまと",
+                        "bg": "bg_beginner_1.png"
+                }
+        ],
+        "advanced": [
+                {
+                        "word": "じどうはんばいき",
+                        "ruby": [
+                                "じ",
+                                "ど",
+                                "う",
+                                "は",
+                                "ん",
+                                "ば",
+                                "い",
+                                "き"
+                        ],
+                        "reverse": "きいばんはうどじ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "しんぶんをよむ",
+                        "ruby": [
+                                "し",
+                                "ん",
+                                "ぶ",
+                                "ん",
+                                "を",
+                                "よ",
+                                "む"
+                        ],
+                        "reverse": "むよをんぶんし",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ごはんをたべる",
+                        "ruby": [
+                                "ご",
+                                "は",
+                                "ん",
+                                "を",
+                                "た",
+                                "べ",
+                                "る"
+                        ],
+                        "reverse": "るべたをんはご",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おふろにはいる",
+                        "ruby": [
+                                "お",
+                                "ふ",
+                                "ろ",
+                                "に",
+                                "は",
+                                "い",
+                                "る"
+                        ],
+                        "reverse": "るいはにろふお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "あしたさんぽにいく",
+                        "ruby": [
+                                "あ",
+                                "し",
+                                "た",
+                                "さ",
+                                "ん",
+                                "ぽ",
+                                "に",
+                                "い",
+                                "く"
+                        ],
+                        "reverse": "くいにぽんさたしあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ほんをたくさんよむ",
+                        "ruby": [
+                                "ほ",
+                                "ん",
+                                "を",
+                                "た",
+                                "く",
+                                "さ",
+                                "ん",
+                                "よ",
+                                "む"
+                        ],
+                        "reverse": "むよんさくたをんほ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "うみをながめる",
+                        "ruby": [
+                                "う",
+                                "み",
+                                "を",
+                                "な",
+                                "が",
+                                "め",
+                                "る"
+                        ],
+                        "reverse": "るめがなをみう",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "たかいやまをのぼる",
+                        "ruby": [
+                                "た",
+                                "か",
+                                "い",
+                                "や",
+                                "ま",
+                                "を",
+                                "の",
+                                "ぼ",
+                                "る"
+                        ],
+                        "reverse": "るぼのをまやいかた",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おんがくをきく",
+                        "ruby": [
+                                "お",
+                                "ん",
+                                "が",
+                                "く",
+                                "を",
+                                "き",
+                                "く"
+                        ],
+                        "reverse": "くきをくがんお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ぴあのをたのしくひく",
+                        "ruby": [
+                                "ぴ",
+                                "あ",
+                                "の",
+                                "を",
+                                "た",
+                                "の",
+                                "し",
+                                "く",
+                                "ひ",
+                                "く"
+                        ],
+                        "reverse": "くひくしのたをのあぴ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ほっかいどうにいく",
+                        "ruby": [
+                                "ほ",
+                                "っ",
+                                "か",
+                                "い",
+                                "ど",
+                                "う",
+                                "に",
+                                "い",
+                                "く"
+                        ],
+                        "reverse": "くいにうどいかっほ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "せんたくをする",
+                        "ruby": [
+                                "せ",
+                                "ん",
+                                "た",
+                                "く",
+                                "を",
+                                "す",
+                                "る"
+                        ],
+                        "reverse": "るすをくたんせ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "へやのそうじをする",
+                        "ruby": [
+                                "へ",
+                                "や",
+                                "の",
+                                "そ",
+                                "う",
+                                "じ",
+                                "を",
+                                "す",
+                                "る"
+                        ],
+                        "reverse": "るすをじうそのやへ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "かいものにいく",
+                        "ruby": [
+                                "か",
+                                "い",
+                                "も",
+                                "の",
+                                "に",
+                                "い",
+                                "く"
+                        ],
+                        "reverse": "くいにのもいか",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おかあさんにかけ",
+                        "ruby": [
+                                "お",
+                                "か",
+                                "あ",
+                                "さ",
+                                "ん",
+                                "に",
+                                "か",
+                                "け"
+                        ],
+                        "reverse": "けかにんさあかお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "でんわをかける",
+                        "ruby": [
+                                "で",
+                                "ん",
+                                "わ",
+                                "を",
+                                "か",
+                                "け",
+                                "る"
+                        ],
+                        "reverse": "るけかをわんで",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "てれびをじっとみる",
+                        "ruby": [
+                                "て",
+                                "れ",
+                                "び",
+                                "を",
+                                "じ",
+                                "っ",
+                                "と",
+                                "み",
+                                "る"
+                        ],
+                        "reverse": "るみとっじをびれて",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ぱそこんをうつ",
+                        "ruby": [
+                                "ぱ",
+                                "そ",
+                                "こ",
+                                "ん",
+                                "を",
+                                "う",
+                                "つ"
+                        ],
+                        "reverse": "つうをんこそぱ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "しけんをうける",
+                        "ruby": [
+                                "し",
+                                "け",
+                                "ん",
+                                "を",
+                                "う",
+                                "け",
+                                "る"
+                        ],
+                        "reverse": "るけうをんけし",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "うんどうをする",
+                        "ruby": [
+                                "う",
+                                "ん",
+                                "ど",
+                                "う",
+                                "を",
+                                "す",
+                                "る"
+                        ],
+                        "reverse": "るすをうどんう",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "あさのさんぽをする",
+                        "ruby": [
+                                "あ",
+                                "さ",
+                                "の",
+                                "さ",
+                                "ん",
+                                "ぽ",
+                                "を",
+                                "す",
+                                "る"
+                        ],
+                        "reverse": "るすをぽんさのさあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "こうえんであそぶ",
+                        "ruby": [
+                                "こ",
+                                "う",
+                                "え",
+                                "ん",
+                                "で",
+                                "あ",
+                                "そ",
+                                "ぶ"
+                        ],
+                        "reverse": "ぶそあでんえうこ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おかしをたべる",
+                        "ruby": [
+                                "お",
+                                "か",
+                                "し",
+                                "を",
+                                "た",
+                                "べ",
+                                "る"
+                        ],
+                        "reverse": "るべたをしかお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "あしたははれだ",
+                        "ruby": [
+                                "あ",
+                                "し",
+                                "た",
+                                "は",
+                                "は",
+                                "れ",
+                                "だ"
+                        ],
+                        "reverse": "だれははたしあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おやすみなさい",
+                        "ruby": [
+                                "お",
+                                "や",
+                                "す",
+                                "み",
+                                "な",
+                                "さ",
+                                "い"
+                        ],
+                        "reverse": "いさなみすやお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おはようございます",
+                        "ruby": [
+                                "お",
+                                "は",
+                                "よ",
+                                "う",
+                                "ご",
+                                "ざ",
+                                "い",
+                                "ま",
+                                "す"
+                        ],
+                        "reverse": "すまいざごうよはお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "こんにちは世界",
+                        "ruby": [
+                                "こ",
+                                "ん",
+                                "に",
+                                "ち",
+                                "は",
+                                "せ",
+                                "か",
+                                "い"
+                        ],
+                        "reverse": "いかせはちにんこ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ありがとうの花",
+                        "ruby": [
+                                "あ",
+                                "り",
+                                "が",
+                                "と",
+                                "う",
+                                "の",
+                                "は",
+                                "な"
+                        ],
+                        "reverse": "なはのうとがりあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "ゆめのなかまで",
+                        "ruby": [
+                                "ゆ",
+                                "め",
+                                "の",
+                                "な",
+                                "か",
+                                "ま",
+                                "で"
+                        ],
+                        "reverse": "でまかなのめゆ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "さよならのうた",
+                        "ruby": [
+                                "さ",
+                                "よ",
+                                "な",
+                                "ら",
+                                "の",
+                                "う",
+                                "た"
+                        ],
+                        "reverse": "たうのらなよさ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "あかいふうせん",
+                        "ruby": [
+                                "あ",
+                                "か",
+                                "い",
+                                "ふ",
+                                "う",
+                                "せ",
+                                "ん"
+                        ],
+                        "reverse": "んせうふいかあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "あおいとりさん",
+                        "ruby": [
+                                "あ",
+                                "お",
+                                "い",
+                                "と",
+                                "り",
+                                "さ",
+                                "ん"
+                        ],
+                        "reverse": "んさりといおあ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "きいろいお花",
+                        "ruby": [
+                                "き",
+                                "い",
+                                "ろ",
+                                "い",
+                                "お",
+                                "は",
+                                "な"
+                        ],
+                        "reverse": "なはおいろいき",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "しろいくもさん",
+                        "ruby": [
+                                "し",
+                                "ろ",
+                                "い",
+                                "く",
+                                "も",
+                                "さ",
+                                "ん"
+                        ],
+                        "reverse": "んさもくいろし",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "くろいねこさん",
+                        "ruby": [
+                                "く",
+                                "ろ",
+                                "い",
+                                "ね",
+                                "こ",
+                                "さ",
+                                "ん"
+                        ],
+                        "reverse": "んさこねいろく",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "きらきらひかる",
+                        "ruby": [
+                                "き",
+                                "ら",
+                                "き",
+                                "ら",
+                                "ひ",
+                                "か",
+                                "る"
+                        ],
+                        "reverse": "るかひらきらき",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "たのしいおんがく",
+                        "ruby": [
+                                "た",
+                                "の",
+                                "し",
+                                "い",
+                                "お",
+                                "ん",
+                                "が",
+                                "く"
+                        ],
+                        "reverse": "くがんおいしのた",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "おいしいおやつ",
+                        "ruby": [
+                                "お",
+                                "い",
+                                "し",
+                                "い",
+                                "お",
+                                "や",
+                                "つ"
+                        ],
+                        "reverse": "つやおいしいお",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "げんきなこども",
+                        "ruby": [
+                                "げ",
+                                "ん",
+                                "き",
+                                "な",
+                                "こ",
+                                "ど",
+                                "も"
+                        ],
+                        "reverse": "もどこなきんげ",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "やさしいお母さん",
+                        "ruby": [
+                                "や",
+                                "さ",
+                                "し",
+                                "い",
+                                "お",
+                                "か",
+                                "あ",
+                                "さ",
+                                "ん"
+                        ],
+                        "reverse": "んさあかおいしさや",
+                        "bg": "bg_beginner_1.png"
+                },
+                {
+                        "word": "つよいお父さん",
+                        "ruby": [
+                                "つ",
+                                "よ",
+                                "い",
+                                "お",
+                                "と",
+                                "う",
+                                "さ",
+                                "ん"
+                        ],
+                        "reverse": "んさうとおいよつ",
+                        "bg": "bg_beginner_1.png"
+                }
+        ]
 };
+
