@@ -17,7 +17,7 @@
     width: 100%;
 }
 
-/* Game Status */
+/* ゲーム状況表示バー（レベル、進捗、スコア） */
 .status-bar {
     position: absolute;
     top: 20px;
@@ -38,7 +38,7 @@
 .status-bar span:first-child { text-align: left; }
 .status-bar span:last-child { text-align: right; }
 
-/* Voice Indicator */
+/* 音声入力インジケーター（待機中の波線） */
 .voice-indicator {
     display: flex;
     flex-direction: column;
@@ -62,7 +62,7 @@
     animation: wave-chalk 1.2s infinite ease-in-out;
 }
 
-/* Recognition container */
+/* 音声認識・録音エリアのコンテナ */
 .recognition-container {
     position: absolute;
     top: 0;
@@ -86,6 +86,7 @@
     width: 100%;
 }
 
+/* 録音停止ボタン（ピンクのチョーク風） */
 .stop-button {
     border-color: var(--chalk-pink);
     color: var(--chalk-pink);
@@ -97,6 +98,7 @@
     border-color: #ffcccc;
 }
 
+/* 認識中テキストの表示 */
 .interim-result {
     font-size: 1.2rem;
     font-weight: 600;
@@ -105,6 +107,7 @@
     margin-bottom: 20px;
 }
 
+/* 録音中の波形ビジュアライザー */
 .recording-visualizer {
     position: relative;
     width: 280px;
@@ -124,6 +127,7 @@
     filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
 }
 
+/* 録音中のパルス演出（広がる輪っか） */
 .pulse-ring {
     position: absolute;
     width: 60px;
@@ -138,6 +142,7 @@
     animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
 
+/* 録音制限時間のカウントダウンタイマー */
 .recording-timer-group {
     margin-top: auto;
     display: flex;
@@ -154,6 +159,7 @@
     margin: 0;
 }
 
+/* 制限時間バー（赤いゲージ） */
 .recording-timer-bar-bg {
     width: 240px;
     height: 6px;
@@ -180,7 +186,7 @@
     transform: scaleX(1);
 }
 
-/* Feedback Panel */
+/* フィードバックパネル（正解・不正解の表示エリア） */
 .feedback-panel {
     display: flex;
     flex-direction: column;
@@ -196,6 +202,7 @@
     margin-bottom: 10px;
 }
 
+/* 正解時の「合格」スタンプ風デザイン */
 .hanko-stamp {
     color: var(--chalk-green);
     border: 4px double var(--chalk-green);
@@ -204,12 +211,13 @@
     font-size: 3.5rem;
 }
 
+/* 不正解時のデザイン */
 .wrong-stamp {
     color: var(--chalk-pink);
     font-size: 5rem;
 }
 
-/* Flash Character Overlay */
+/* 出題時の文字フラッシュ演出（中央に大きく出る文字） */
 .flash-container {
     position: absolute;
     top: 0;
@@ -234,6 +242,7 @@
     transform: rotate(-5deg);
 }
 
+/* 出題時のラベル（「聞いて」など） */
 .flash-label {
     font-size: 2.5rem;
     color: var(--chalk-white);
@@ -243,6 +252,7 @@
     letter-spacing: 2px;
 }
 
+/* フラッシュ文字のアニメーション */
 @keyframes questionPing {
     0% { transform: scale(1) rotate(-5deg); filter: brightness(1); }
     10% { transform: scale(1.3) rotate(-5deg); filter: brightness(1.5); }
@@ -250,7 +260,7 @@
     100% { transform: scale(1) rotate(-5deg); filter: brightness(1); }
 }
 
-/* Developer Mode */
+/* 開発者モード・レイアウト設定 */
 .dev-layout {
     display: grid;
     grid-template-columns: 240px 1fr;
