@@ -1,139 +1,116 @@
-// Reversa - UI Management
+/**
+ * Reversa - UI要素管理および画面操作 (UI Management)
+ * 
+ * 【目的】
+ * HTML上のすべてのパーツ（ボタン、テキスト、キャンバス等）をJavaScriptから操作するための
+ * 参照を一括管理し、画面の切り替えや視覚的なフィードバックを制御します。
+ * 
+ * 【主な機能】
+ * 1. 要素のキャッシュ: document.getElementById 等の呼び出しを最小限にし、パフォーマンスを向上。
+ * 2. 画面遷移制御: ホーム、ロード中、ゲーム、結果、開発者スタジオの表示・非表示を切り替え。
+ * 3. 動的演出: ローディングバーの進捗、正答率の円形グラフ、結果メッセージの更新。
+ * 4. 視覚エフェクト: フィードバック（正解/不正解）の表示、波形キャンバスのクリアなど。
+ */
 
-const elements = {
+// HTML要素への参照をまとめたオブジェクト
+export const elements = {
+    // 難易度・設定関連
     levelOptions: document.getElementById('theme-options'),
     labelLevel: document.getElementById('label-level'),
     labelProgress: document.getElementById('label-progress'),
     labelScore: document.getElementById('label-score'),
+    
+    // ゲーム進行・ステータス
     gameStatus: document.getElementById('game-status'),
     voiceIndicator: document.getElementById('voice-indicator'),
     recordingContainer: document.getElementById('recording-container'),
     recordingStatus: document.getElementById('recording-status'),
+    
+    // フィードバック・判定表示
     feedbackPanel: document.getElementById('feedback-panel'),
     feedbackBadge: document.getElementById('feedback-badge'),
     displayCorrectReverse: document.getElementById('display-correct-reverse'),
     displayUserAnswer: document.getElementById('display-user-answer'),
     userAnswerContainer: document.getElementById('user-answer-container'),
+    
+    // ボタン類
     btnNext: document.getElementById('btn-next'),
     btnRestart: document.getElementById('btn-restart'),
     btnExportLog: document.getElementById('btn-export-log'),
+    btnRetryRecord: document.getElementById('btn-retry-record'),
+    btnSkipQuestion: document.getElementById('btn-skip-question'),
+    btnPlayMaster: document.getElementById('btn-play-master'),
+    btnStartRecord: document.getElementById('btn-start-record'),
+    
+    // リザルト画面（円形グラフなど）
     accuracyPath: document.getElementById('accuracy-path'),
     accuracyText: document.getElementById('accuracy-text'),
     resultMessage: document.getElementById('result-message'),
+    resultHistoryList: document.getElementById('result-history-list'),
+    
+    // ローディング画面
     loadingBar: document.getElementById('loading-bar'),
     loadingStatus: document.getElementById('loading-status'),
     loadingTitle: document.getElementById('loading-title'),
     btnStartAfterLoad: document.getElementById('btn-start-after-load'),
     loadingSpinner: document.querySelector('.loading-spinner'),
-    btnRetryRecord: document.getElementById('btn-retry-record'),
-    btnSkipQuestion: document.getElementById('btn-skip-question'),
-    actionChoiceGroup: document.getElementById('action-choice-group'),
-    micArea: document.getElementById('mic-area'),
-    countdownArea: document.getElementById('recording-timer-text'),
-    recordingCountdown: document.getElementById('recording-countdown'),
-    btnPlayMaster: document.getElementById('btn-play-master'),
-    btnStartRecord: document.getElementById('btn-start-record'),
+    
+    // 設定チェックボックス
     checkSilent: document.getElementById('check-silent'),
-    gameWaveformCanvas: document.getElementById('game-waveform-canvas'),
     checkBlind: document.getElementById('check-blind'),
     checkNatural: document.getElementById('check-natural'),
+    
+    // キャンバス・演出
+    gameWaveformCanvas: document.getElementById('game-waveform-canvas'),
     flashContainer: document.getElementById('flash-container'),
     flashCharacter: document.getElementById('flash-character'),
+    
+    // 開発者スタジオ関連
     openDevBtn: document.getElementById('btn-open-dev'),
     devBackBtn: document.getElementById('btn-dev-back'),
+    devNavItems: document.querySelectorAll('.nav-item'),
     devListContainer: document.getElementById('dev-list-container'),
     devTargetText: document.getElementById('dev-target-text'),
     btnRecordDev: document.getElementById('btn-record-dev'),
-    btnRecordRhythm: document.getElementById('btn-record-rhythm'),
     btnPlayDev: document.getElementById('btn-play-dev'),
     btnSaveDev: document.getElementById('btn-save-dev'),
     devStatus: document.getElementById('dev-status'),
-    pilotProgress: document.getElementById('pilot-progress'),
-    pilotStatus: document.getElementById('pilot-status'),
-    pilotBar: document.getElementById('pilot-bar'),
-    waveformCanvas: document.getElementById('waveform-canvas'),
-    waveformCanvasStatic: document.getElementById('waveform-canvas-static'),
-    metronomeArea: document.getElementById('metronome-area'),
-    rhythmCountdown: document.getElementById('rhythm-countdown'),
-    beatIndicator: document.getElementById('recording-beat-indicator'),
-    waveformPreview: document.getElementById('waveform-preview'),
-    screens: {
-        home: document.getElementById('screen-home'),
-        game: document.getElementById('screen-game'),
-        result: document.getElementById('screen-result'),
-        loading: document.getElementById('screen-loading'),
-        dev: document.getElementById('screen-dev')
-    }
+    waveformCanvas: document.getElementById('waveform-canvas')
 };
 
-function showScreen(screenId) {
-    Object.keys(elements.screens).forEach(key => {
-        elements.screens[key].classList.toggle('active', key === screenId);
-    });
-    currentState.screen = screenId;
+/**
+ * 指定した画面を表示し、他の画面を非表示にする
+ * @param {string} screenId 表示したい画面のID (home, loading, game, result, dev)
+ */
+export function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(`screen-${screenId}`);
+    if (target) target.classList.add('active');
+}
+
+/**
+ * リザルト画面の正答率円形グラフを更新する
+ * @param {number} percentage 正答率 (0-100)
+ */
+export function updateAccuracyCircle(percentage) {
+    const radius = 15.9155;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (percentage / 100) * circumference;
     
-    if (screenId === 'home') {
-        const dynamicBg = document.getElementById('dynamic-bg');
-        if (dynamicBg) dynamicBg.classList.remove('active');
+    if (elements.accuracyPath) {
+        elements.accuracyPath.style.strokeDasharray = `${percentage}, 100`;
+    }
+    if (elements.accuracyText) {
+        elements.accuracyText.textContent = `${Math.round(percentage)}%`;
     }
 }
 
-function setUIPhase(phase) {
-    if (currentState.recordingTimer) clearTimeout(currentState.recordingTimer);
-    if (currentState.countdownInterval) clearInterval(currentState.countdownInterval);
-    
-    const elementsToHide = [
-        elements.voiceIndicator,
-        elements.recordingContainer,
-        elements.feedbackPanel,
-        elements.actionChoiceGroup,
-        elements.btnStartRecord,
-        elements.btnStopRecord,
-        elements.countdownArea
-    ];
-    elementsToHide.forEach(el => {
-        if (el) el.classList.add('hidden');
-    });
-    
-    if (elements.recordingContainer) elements.recordingContainer.classList.remove('active');
-    if (elements.recordingStatus) elements.recordingStatus.classList.remove('listening');
-
-    switch(phase) {
-        case 'READING':
-            if (elements.voiceIndicator) elements.voiceIndicator.classList.remove('hidden');
-            break;
-        case 'WAIT_START':
-            if (elements.recordingContainer) elements.recordingContainer.classList.remove('hidden');
-            if (elements.btnStartRecord) elements.btnStartRecord.classList.remove('hidden');
-            if (elements.recordingStatus) {
-                elements.recordingStatus.textContent = '準備ができたら開始してください';
-                elements.recordingStatus.classList.remove('hidden');
-            }
-            if (elements.countdownArea) elements.countdownArea.classList.remove('hidden');
-            break;
-        case 'RECORDING':
-            if (elements.recordingContainer) {
-                elements.recordingContainer.classList.remove('hidden');
-                elements.recordingContainer.classList.add('active');
-            }
-            if (elements.micArea) elements.micArea.classList.remove('hidden');
-            if (elements.countdownArea) elements.countdownArea.classList.remove('hidden');
-            if (elements.recordingStatus) {
-                elements.recordingStatus.textContent = '';
-                elements.recordingStatus.classList.add('listening');
-                elements.recordingStatus.classList.remove('hidden');
-            }
-            if (elements.btnStopRecord) elements.btnStopRecord.classList.remove('hidden');
-            break;
-        case 'RETRY':
-            if (elements.recordingContainer) elements.recordingContainer.classList.remove('hidden');
-            if (elements.actionChoiceGroup) elements.actionChoiceGroup.classList.remove('hidden');
-            if (elements.btnRetryRecord) elements.btnRetryRecord.classList.remove('hidden');
-            if (elements.recordingStatus) elements.recordingStatus.classList.remove('hidden');
-            if (elements.countdownArea) elements.countdownArea.classList.add('hidden');
-            break;
-        case 'FEEDBACK':
-            if (elements.feedbackPanel) elements.feedbackPanel.classList.remove('hidden');
-            break;
+/**
+ * 音声波形キャンバスをクリア（真っさらな状態に）する
+ */
+export function clearCanvas() {
+    if (elements.gameWaveformCanvas) {
+        const ctx = elements.gameWaveformCanvas.getContext('2d');
+        ctx.clearRect(0, 0, elements.gameWaveformCanvas.width, elements.gameWaveformCanvas.height);
     }
 }
