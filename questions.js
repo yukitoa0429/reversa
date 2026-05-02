@@ -1,9 +1,3 @@
-/**
- * Reversa Question Database (Theme Based)
- * 初級：3文字
- * 中級：4〜6文字
- * 上級：7〜10文字
- */
 var QUESTION_DATABASE = {
 	"beginner": [
 		{
@@ -13,6 +7,7 @@ var QUESTION_DATABASE = {
 				"つ",
 				"ね"
 			],
+			"phonetic": "キツネ、",
 			"reverse": "ねつき",
 			"bg": "bg_beginner_1.png"
 		},
@@ -23,6 +18,7 @@ var QUESTION_DATABASE = {
 				"く",
 				"ら"
 			],
+			"phonetic": "サクラ、",
 			"reverse": "らくさ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -33,6 +29,7 @@ var QUESTION_DATABASE = {
 				"ん",
 				"ご"
 			],
+			"phonetic": "リンゴ、",
 			"reverse": "ごんり",
 			"bg": "bg_beginner_1.png"
 		},
@@ -43,6 +40,7 @@ var QUESTION_DATABASE = {
 				"か",
 				"ん"
 			],
+			"phonetic": "ミカン、",
 			"reverse": "んかみ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -53,6 +51,7 @@ var QUESTION_DATABASE = {
 				"る",
 				"ま"
 			],
+			"phonetic": "クルマ、",
 			"reverse": "まるく",
 			"bg": "bg_beginner_1.png"
 		},
@@ -63,6 +62,7 @@ var QUESTION_DATABASE = {
 				"が",
 				"ね"
 			],
+			"phonetic": "メガネ、",
 			"reverse": "ねがめ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -73,6 +73,7 @@ var QUESTION_DATABASE = {
 				"ら",
 				"す"
 			],
+			"phonetic": "カラス、",
 			"reverse": "すらか",
 			"bg": "bg_beginner_1.png"
 		},
@@ -83,6 +84,7 @@ var QUESTION_DATABASE = {
 				"ず",
 				"め"
 			],
+			"phonetic": "スズメ、",
 			"reverse": "めずす",
 			"bg": "bg_beginner_1.png"
 		},
@@ -93,6 +95,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"ぎ"
 			],
+			"phonetic": "ウサギ、",
 			"reverse": "ぎさう",
 			"bg": "bg_beginner_1.png"
 		},
@@ -103,6 +106,7 @@ var QUESTION_DATABASE = {
 				"じ",
 				"ら"
 			],
+			"phonetic": "クジラ、",
 			"reverse": "らじく",
 			"bg": "bg_beginner_1.png"
 		},
@@ -113,6 +117,7 @@ var QUESTION_DATABASE = {
 				"よ",
 				"こ"
 			],
+			"phonetic": "ヒヨコ、",
 			"reverse": "こよひ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -123,6 +128,7 @@ var QUESTION_DATABASE = {
 				"え",
 				"る"
 			],
+			"phonetic": "カエル、",
 			"reverse": "るえか",
 			"bg": "bg_beginner_1.png"
 		},
@@ -133,6 +139,7 @@ var QUESTION_DATABASE = {
 				"だ",
 				"か"
 			],
+			"phonetic": "メダカ、",
 			"reverse": "かだめ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -143,6 +150,7 @@ var QUESTION_DATABASE = {
 				"か",
 				"な"
 			],
+			"phonetic": "サカナ、",
 			"reverse": "なかさ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -153,6 +161,7 @@ var QUESTION_DATABASE = {
 				"は",
 				"ん"
 			],
+			"phonetic": "ゴハン、",
 			"reverse": "んはご",
 			"bg": "bg_beginner_1.png"
 		},
@@ -163,6 +172,7 @@ var QUESTION_DATABASE = {
 				"ま",
 				"ご"
 			],
+			"phonetic": "タマゴ、",
 			"reverse": "ごまた",
 			"bg": "bg_beginner_1.png"
 		},
@@ -173,6 +183,7 @@ var QUESTION_DATABASE = {
 				"ど",
 				"ん"
 			],
+			"phonetic": "ウドン、",
 			"reverse": "んどう",
 			"bg": "bg_beginner_1.png"
 		},
@@ -183,6 +194,7 @@ var QUESTION_DATABASE = {
 				"て",
 				"と"
 			],
+			"phonetic": "ポテト、",
 			"reverse": "とてぽ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -193,6 +205,7 @@ var QUESTION_DATABASE = {
 				"く",
 				"え"
 			],
+			"phonetic": "ツクエ、",
 			"reverse": "えくつ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -203,6 +216,7 @@ var QUESTION_DATABASE = {
 				"ば",
 				"ん"
 			],
+			"phonetic": "カバン、",
 			"reverse": "んばか",
 			"bg": "bg_beginner_1.png"
 		},
@@ -213,6 +227,7 @@ var QUESTION_DATABASE = {
 				"い",
 				"ふ"
 			],
+			"phonetic": "サイフ、",
 			"reverse": "ふいさ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -223,6 +238,7 @@ var QUESTION_DATABASE = {
 				"ち",
 				"ご"
 			],
+			"phonetic": "イチゴ、",
 			"reverse": "ごちい",
 			"bg": "bg_beginner_1.png"
 		},
@@ -233,6 +249,7 @@ var QUESTION_DATABASE = {
 				"い",
 				"か"
 			],
+			"phonetic": "スイカ、",
 			"reverse": "かいす",
 			"bg": "bg_beginner_1.png"
 		},
@@ -243,6 +260,7 @@ var QUESTION_DATABASE = {
 				"な",
 				"な"
 			],
+			"phonetic": "バナナ、",
 			"reverse": "ななば",
 			"bg": "bg_beginner_1.png"
 		},
@@ -253,6 +271,7 @@ var QUESTION_DATABASE = {
 				"ろ",
 				"ん"
 			],
+			"phonetic": "メロン、",
 			"reverse": "んろめ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -263,6 +282,7 @@ var QUESTION_DATABASE = {
 				"ど",
 				"う"
 			],
+			"phonetic": "ブドウ、",
 			"reverse": "うどぶ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -273,6 +293,7 @@ var QUESTION_DATABASE = {
 				"た",
 				"す"
 			],
+			"phonetic": "レタス、",
 			"reverse": "すたれ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -283,6 +304,7 @@ var QUESTION_DATABASE = {
 				"ま",
 				"と"
 			],
+			"phonetic": "トマト、",
 			"reverse": "とまと",
 			"bg": "bg_beginner_1.png"
 		},
@@ -293,6 +315,7 @@ var QUESTION_DATABASE = {
 				"す",
 				"び"
 			],
+			"phonetic": "ナスビ、",
 			"reverse": "びすな",
 			"bg": "bg_beginner_1.png"
 		},
@@ -303,6 +326,7 @@ var QUESTION_DATABASE = {
 				"の",
 				"こ"
 			],
+			"phonetic": "キノコ、",
 			"reverse": "このき",
 			"bg": "bg_beginner_1.png"
 		},
@@ -314,6 +338,7 @@ var QUESTION_DATABASE = {
 				"の",
 				"こ"
 			],
+			"phonetic": "タケノコ、",
 			"reverse": "このけた",
 			"bg": "bg_beginner_1.png"
 		},
@@ -324,6 +349,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"み"
 			],
+			"phonetic": "ハサミ、",
 			"reverse": "みさは",
 			"bg": "bg_beginner_1.png"
 		},
@@ -334,6 +360,7 @@ var QUESTION_DATABASE = {
 				"け",
 				"い"
 			],
+			"phonetic": "トケイ、",
 			"reverse": "いけと",
 			"bg": "bg_beginner_1.png"
 		},
@@ -344,6 +371,7 @@ var QUESTION_DATABASE = {
 				"れ",
 				"び"
 			],
+			"phonetic": "テレビ、",
 			"reverse": "びれて",
 			"bg": "bg_beginner_1.png"
 		},
@@ -354,6 +382,7 @@ var QUESTION_DATABASE = {
 				"じ",
 				"お"
 			],
+			"phonetic": "ラジオ、",
 			"reverse": "おじら",
 			"bg": "bg_beginner_1.png"
 		},
@@ -364,6 +393,7 @@ var QUESTION_DATABASE = {
 				"い",
 				"く"
 			],
+			"phonetic": "バイク、",
 			"reverse": "くいば",
 			"bg": "bg_beginner_1.png"
 		},
@@ -374,6 +404,7 @@ var QUESTION_DATABASE = {
 				"ね",
 				"だ"
 			],
+			"phonetic": "フネダ、",
 			"reverse": "だねふ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -384,6 +415,7 @@ var QUESTION_DATABASE = {
 				"ら",
 				"だ"
 			],
+			"phonetic": "ソラダ、",
 			"reverse": "だらそ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -394,6 +426,7 @@ var QUESTION_DATABASE = {
 				"み",
 				"だ"
 			],
+			"phonetic": "ウミダ、",
 			"reverse": "だみう",
 			"bg": "bg_beginner_1.png"
 		},
@@ -404,6 +437,7 @@ var QUESTION_DATABASE = {
 				"ま",
 				"だ"
 			],
+			"phonetic": "ヤマダ、",
 			"reverse": "だまや",
 			"bg": "bg_beginner_1.png"
 		},
@@ -414,6 +448,7 @@ var QUESTION_DATABASE = {
 				"わ",
 				"だ"
 			],
+			"phonetic": "カワダ、",
 			"reverse": "だわか",
 			"bg": "bg_beginner_1.png"
 		},
@@ -424,6 +459,7 @@ var QUESTION_DATABASE = {
 				"な",
 				"だ"
 			],
+			"phonetic": "ハナダ、",
 			"reverse": "だなは",
 			"bg": "bg_beginner_1.png"
 		},
@@ -434,6 +470,7 @@ var QUESTION_DATABASE = {
 				"り",
 				"だ"
 			],
+			"phonetic": "モリダ、",
 			"reverse": "だりも",
 			"bg": "bg_beginner_1.png"
 		},
@@ -444,6 +481,7 @@ var QUESTION_DATABASE = {
 				"め",
 				"だ"
 			],
+			"phonetic": "コメダ、",
 			"reverse": "だめこ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -454,6 +492,7 @@ var QUESTION_DATABASE = {
 				"め",
 				"だ"
 			],
+			"phonetic": "カメダ、",
 			"reverse": "だめか",
 			"bg": "bg_beginner_1.png"
 		},
@@ -464,6 +503,7 @@ var QUESTION_DATABASE = {
 				"り",
 				"だ"
 			],
+			"phonetic": "アリダ、",
 			"reverse": "だりあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -474,6 +514,7 @@ var QUESTION_DATABASE = {
 				"し",
 				"だ"
 			],
+			"phonetic": "ムシダ、",
 			"reverse": "だしむ",
 			"bg": "bg_beginner_1.png"
 		}
@@ -488,6 +529,7 @@ var QUESTION_DATABASE = {
 				"む",
 				"り"
 			],
+			"phonetic": "カタツムリ、",
 			"reverse": "りむつたか",
 			"bg": "bg_beginner_1.png"
 		},
@@ -499,6 +541,7 @@ var QUESTION_DATABASE = {
 				"わ",
 				"り"
 			],
+			"phonetic": "ヒマワリ、",
 			"reverse": "りわまひ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -510,6 +553,7 @@ var QUESTION_DATABASE = {
 				"ぽ",
 				"ぽ"
 			],
+			"phonetic": "タンポポ、",
 			"reverse": "ぽぽんた",
 			"bg": "bg_beginner_1.png"
 		},
@@ -521,6 +565,7 @@ var QUESTION_DATABASE = {
 				"が",
 				"お"
 			],
+			"phonetic": "アサガオ、",
 			"reverse": "おがさあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -532,6 +577,7 @@ var QUESTION_DATABASE = {
 				"ぎ",
 				"り"
 			],
+			"phonetic": "オニギリ、",
 			"reverse": "りぎにお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -544,6 +590,7 @@ var QUESTION_DATABASE = {
 				"と",
 				"う"
 			],
+			"phonetic": "オベントウ、",
 			"reverse": "うとんべお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -556,6 +603,7 @@ var QUESTION_DATABASE = {
 				"く",
 				"き"
 			],
+			"phonetic": "センタクキ、",
 			"reverse": "きくたんせ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -568,6 +616,7 @@ var QUESTION_DATABASE = {
 				"う",
 				"こ"
 			],
+			"phonetic": "レイゾウコ、",
 			"reverse": "こうぞいれ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -581,6 +630,7 @@ var QUESTION_DATABASE = {
 				"え",
 				"ん"
 			],
+			"phonetic": "ドウブツエン、",
 			"reverse": "んえつぶうど",
 			"bg": "bg_beginner_1.png"
 		},
@@ -594,6 +644,7 @@ var QUESTION_DATABASE = {
 				"せ",
 				"ん"
 			],
+			"phonetic": "シンカンセン、",
 			"reverse": "んせんかんし",
 			"bg": "bg_beginner_1.png"
 		},
@@ -605,6 +656,7 @@ var QUESTION_DATABASE = {
 				"う",
 				"き"
 			],
+			"phonetic": "ヒコウキ、",
 			"reverse": "きうこひ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -616,6 +668,7 @@ var QUESTION_DATABASE = {
 				"こ",
 				"う"
 			],
+			"phonetic": "ガッコウ、",
 			"reverse": "うこっが",
 			"bg": "bg_beginner_1.png"
 		},
@@ -627,6 +680,7 @@ var QUESTION_DATABASE = {
 				"え",
 				"ん"
 			],
+			"phonetic": "コウエン、",
 			"reverse": "んえうこ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -639,6 +693,7 @@ var QUESTION_DATABASE = {
 				"だ",
 				"い"
 			],
+			"phonetic": "スベリダイ、",
 			"reverse": "いだりべす",
 			"bg": "bg_beginner_1.png"
 		},
@@ -650,6 +705,7 @@ var QUESTION_DATABASE = {
 				"ん",
 				"こ"
 			],
+			"phonetic": "ブランコ、",
 			"reverse": "こんらぶ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -663,6 +719,7 @@ var QUESTION_DATABASE = {
 				"か",
 				"ん"
 			],
+			"phonetic": "スイゾクカン、",
 			"reverse": "んかくぞいす",
 			"bg": "bg_beginner_1.png"
 		},
@@ -676,6 +733,7 @@ var QUESTION_DATABASE = {
 				"か",
 				"ん"
 			],
+			"phonetic": "ハクブツカン、",
 			"reverse": "んかつぶくは",
 			"bg": "bg_beginner_1.png"
 		},
@@ -687,6 +745,7 @@ var QUESTION_DATABASE = {
 				"よ",
 				"う"
 			],
+			"phonetic": "タイヨウ、",
 			"reverse": "うよいた",
 			"bg": "bg_beginner_1.png"
 		},
@@ -699,6 +758,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"ま"
 			],
+			"phonetic": "オツキサマ、",
 			"reverse": "まさきつお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -711,6 +771,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"ま"
 			],
+			"phonetic": "オホシサマ、",
 			"reverse": "まさしほお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -723,6 +784,7 @@ var QUESTION_DATABASE = {
 				"が",
 				"わ"
 			],
+			"phonetic": "アマノガワ、",
 			"reverse": "わがのまあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -735,6 +797,7 @@ var QUESTION_DATABASE = {
 				"す",
 				"み"
 			],
+			"phonetic": "ナツヤスミ、",
 			"reverse": "みすやつな",
 			"bg": "bg_beginner_1.png"
 		},
@@ -747,6 +810,7 @@ var QUESTION_DATABASE = {
 				"す",
 				"み"
 			],
+			"phonetic": "フユヤスミ、",
 			"reverse": "みすやゆふ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -758,6 +822,7 @@ var QUESTION_DATABASE = {
 				"ふ",
 				"り"
 			],
+			"phonetic": "アメフリ、",
 			"reverse": "りふめあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -770,6 +835,7 @@ var QUESTION_DATABASE = {
 				"る",
 				"ま"
 			],
+			"phonetic": "ユキダルマ、",
 			"reverse": "まるだきゆ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -781,6 +847,7 @@ var QUESTION_DATABASE = {
 				"な",
 				"り"
 			],
+			"phonetic": "カミナリ、",
 			"reverse": "りなみか",
 			"bg": "bg_beginner_1.png"
 		},
@@ -792,6 +859,7 @@ var QUESTION_DATABASE = {
 				"じ",
 				"ん"
 			],
+			"phonetic": "ニンジン、",
 			"reverse": "んじんに",
 			"bg": "bg_beginner_1.png"
 		},
@@ -805,6 +873,7 @@ var QUESTION_DATABASE = {
 				"こ",
 				"し"
 			],
+			"phonetic": "トウモロコシ、",
 			"reverse": "しころもうと",
 			"bg": "bg_beginner_1.png"
 		},
@@ -817,6 +886,7 @@ var QUESTION_DATABASE = {
 				"い",
 				"も"
 			],
+			"phonetic": "サツマイモ、",
 			"reverse": "もいまつさ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -830,6 +900,7 @@ var QUESTION_DATABASE = {
 				"そ",
 				"う"
 			],
+			"phonetic": "ホウレンソウ、",
 			"reverse": "うそんれうほ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -841,6 +912,7 @@ var QUESTION_DATABASE = {
 				"の",
 				"こ"
 			],
+			"phonetic": "タケノコ、",
 			"reverse": "このけた",
 			"bg": "bg_beginner_1.png"
 		},
@@ -852,6 +924,7 @@ var QUESTION_DATABASE = {
 				"た",
 				"け"
 			],
+			"phonetic": "マツタケ、",
 			"reverse": "けたつま",
 			"bg": "bg_beginner_1.png"
 		},
@@ -863,6 +936,7 @@ var QUESTION_DATABASE = {
 				"た",
 				"け"
 			],
+			"phonetic": "シイタケ、",
 			"reverse": "けたいし",
 			"bg": "bg_beginner_1.png"
 		},
@@ -875,6 +949,7 @@ var QUESTION_DATABASE = {
 				"だ",
 				"け"
 			],
+			"phonetic": "エノキダケ、",
 			"reverse": "けだきのえ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -886,6 +961,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"い"
 			],
+			"phonetic": "ハクサイ、",
 			"reverse": "いさくは",
 			"bg": "bg_beginner_1.png"
 		},
@@ -897,6 +973,7 @@ var QUESTION_DATABASE = {
 				"つ",
 				"な"
 			],
+			"phonetic": "コマツナ、",
 			"reverse": "なつまこ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -910,6 +987,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"い"
 			],
+			"phonetic": "チンゲンサイ、",
 			"reverse": "いさんげんち",
 			"bg": "bg_beginner_1.png"
 		},
@@ -920,6 +998,7 @@ var QUESTION_DATABASE = {
 				"た",
 				"す"
 			],
+			"phonetic": "レタス、",
 			"reverse": "すたれ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -930,6 +1009,7 @@ var QUESTION_DATABASE = {
 				"ま",
 				"と"
 			],
+			"phonetic": "トマト、",
 			"reverse": "とまと",
 			"bg": "bg_beginner_1.png"
 		}
@@ -947,6 +1027,7 @@ var QUESTION_DATABASE = {
 				"い",
 				"き"
 			],
+			"phonetic": "ジドウハンバイキ、",
 			"reverse": "きいばんはうどじ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -961,6 +1042,7 @@ var QUESTION_DATABASE = {
 				"よ",
 				"む"
 			],
+			"phonetic": "シンブンヲヨム、",
 			"reverse": "むよをんぶんし",
 			"bg": "bg_beginner_1.png"
 		},
@@ -975,6 +1057,7 @@ var QUESTION_DATABASE = {
 				"べ",
 				"る"
 			],
+			"phonetic": "ゴハンヲタベル、",
 			"reverse": "るべたをんはご",
 			"bg": "bg_beginner_1.png"
 		},
@@ -989,6 +1072,7 @@ var QUESTION_DATABASE = {
 				"い",
 				"る"
 			],
+			"phonetic": "オフロニハイル、",
 			"reverse": "るいはにろふお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1005,6 +1089,7 @@ var QUESTION_DATABASE = {
 				"い",
 				"く"
 			],
+			"phonetic": "アシタサンポニイク、",
 			"reverse": "くいにぽんさたしあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1021,6 +1106,7 @@ var QUESTION_DATABASE = {
 				"よ",
 				"む"
 			],
+			"phonetic": "ホンヲタクサンヨム、",
 			"reverse": "むよんさくたをんほ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1035,6 +1121,7 @@ var QUESTION_DATABASE = {
 				"め",
 				"る"
 			],
+			"phonetic": "ウミヲナガメル、",
 			"reverse": "るめがなをみう",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1051,6 +1138,7 @@ var QUESTION_DATABASE = {
 				"ぼ",
 				"る"
 			],
+			"phonetic": "タカイヤマヲノボル、",
 			"reverse": "るぼのをまやいかた",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1065,6 +1153,7 @@ var QUESTION_DATABASE = {
 				"き",
 				"く"
 			],
+			"phonetic": "オンガクヲキク、",
 			"reverse": "くきをくがんお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1082,6 +1171,7 @@ var QUESTION_DATABASE = {
 				"ひ",
 				"く"
 			],
+			"phonetic": "ピアノヲタノシクヒク、",
 			"reverse": "くひくしのたをのあぴ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1098,6 +1188,7 @@ var QUESTION_DATABASE = {
 				"い",
 				"く"
 			],
+			"phonetic": "ホッカイドウニイク、",
 			"reverse": "くいにうどいかっほ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1112,6 +1203,7 @@ var QUESTION_DATABASE = {
 				"す",
 				"る"
 			],
+			"phonetic": "センタクヲスル、",
 			"reverse": "るすをくたんせ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1128,6 +1220,7 @@ var QUESTION_DATABASE = {
 				"す",
 				"る"
 			],
+			"phonetic": "ヘヤノソウジヲスル、",
 			"reverse": "るすをじうそのやへ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1142,6 +1235,7 @@ var QUESTION_DATABASE = {
 				"い",
 				"く"
 			],
+			"phonetic": "カイモノニイク、",
 			"reverse": "くいにのもいか",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1158,6 +1252,7 @@ var QUESTION_DATABASE = {
 				"ん",
 				"わ"
 			],
+			"phonetic": "オカアサンニデンワ、",
 			"reverse": "わんでにんさあかお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1172,6 +1267,7 @@ var QUESTION_DATABASE = {
 				"け",
 				"る"
 			],
+			"phonetic": "デンワヲカケル、",
 			"reverse": "るけかをわんで",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1188,6 +1284,7 @@ var QUESTION_DATABASE = {
 				"み",
 				"る"
 			],
+			"phonetic": "テレビヲジットミル、",
 			"reverse": "るみとっじをびれて",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1202,6 +1299,7 @@ var QUESTION_DATABASE = {
 				"う",
 				"つ"
 			],
+			"phonetic": "パソコンヲウツ、",
 			"reverse": "つうをんこそぱ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1216,6 +1314,7 @@ var QUESTION_DATABASE = {
 				"け",
 				"る"
 			],
+			"phonetic": "シケンヲウケル、",
 			"reverse": "るけうをんけし",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1230,6 +1329,7 @@ var QUESTION_DATABASE = {
 				"す",
 				"る"
 			],
+			"phonetic": "ウンドウヲスル、",
 			"reverse": "るすをうどんう",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1246,6 +1346,7 @@ var QUESTION_DATABASE = {
 				"す",
 				"る"
 			],
+			"phonetic": "アサノサンポヲスル、",
 			"reverse": "るすをぽんさのさあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1261,6 +1362,7 @@ var QUESTION_DATABASE = {
 				"そ",
 				"ぶ"
 			],
+			"phonetic": "コウエンデアソブ、",
 			"reverse": "ぶそあでんえうこ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1275,6 +1377,7 @@ var QUESTION_DATABASE = {
 				"べ",
 				"る"
 			],
+			"phonetic": "オカシヲタベル、",
 			"reverse": "るべたをしかお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1289,6 +1392,7 @@ var QUESTION_DATABASE = {
 				"れ",
 				"だ"
 			],
+			"phonetic": "アシタハハレダ、",
 			"reverse": "だれははたしあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1303,6 +1407,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"い"
 			],
+			"phonetic": "オヤスミナサイ、",
 			"reverse": "いさなみすやお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1319,6 +1424,7 @@ var QUESTION_DATABASE = {
 				"ま",
 				"す"
 			],
+			"phonetic": "オハヨウゴザイマス、",
 			"reverse": "すまいざごうよはお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1334,6 +1440,7 @@ var QUESTION_DATABASE = {
 				"か",
 				"い"
 			],
+			"phonetic": "コンニチハセカイ、",
 			"reverse": "いかせはちにんこ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1349,6 +1456,7 @@ var QUESTION_DATABASE = {
 				"は",
 				"な"
 			],
+			"phonetic": "アリガトウノハナ、",
 			"reverse": "なはのうとがりあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1363,6 +1471,7 @@ var QUESTION_DATABASE = {
 				"ま",
 				"で"
 			],
+			"phonetic": "ユメノナカマデ、",
 			"reverse": "でまかなのめゆ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1377,6 +1486,7 @@ var QUESTION_DATABASE = {
 				"う",
 				"た"
 			],
+			"phonetic": "サヨナラノウタ、",
 			"reverse": "たうのらなよさ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1391,6 +1501,7 @@ var QUESTION_DATABASE = {
 				"せ",
 				"ん"
 			],
+			"phonetic": "アカイフウセン、",
 			"reverse": "んせうふいかあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1405,6 +1516,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"ん"
 			],
+			"phonetic": "アオイトリサン、",
 			"reverse": "んさりといおあ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1419,6 +1531,7 @@ var QUESTION_DATABASE = {
 				"は",
 				"な"
 			],
+			"phonetic": "キイロイオハナ、",
 			"reverse": "なはおいろいき",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1433,6 +1546,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"ん"
 			],
+			"phonetic": "シロイクモサン、",
 			"reverse": "んさもくいろし",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1447,6 +1561,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"ん"
 			],
+			"phonetic": "クロイネコサン、",
 			"reverse": "んさこねいろく",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1461,6 +1576,7 @@ var QUESTION_DATABASE = {
 				"か",
 				"る"
 			],
+			"phonetic": "キラキラヒカル、",
 			"reverse": "るかひらきらき",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1476,6 +1592,7 @@ var QUESTION_DATABASE = {
 				"が",
 				"く"
 			],
+			"phonetic": "タノシイオンガク、",
 			"reverse": "くがんおいしのた",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1490,6 +1607,7 @@ var QUESTION_DATABASE = {
 				"や",
 				"つ"
 			],
+			"phonetic": "オイシイオヤツ、",
 			"reverse": "つやおいしいお",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1504,6 +1622,7 @@ var QUESTION_DATABASE = {
 				"ど",
 				"も"
 			],
+			"phonetic": "ゲンキナコドモ、",
 			"reverse": "もどこなきんげ",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1520,6 +1639,7 @@ var QUESTION_DATABASE = {
 				"さ",
 				"ん"
 			],
+			"phonetic": "ヤサシイオカアサン、",
 			"reverse": "んさあかおいしさや",
 			"bg": "bg_beginner_1.png"
 		},
@@ -1535,10 +1655,9 @@ var QUESTION_DATABASE = {
 				"さ",
 				"ん"
 			],
+			"phonetic": "ツヨイオトウサン、",
 			"reverse": "んさうとおいよつ",
 			"bg": "bg_beginner_1.png"
 		}
 	]
 };
-
-
