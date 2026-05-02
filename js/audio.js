@@ -1,65 +1,39 @@
 // Reversa - オーディオエンジン
-// 音声合成（TTS）、データベース（IndexedDB）への保存、再生制御を担当します。
+// 音声合成（TTS）、データベース（IndexedDB）への保存、再生制御、および録音を担当します。
+
+import { CONFIG } from '../config.js';
+
+// 内部定数
+const DB_NAME = 'reversa_audio_v13';
+const DB_VERSION = 1;
+const STORE_NAME = 'audio_cache';
+const SPEECH_RATE = 1.0;
+
+// グローバルな再生状態
+const GLOBAL_PLAYER = {
+    audioCtx: null,
+    activeSources: []
+};
+
+let db = null;
 
 /**
  * Web Audio API のコンテキストを取得または作成します。
  */
-function getPlaybackContext() {
+export function getPlaybackContext() {
     if (!GLOBAL_PLAYER.audioCtx) {
         GLOBAL_PLAYER.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
-    // ブラウザの制限を回避するため、必要に応じて再開
     if (GLOBAL_PLAYER.audioCtx.state === 'suspended') {
         GLOBAL_PLAYER.audioCtx.resume();
     }
     return GLOBAL_PLAYER.audioCtx;
 }
 
-// --- 効果音 (SE) ---
 /**
- * 指定されたタイプの効果音を生成・再生します。
+ * データベースを初期化します。
  */
-function playSE(type) {
-    try {
-        const ctx = getPlaybackContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        const now = ctx.currentTime;
-        if (type === 'start') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(600, now);
-            osc.frequency.exponentialRampToValueAtTime(300, now + 0.1);
-            gain.gain.setValueAtTime(0.5, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-            osc.start(now);
-            osc.stop(now + 0.1);
-        } else if (type === 'correct') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(880, now); 
-            osc.frequency.setValueAtTime(1108.73, now + 0.15); 
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.5, now + 0.05);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
-            osc.start(now);
-            osc.stop(now + 0.4);
-        } else if (type === 'wrong') {
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(150, now);
-            gain.gain.setValueAtTime(0.5, now);
-            gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
-            osc.start(now);
-            osc.stop(now + 0.3);
-        }
-    } catch (e) {
-        console.warn("SE Playback failed:", e);
-    }
-}
-
-// --- Database Logic (IndexedDB) ---
-function initDB() {
+export async function initAudio() {
     return new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, DB_VERSION);
         request.onupgradeneeded = (event) => {
@@ -76,105 +50,64 @@ function initDB() {
     });
 }
 
-async function getCachedAudio(key) {
-    if (!db) return null;
-    return new Promise((resolve) => {
-        const transaction = db.transaction([STORE_NAME], 'readonly');
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.get(key);
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => resolve(null);
-    });
+/**
+ * 効果音を再生します。
+ */
+export function playSE(type) {
+    try {
+        const ctx = getPlaybackContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        const now = ctx.currentTime;
+        if (type === 'correct') {
+            osc.frequency.setValueAtTime(880, now); 
+            osc.frequency.setValueAtTime(1108, now + 0.1); 
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+            osc.start(); osc.stop(now + 0.3);
+        } else if (type === 'wrong') {
+            osc.frequency.setValueAtTime(150, now);
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+            osc.start(); osc.stop(now + 0.3);
+        }
+    } catch (e) { console.warn(e); }
 }
 
-async function saveCachedAudio(key, blob) {
-    if (!db) return;
-    return new Promise((resolve) => {
-        const transaction = db.transaction([STORE_NAME], 'readwrite');
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.put(blob, key);
-        request.onsuccess = () => resolve();
-        request.onerror = () => resolve();
-    });
-}
-
-// --- Audio Playback ---
-async function playBlob(blob, fadeTime = 0.015) {
+/**
+ * 音声Blobを再生します。
+ */
+export async function playBlob(blob) {
     const ctx = getPlaybackContext();
     try {
         const arrayBuffer = await blob.arrayBuffer();
         const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
-        return playBuffer(audioBuffer, fadeTime);
-    } catch (err) {
-        console.error("playBlob error:", err);
-    }
+        const source = ctx.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(ctx.destination);
+        source.start();
+    } catch (err) { console.error(err); }
 }
 
-function playBuffer(audioBuffer, fadeTime = 0.015) {
-    const ctx = getPlaybackContext();
-    return new Promise((resolve) => {
-        try {
-            const source = ctx.createBufferSource();
-            source.buffer = audioBuffer;
-            const gainNode = ctx.createGain();
-            source.connect(gainNode);
-            gainNode.connect(ctx.destination);
-            
-            const now = ctx.currentTime;
-            gainNode.gain.setValueAtTime(0, now);
-            gainNode.gain.linearRampToValueAtTime(1, now + fadeTime);
-            
-            const duration = audioBuffer.duration;
-            if (duration > fadeTime * 2) {
-                gainNode.gain.setValueAtTime(1, now + duration - fadeTime);
-                gainNode.gain.linearRampToValueAtTime(0, now + duration);
-            }
-            
-            source.start(now);
-            GLOBAL_PLAYER.activeSources.push(source);
-            source.onended = () => {
-                GLOBAL_PLAYER.activeSources = GLOBAL_PLAYER.activeSources.filter(s => s !== source);
-                resolve();
-            };
-        } catch (err) {
-            console.error("playBuffer error:", err);
-            resolve();
-        }
-    });
-}
-
-function stopAllPlayback() {
-    GLOBAL_PLAYER.activeSources.forEach(source => {
-        try { source.stop(); } catch(e) {}
-    });
-    GLOBAL_PLAYER.activeSources = [];
-}
-
-// --- 音声合成 (TTS) ---
 /**
- * 指定された単語の音声Blobを取得します。
- * キャッシュがあればそれを返し、なければOpenAI APIで生成します。
+ * 音声データを取得（キャッシュ優先）
  */
-async function getAudioBlob(word, type = 'orig') {
-    const prefix = (type === 'rev') ? 'v13_rev_' : `v13_${type}_`;
-    const cacheKey = `${prefix}${word}`;
+export async function getAudioBlob(word, type = 'orig') {
+    if (!db) await initAudio();
+    const cacheKey = `${type}_${word}`;
     
-    const cachedBlob = await getCachedAudio(cacheKey);
-    if (cachedBlob) return cachedBlob;
+    // キャッシュ確認
+    const cached = await new Promise(r => {
+        const req = db.transaction([STORE_NAME], 'readonly').objectStore(STORE_NAME).get(cacheKey);
+        req.onsuccess = () => r(req.result);
+        req.onerror = () => r(null);
+    });
+    if (cached) return cached;
 
+    // OpenAI TTS
     try {
-        let textToSpeak = (type === 'rev' || type === 'orig') ? word : word.split('').join('  ');
-        if (textToSpeak.trim() === 'ん' || textToSpeak.trim() === 'ン') textToSpeak = 'んー';
-        
-        let currentSpeed = SPEECH_RATE;
-        if (type === 'parts') {
-            currentSpeed = 0.95;
-            if (!textToSpeak.includes('、')) textToSpeak += '、';
-        }
-        
-        textToSpeak = hiraganaToKatakana(textToSpeak);
-        
-        // OpenAI TTS API へのリクエスト
         const response = await fetch('https://api.openai.com/v1/audio/speech', {
             method: 'POST',
             headers: {
@@ -182,31 +115,43 @@ async function getAudioBlob(word, type = 'orig') {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'tts-1',    // 高速な音声合成モデル
-                input: textToSpeak,
-                voice: "onyx",     // 自然な男性ボイスを採用
-                speed: currentSpeed
+                model: 'tts-1',
+                input: word,
+                voice: "onyx",
+                speed: SPEECH_RATE
             })
         });
-
-        if (!response.ok) throw new Error(`OpenAI API error: ${response.status}`);
+        if (!response.ok) throw new Error();
         const blob = await response.blob();
-        await saveCachedAudio(cacheKey, blob);
+        
+        // 保存
+        const tx = db.transaction([STORE_NAME], 'readwrite');
+        tx.objectStore(STORE_NAME).put(blob, cacheKey);
         return blob;
-    } catch (e) {
-        console.warn("Cloud TTS failed, falling back to local/other", e);
-    }
+    } catch (e) { return null; }
+}
 
-    const extensions = ['wav', 'mp3'];
-    for (const ext of extensions) {
-        let localPath = (type === 'parts' || type === 'words') 
-            ? `assets/audio/${type}/${word}.${ext}?v=5`
-            : `assets/audio/${word.length}/${word}_${type}.${ext}?v=5`;
+// 録音ロジック（簡易版）
+let mediaRecorder = null;
+let recordedChunks = [];
 
-        try {
-            const response = await fetch(localPath);
-            if (response.ok) return await response.blob();
-        } catch (e) { /* ignore */ }
+export function startRecording() {
+    recordedChunks = [];
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(recordedChunks, { type: 'audio/wav' });
+            // ここでサーバーに送るなどの処理
+        };
+        mediaRecorder.start();
+        console.log('Recording started...');
+    });
+}
+
+export function stopRecording() {
+    if (mediaRecorder) {
+        mediaRecorder.stop();
+        console.log('Recording stopped.');
     }
-    return null;
 }
