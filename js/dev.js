@@ -1,239 +1,210 @@
-// Reversa - Developer Studio Logic
+/**
+ * Reversa - デベロッパー・スタジオ制御ロジック (Developer Studio)
+ * 
+ * 【目的】
+ * アプリ内で使用する音声素材（五十音パーツなど）を、ブラウザ上で録音・テスト・保存するための
+ * 開発者専用ツールを制御します。
+ * 
+ * 【主な機能】
+ * 1. リスト管理: 五十音、単語、パイロット用フレーズのリストを表示・切替。
+ * 2. リアルタイム・ビジュアライザー: 録音中の声の波形を Canvas 上に描画。
+ * 3. 録音・再生制御: ブラウザの MediaRecorder を使用した音声のキャプチャと再生。
+ * 4. サーバー通信: 録音したデータをバックエンド（server.py）へ送信し、トリミングして保存。
+ */
 
+import { elements } from './ui.js';
+import { getPlaybackContext } from './audio.js';
+
+// 開発者スタジオの内部状態
 const DEV_STATE = {
-    tab: 'moras',
-    target: null,
-    moraList: 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん'.split(''),
-    pilotIndex: 0,
-    pilotList: [...PILOT_WORDS, ...PILOT_NUMBERS],
+    currentTab: 'moras',
+    selectedItem: null,
     recorder: null,
     chunks: [],
-    blob: null
+    audioBlob: null
 };
 
-function initDevMode() {
-    switchDevTab('moras');
+/**
+ * 開発者スタジオの初期化
+ */
+export function initDevStudio() {
+    setupDevEventListeners();
+    renderDevList();
 }
 
-function switchDevTab(tabId) {
-    DEV_STATE.tab = tabId;
-    document.querySelectorAll('.nav-item').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
-    if (elements.pilotProgress) elements.pilotProgress.classList.toggle('hidden', tabId !== 'pilot');
-    refreshDevList();
+/**
+ * イベントリスナーの設定
+ */
+function setupDevEventListeners() {
+    // タブ切り替え（50音 / 単語 / パイロット）
+    elements.devNavItems.forEach(item => {
+        item.addEventListener('click', () => {
+            elements.devNavItems.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            DEV_STATE.currentTab = item.dataset.tab;
+            renderDevList();
+        });
+    });
+
+    // 録音ボタン（手動）
+    elements.btnRecordDev.addEventListener('click', () => {
+        if (DEV_STATE.recorder && DEV_STATE.recorder.state === 'recording') {
+            stopDevRecording();
+        } else {
+            startDevRecording();
+        }
+    });
+
+    // 再生ボタン
+    elements.btnPlayDev.addEventListener('click', () => {
+        if (DEV_STATE.audioBlob) {
+            const url = URL.createObjectURL(DEV_STATE.audioBlob);
+            const audio = new Audio(url);
+            audio.play();
+        }
+    });
+
+    // 保存ボタン
+    elements.btnSaveDev.addEventListener('click', saveDevAudio);
 }
 
-function refreshDevList() {
-    elements.devListContainer.innerHTML = '';
-    const list = DEV_STATE.tab === 'moras' ? DEV_STATE.moraList : 
-                 DEV_STATE.tab === 'pilot' ? DEV_STATE.pilotList : 
-                 Array.from(new Set(QUESTION_DATABASE[3].concat(QUESTION_DATABASE[4], QUESTION_DATABASE[5]).map(q => q.word)));
+/**
+ * リスト（50音や単語など）を画面に描画
+ */
+function renderDevList() {
+    const container = elements.devListContainer;
+    container.innerHTML = '';
     
-    list.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'mora-item';
-        div.textContent = item;
-        div.onclick = () => selectDevTarget(item);
-        elements.devListContainer.appendChild(div);
-    });
-}
-
-function selectDevTarget(word) {
-    DEV_STATE.target = word;
-    elements.devTargetText.innerHTML = '';
-    word.split('').forEach(char => {
-        const span = document.createElement('span');
-        span.className = 'char-unit';
-        span.textContent = char;
-        elements.devTargetText.appendChild(span);
-    });
-    elements.btnRecordDev.classList.remove('hidden');
-    elements.btnRecordRhythm.classList.remove('hidden');
-    elements.btnPlayDev.classList.add('hidden');
-    elements.btnSaveDev.classList.add('hidden');
-    elements.waveformPreview.classList.add('hidden');
-    if (DEV_STATE.tab === 'pilot') updatePilotUI();
-}
-
-function updatePilotUI() {
-    const current = DEV_STATE.pilotIndex + 1;
-    elements.pilotStatus.textContent = `${current} / ${DEV_STATE.pilotList.length}`;
-    elements.pilotBar.style.width = `${(current / DEV_STATE.pilotList.length) * 100}%`;
-}
-
-async function toggleDevRecording() {
-    if (!DEV_STATE.target) return alert('ターゲットを選んでください');
-    if (DEV_STATE.recorder && DEV_STATE.recorder.state === 'recording') {
-        DEV_STATE.recorder.stop();
-        elements.btnRecordDev.textContent = '🔴 録音開始';
-        return;
+    let list = [];
+    if (DEV_STATE.currentTab === 'moras') {
+        list = ["あ","い","う","え","お","か","き","く","け","こ","さ","し","す","せ","そ","た","ち","つ","て","と","な","に","ぬ","ね","の","は","ひ","ふ","へ","ほ","ま","み","む","め","も","や","ゆ","よ","ら","り","る","れ","ろ","わ","を","ん"];
+    } else if (DEV_STATE.currentTab === 'words') {
+        list = ["りんご", "みかん", "ばなな", "とけい", "くるま"];
+    } else {
+        list = ["なつやすみ", "おはよう", "ありがとう"];
     }
+
+    list.forEach(item => {
+        const btn = document.createElement('button');
+        btn.className = 'list-item';
+        btn.textContent = item;
+        if (DEV_STATE.selectedItem === item) btn.classList.add('selected');
+        
+        btn.onclick = () => {
+            DEV_STATE.selectedItem = item;
+            document.querySelectorAll('.list-item').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            elements.devTargetText.textContent = item;
+            elements.devStatus.textContent = `${item} が選択されました。録音ボタンを押してください。`;
+        };
+        container.appendChild(btn);
+    });
+}
+
+/**
+ * 録音開始
+ */
+async function startDevRecording() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        DEV_STATE.recorder = new MediaRecorder(stream);
         DEV_STATE.chunks = [];
-        DEV_STATE.recorder.ondataavailable = e => DEV_STATE.chunks.push(e.data);
+        DEV_STATE.recorder = new MediaRecorder(stream);
+        
+        DEV_STATE.recorder.ondataavailable = (e) => DEV_STATE.chunks.push(e.data);
         DEV_STATE.recorder.onstop = () => {
-            DEV_STATE.blob = new Blob(DEV_STATE.chunks, { type: 'audio/wav' });
+            DEV_STATE.audioBlob = new Blob(DEV_STATE.chunks, { type: 'audio/wav' });
             elements.btnPlayDev.classList.remove('hidden');
             elements.btnSaveDev.classList.remove('hidden');
-            elements.devStatus.textContent = '録音完了。確認して保存してください。';
-            stream.getTracks().forEach(t => t.stop());
+            elements.devStatus.textContent = '録音が完了しました。保存または再生が可能です。';
         };
+
         DEV_STATE.recorder.start();
         elements.btnRecordDev.textContent = '⏹ 停止';
+        elements.btnRecordDev.classList.add('recording');
         elements.devStatus.textContent = '録音中...';
+        
+        // 波形の可視化を開始
         visualizeDevWaveform(stream);
-    } catch (err) { console.error(err); }
+    } catch (err) {
+        console.error('録音の開始に失敗しました:', err);
+        elements.devStatus.textContent = 'マイクの使用が許可されていません。';
+    }
 }
 
-async function startRhythmRecording() {
-    if (!DEV_STATE.target) return alert('ターゲットを選んでください');
-    elements.metronomeArea.classList.remove('hidden');
-    elements.waveformPreview.classList.add('hidden');
-    elements.btnRecordRhythm.disabled = true;
-    const pendulum = document.querySelector('.pendulum');
-    pendulum.style.animationDuration = `${RHYTHM_BEAT_MS/1000}s`;
-    
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        DEV_STATE.recorder = new MediaRecorder(stream);
-        const chunks = [];
-        DEV_STATE.recorder.ondataavailable = e => chunks.push(e.data);
-        
-        for (let i = 3; i > 0; i--) {
-            elements.rhythmCountdown.textContent = i;
-            elements.beatIndicator.classList.add('hit');
-            setTimeout(() => elements.beatIndicator.classList.remove('hit'), 100);
-            pendulum.classList.add('active');
-            await sleep(RHYTHM_BEAT_MS);
-        }
-        await sleep(RHYTHM_BEAT_MS - 50); 
-        DEV_STATE.recorder.start();
-        elements.rhythmCountdown.textContent = 'GO!';
-        visualizeDevWaveform(stream);
-        
-        const totalDuration = (DEV_STATE.target.length * RHYTHM_BEAT_MS) + 500;
-        let startTime = Date.now() + 50;
-        const hInt = setInterval(() => {
-            const elapsed = Date.now() - startTime;
-            const index = Math.floor(elapsed / RHYTHM_BEAT_MS);
-            const chars = elements.devTargetText.querySelectorAll('.char-unit');
-            chars.forEach((c, i) => c.classList.toggle('highlight', i === index));
-            if (elapsed >= totalDuration) {
-                clearInterval(hInt);
-                chars.forEach(c => c.classList.remove('highlight'));
-            }
-        }, 50);
-
-        await sleep(totalDuration); 
+/**
+ * 録音停止
+ */
+function stopDevRecording() {
+    if (DEV_STATE.recorder) {
         DEV_STATE.recorder.stop();
-        elements.metronomeArea.classList.add('hidden');
-        elements.btnRecordRhythm.disabled = false;
-
-        DEV_STATE.recorder.onstop = async () => {
-            const fullBlob = new Blob(chunks, { type: DEV_STATE.recorder.mimeType });
-            const audioCtx = getPlaybackContext();
-            const arrayBuffer = await fullBlob.arrayBuffer();
-            const fullAudioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-            const duration = (DEV_STATE.target.length * RHYTHM_BEAT_MS) / 1000; 
-            const trimmedBuffer = audioCtx.createBuffer(fullAudioBuffer.numberOfChannels, audioCtx.sampleRate * duration, audioCtx.sampleRate);
-            for (let ch = 0; ch < fullAudioBuffer.numberOfChannels; ch++) {
-                trimmedBuffer.getChannelData(ch).set(fullAudioBuffer.getChannelData(ch).subarray(Math.floor(0.02 * audioCtx.sampleRate)));
-            }
-            DEV_STATE.blob = exportWAV(trimmedBuffer);
-            elements.waveformPreview.classList.remove('hidden');
-            drawStaticWaveform(trimmedBuffer);
-            elements.btnPlayDev.classList.remove('hidden');
-            elements.btnSaveDev.classList.remove('hidden');
-            stream.getTracks().forEach(t => t.stop());
-        };
-    } catch (err) { console.error(err); elements.btnRecordRhythm.disabled = false; }
-}
-
-function drawStaticWaveform(buffer) {
-    const canvas = elements.waveformCanvasStatic;
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-    const data = buffer.getChannelData(0);
-    const amp = canvas.height / 2;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.strokeStyle = '#34d399';
-    ctx.moveTo(0, amp);
-    const step = Math.ceil(data.length / canvas.width);
-    for (let i = 0; i < canvas.width; i++) {
-        let max = 0;
-        for (let j = 0; j < step; j++) {
-            const d = Math.abs(data[(i * step) + j] || 0);
-            if (d > max) max = d;
-        }
-        ctx.lineTo(i, amp - max * amp);
-        ctx.lineTo(i, amp + max * amp);
+        DEV_STATE.recorder.stream.getTracks().forEach(track => track.stop());
+        elements.btnRecordDev.textContent = '🔴 手動録音';
+        elements.btnRecordDev.classList.remove('recording');
     }
-    ctx.stroke();
 }
 
-function playCurrentDevRecording() {
-    if (DEV_STATE.blob) new Audio(URL.createObjectURL(DEV_STATE.blob)).play();
-}
+/**
+ * サーバーへ音声を保存
+ */
+async function saveDevAudio() {
+    if (!DEV_STATE.audioBlob || !DEV_STATE.selectedItem) return;
 
-async function saveCurrentDevRecording() {
-    if (!DEV_STATE.blob || !DEV_STATE.target) return;
+    elements.devStatus.textContent = 'サーバーへ保存中...';
+    const filename = `${DEV_STATE.selectedItem}.wav`;
+    const folder = DEV_STATE.currentTab;
+
     try {
-        const audioCtx = getPlaybackContext();
-        const arrayBuffer = await DEV_STATE.blob.arrayBuffer();
-        const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-        const wavBlob = exportWAV(audioBuffer);
-        const params = new URLSearchParams({ filename: `${DEV_STATE.target}.wav`, folder: DEV_STATE.tab === 'moras' ? 'parts' : 'orig' });
-        const res = await fetch(`${DEV_SERVER_URL}/save_audio?${params.toString()}`, { method: 'POST', body: wavBlob });
-        if (res.ok) {
-            elements.devStatus.textContent = '保存完了！✨';
-            if (DEV_STATE.tab === 'pilot' && DEV_STATE.pilotIndex < DEV_STATE.pilotList.length - 1) {
-                DEV_STATE.pilotIndex++;
-                setTimeout(() => selectDevTarget(DEV_STATE.pilotList[DEV_STATE.pilotIndex]), 1000);
-            }
+        const response = await fetch(`http://localhost:8081/upload?filename=${encodeURIComponent(filename)}&folder=${folder}`, {
+            method: 'POST',
+            body: DEV_STATE.audioBlob
+        });
+
+        if (response.ok) {
+            elements.devStatus.textContent = `保存完了: ${filename}`;
+            elements.btnSaveDev.classList.add('hidden');
+        } else {
+            throw new Error('サーバーエラー');
         }
-    } catch (err) { console.error(err); }
-}
-
-async function testMoraConcatenation(text) {
-    if (currentState.isReading) return;
-    currentState.isReading = true;
-    const sequence = text.split('');
-    const blobs = [];
-    for (let unit of sequence) blobs.push(await getAudioBlob(unit, 'parts'));
-    stopAllPlayback();
-    for (let i = 0; i < sequence.length; i++) {
-        elements.devTargetText.textContent = sequence[i];
-        if (blobs[i]) playBlob(blobs[i]);
-        await sleep(RHYTHM_BEAT_MS - 20);
+    } catch (err) {
+        console.error('保存失敗:', err);
+        elements.devStatus.textContent = '保存に失敗しました。server.py が起動しているか確認してください。';
     }
-    currentState.isReading = false;
 }
 
+/**
+ * 波形ビジュアライザー (Canvas描画)
+ */
 function visualizeDevWaveform(stream) {
     const audioCtx = getPlaybackContext();
     const source = audioCtx.createMediaStreamSource(stream);
     const analyser = audioCtx.createAnalyser();
     analyser.fftSize = 256;
     source.connect(analyser);
+
     const canvas = elements.waveformCanvas;
     const ctx = canvas.getContext('2d');
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
+
     function draw() {
         if (!DEV_STATE.recorder || DEV_STATE.recorder.state === 'inactive') return;
         requestAnimationFrame(draw);
+
         analyser.getByteFrequencyData(dataArray);
+
+        // 背景のクリア
         ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
         const barWidth = (canvas.width / bufferLength) * 2.5;
         let x = 0;
+
         for(let i = 0; i < bufferLength; i++) {
             const h = dataArray[i] / 2;
+            // 黒板テーマに合わせた青〜紫のグラデーション風
             ctx.fillStyle = `rgb(${h + 100}, 50, 255)`;
             ctx.fillRect(x, canvas.height - h, barWidth, h);
             x += barWidth + 1;
