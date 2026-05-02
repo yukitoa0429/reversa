@@ -18,7 +18,9 @@
     <meta name="description" content="聴覚だけで文字を記憶し、逆から答える。Whisper APIを用いた高精度な脳トレ。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Frederick+the+Great&family=Kiwi+Maru:wght@300;400;500&family=Outfit:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Frederick+the+Great&family=Kiwi+Maru:wght@300;400;500&family=Outfit:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
@@ -104,7 +106,8 @@
                     <div id="loading-bar" class="loading-bar"></div>
                 </div>
                 <p id="loading-status">0 / 3 完了</p>
-                <button id="btn-start-after-load" class="start-button hidden" onclick="startQuestion()">トレーニングを開始する</button>
+                <button id="btn-start-after-load" class="start-button hidden"
+                    onclick="startQuestion()">トレーニングを開始する</button>
             </div>
         </section>
 
@@ -132,13 +135,16 @@
                     </div>
                     <p class="recording-status" id="recording-status">準備ができたら開始してください</p>
                     <div class="recording-timer-group">
-                        <p class="recording-timer-text" id="recording-timer-text">自動停止まで：<span id="recording-countdown">3</span>秒</p>
+                        <p class="recording-timer-text" id="recording-timer-text">自動停止まで：<span
+                                id="recording-countdown">3</span>秒</p>
                         <div class="recording-timer-bar-bg" id="recording-timer-bar"></div>
                     </div>
 
                     <div id="action-choice-group" class="action-choice-group hidden">
-                        <button id="btn-retry-record" class="choice-button primary" onclick="startQuestion()">🎙️ 音声を聞き直して答える</button>
-                        <button id="btn-skip-question" class="choice-button secondary" onclick="nextQuestion()">⏭️ スキップする</button>
+                        <button id="btn-retry-record" class="choice-button primary" onclick="startQuestion()">🎙️
+                            音声を聞き直して答える</button>
+                        <button id="btn-skip-question" class="choice-button secondary" onclick="nextQuestion()">⏭️
+                            スキップする</button>
                     </div>
                 </div>
 
@@ -212,6 +218,17 @@
                                     </div>
                                 </div>
                                 <h2 id="dev-target-text" class="dev-target-text">準備中</h2>
+                            </div>
+
+                            <div class="dev-section"
+                                style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                                <h4 style="color: #34d399; margin: 0;">TTS 読み上げテスト</h4>
+                                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                    <input type="text" id="dev-tts-input" placeholder="テストしたい文字（例：ん）"
+                                        style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: rgba(0,0,0,0.3); color: white; outline: none;">
+                                    <button id="dev-btn-test-tts" class="primary-button" style="white-space: nowrap;">🔊
+                                        再生テスト</button>
+                                </div>
                             </div>
 
                             <!-- NEW: Rhythm/Metronome UI -->
