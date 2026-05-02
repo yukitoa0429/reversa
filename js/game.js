@@ -3,7 +3,6 @@
 
 // 1セットの問題数
 var QUESTIONS_PER_TURN = 10;
-var RHYTHM_BEAT_MS = 500;
 
 /**
  * 問題データベースから次の問題を取得します。
@@ -39,9 +38,9 @@ async function startGame(theme) {
     currentState.turnLogs = [];
     
     // UIの設定を取得
-    currentState.isSilent = elements.checkSilent ? elements.checkSilent.checked : false;
-    currentState.isBlind = elements.checkBlind ? elements.checkBlind.checked : true;
-    currentState.useNaturalVoice = elements.checkNatural ? elements.checkNatural.checked : true;
+    currentState.isSilent = (elements.checkSilent && elements.checkSilent.checked);
+    currentState.isBlind = (elements.checkBlind && elements.checkBlind.checked);
+    currentState.useNaturalVoice = (elements.checkNatural && elements.checkNatural.checked);
 
     // 問題リストを作成
     currentState.allSequences = [];

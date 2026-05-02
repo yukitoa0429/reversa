@@ -1,5 +1,5 @@
 // Reversa - オーディオエンジン
-// 音声合成（TTS）、データベース（IndexedDB）への保存、再生制御、および録音を担当します。
+// 音声合成（TTS）、データベース（IndexedDB）への保存、再生制御を担当します。
 
 var DB_NAME = 'reversa_audio_v13';
 var DB_VERSION = 1;
@@ -131,7 +131,6 @@ async function getAudioBlob(word, type) {
     } catch (e) { return null; }
 }
 
-var mediaRecorder = null;
 function startRecording() { console.log("Recording started"); }
 function stopRecording() { console.log("Recording stopped"); }
 
