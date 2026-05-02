@@ -1,33 +1,26 @@
 // Reversa - ゲームコアロジック
-import { currentState } from './state.js';
-import { elements, showScreen } from './ui.js';
-import { 
-    initAudio,
-    playSE, 
-    playBlob, 
-    getAudioBlob,
-    startRecording,
-    stopRecording
-} from './audio.js';
-import { normalizeText, katakanaToHiragana, sleep } from './utils.js';
+// 音声認識、ゲームループ、VAD（発話検知）の制御を担当します。
 
 // 1セットの問題数
-const QUESTIONS_PER_TURN = 10;
+var QUESTIONS_PER_TURN = 10;
+var RHYTHM_BEAT_MS = 500;
 
 /**
- * 次の問題を抽選
+ * 問題データベースから次の問題を取得します。
  */
 function getNextQuestion(theme) {
-    const db = window.QUESTION_DATABASE || {};
-    const pool = db[theme] || [];
+    var db = window.QUESTION_DATABASE || {};
+    var pool = db[theme] || [];
     if (pool.length > 0) {
-        let availablePool = pool.filter(q => !currentState.recentQuestions.includes(q.word));
+        var availablePool = pool.filter(function(q) {
+            return !currentState.recentQuestions.includes(q.word);
+        });
         if (availablePool.length === 0) {
             availablePool = pool;
             currentState.recentQuestions = [];
         }
-        const randomIndex = Math.floor(Math.random() * availablePool.length);
-        const selectedQuestion = availablePool[randomIndex];
+        var randomIndex = Math.floor(Math.random() * availablePool.length);
+        var selectedQuestion = availablePool[randomIndex];
         currentState.recentQuestions.push(selectedQuestion.word);
         if (currentState.recentQuestions.length > 5) currentState.recentQuestions.shift();
         return selectedQuestion;
@@ -36,23 +29,24 @@ function getNextQuestion(theme) {
 }
 
 /**
- * ゲームのセットアップ
+ * ゲームを開始し、初期状態をセットアップします。
  */
 async function startGame(theme) {
-    console.log(`Starting game: ${theme}`);
+    console.log("Starting game: " + theme);
     currentState.currentLevel = theme;
     currentState.currentQuestion = 0;
     currentState.score = 0;
+    currentState.turnLogs = [];
     
-    // 設定の読み込み
+    // UIの設定を取得
     currentState.isSilent = elements.checkSilent ? elements.checkSilent.checked : false;
     currentState.isBlind = elements.checkBlind ? elements.checkBlind.checked : true;
     currentState.useNaturalVoice = elements.checkNatural ? elements.checkNatural.checked : true;
 
-    // 問題リストの作成
+    // 問題リストを作成
     currentState.allSequences = [];
-    for (let i = 0; i < QUESTIONS_PER_TURN; i++) {
-        const q = getNextQuestion(theme);
+    for (var i = 0; i < QUESTIONS_PER_TURN; i++) {
+        var q = getNextQuestion(theme);
         if (q) currentState.allSequences.push(q);
     }
 
@@ -61,34 +55,36 @@ async function startGame(theme) {
 }
 
 /**
- * 音声の事前準備
+ * 音声データの事前生成・キャッシュ
  */
 async function preloadAudios(questions) {
-    const total = questions.length;
+    var total = questions.length;
     if (elements.loadingSpinner) elements.loadingSpinner.classList.remove('hidden');
+    if (elements.btnStartAfterLoad) elements.btnStartAfterLoad.classList.add('hidden');
     
-    for (let i = 0; i < total; i++) {
-        const q = questions[i];
-        if (elements.loadingStatus) elements.loadingStatus.textContent = `${i + 1} / ${total} 準備中...`;
+    for (var i = 0; i < total; i++) {
+        var q = questions[i];
+        if (elements.loadingStatus) elements.loadingStatus.textContent = (i + 1) + " / " + total + " 準備中...";
         await getAudioBlob(q.word, 'orig');
         await getAudioBlob(q.reverse, 'rev');
-        const progress = ((i + 1) / total) * 100;
-        if (elements.loadingBar) elements.loadingBar.style.width = `${progress}%`;
+        var progress = ((i + 1) / total) * 100;
+        if (elements.loadingBar) elements.loadingBar.style.width = progress + "%";
     }
-    if (elements.loadingStatus) elements.loadingStatus.textContent = '準備完了！';
+    if (elements.loadingBar) elements.loadingBar.style.width = '100%';
+    if (elements.loadingStatus) elements.loadingStatus.textContent = '準備完了';
+    if (elements.loadingTitle) elements.loadingTitle.textContent = '準備が整いました！';
     if (elements.loadingSpinner) elements.loadingSpinner.classList.add('hidden');
     if (elements.btnStartAfterLoad) elements.btnStartAfterLoad.classList.remove('hidden');
 }
 
 /**
- * 出題開始
+ * 各問題の開始処理
  */
 function startQuestion() {
     currentState.currentQuestion++;
-    if (elements.labelProgress) elements.labelProgress.textContent = `${currentState.currentQuestion} / ${QUESTIONS_PER_TURN}`;
-    if (elements.labelLevel) elements.labelLevel.textContent = currentState.currentLevel.toUpperCase();
+    if (elements.labelProgress) elements.labelProgress.textContent = currentState.currentQuestion + " / " + QUESTIONS_PER_TURN;
     
-    const q = currentState.allSequences[currentState.currentQuestion - 1];
+    var q = currentState.allSequences[currentState.currentQuestion - 1];
     if (!q) {
         showResult();
         return;
@@ -102,10 +98,9 @@ function startQuestion() {
 }
 
 /**
- * 問題の読み上げ
+ * 問題の読み上げ実行
  */
 async function playQuestion(q) {
-    // インジケーター表示
     if (elements.voiceIndicator) elements.voiceIndicator.classList.remove('hidden');
 
     if (!currentState.isBlind && elements.flashContainer) {
@@ -113,14 +108,13 @@ async function playQuestion(q) {
         elements.flashCharacter.textContent = '?';
     }
 
-    const blob = await getAudioBlob(q.word, 'orig');
+    var blob = await getAudioBlob(q.word, 'orig');
     if (blob) await playBlob(blob);
     await sleep(1500);
 
     if (elements.flashContainer) elements.flashContainer.classList.add('hidden');
     if (elements.voiceIndicator) elements.voiceIndicator.classList.add('hidden');
     
-    // 録音開始（フェーズ切り替え）
     if (elements.recordingContainer) elements.recordingContainer.classList.remove('hidden');
     startRecording();
 }
@@ -132,61 +126,49 @@ function submitAnswer(rawAnswer) {
     if (elements.recordingContainer) elements.recordingContainer.classList.add('hidden');
     if (elements.feedbackPanel) elements.feedbackPanel.classList.remove('hidden');
 
-    const cleanedAnswer = normalizeText(rawAnswer);
-    const normalizedCorrect = normalizeText(currentState.correctAnswer);
-    const isCorrect = (cleanedAnswer === normalizedCorrect);
+    var cleanedAnswer = normalizeText(rawAnswer);
+    var normalizedCorrect = normalizeText(currentState.correctAnswer);
+    var isCorrect = (cleanedAnswer === normalizedCorrect);
 
     if (isCorrect) {
         playSE('correct');
         currentState.score++;
-        if (elements.feedbackBadge) elements.feedbackBadge.textContent = '正解！';
+        if (elements.feedbackBadge) {
+            elements.feedbackBadge.textContent = 'お見事';
+            elements.feedbackBadge.className = 'feedback-badge hanko-stamp animate';
+        }
     } else {
         playSE('wrong');
-        if (elements.feedbackBadge) elements.feedbackBadge.textContent = '✕';
+        if (elements.feedbackBadge) {
+            elements.feedbackBadge.textContent = '✕';
+            elements.feedbackBadge.className = 'feedback-badge wrong-stamp animate';
+        }
     }
     
     if (elements.displayCorrectReverse) elements.displayCorrectReverse.textContent = katakanaToHiragana(currentState.correctAnswer);
     if (elements.displayUserAnswer) elements.displayUserAnswer.textContent = cleanedAnswer || '(無音)';
-    if (elements.labelScore) elements.labelScore.textContent = `Score: ${currentState.score}`;
+    if (elements.labelScore) elements.labelScore.textContent = "Score: " + currentState.score;
+    if (elements.btnNext) elements.btnNext.textContent = currentState.currentQuestion >= QUESTIONS_PER_TURN ? '結果を見る' : '次へ';
+}
+
+function nextQuestion() {
+    if (elements.feedbackPanel) elements.feedbackPanel.classList.add('hidden');
+    if (currentState.currentQuestion >= QUESTIONS_PER_TURN) showResult(); 
+    else startQuestion();
+}
+
+function skipQuestion() {
+    stopRecording();
+    submitAnswer('(スキップ)');
 }
 
 /**
  * 結果表示
  */
 function showResult() {
-    const accuracy = Math.round((currentState.score / QUESTIONS_PER_TURN) * 100);
+    var accuracy = Math.round((currentState.score / QUESTIONS_PER_TURN) * 100);
     showScreen('result');
-    if (elements.accuracyText) elements.accuracyText.textContent = `${accuracy}%`;
-}
-
-/**
- * アプリ初期化
- */
-function initApp() {
-    console.log('Reversa Initializing...');
-    initAudio().catch(err => console.error("Audio Init Failed:", err));
-
-    // ボタンの紐付け
-    if (elements.btnBeginner) elements.btnBeginner.onclick = () => startGame('beginner');
-    if (elements.btnIntermediate) elements.btnIntermediate.onclick = () => startGame('intermediate');
-    if (elements.btnAdvanced) elements.btnAdvanced.onclick = () => startGame('advanced');
-    
-    if (elements.btnStartAfterLoad) elements.btnStartAfterLoad.onclick = () => startQuestion();
-    if (elements.btnNext) elements.btnNext.onclick = () => {
-        if (elements.feedbackPanel) elements.feedbackPanel.classList.add('hidden');
-        if (currentState.currentQuestion >= QUESTIONS_PER_TURN) showResult();
-        else startQuestion();
-    };
-    if (elements.btnRestart) elements.btnRestart.onclick = () => location.reload(); // 確実にリセット
-    if (elements.openDevBtn) elements.openDevBtn.onclick = () => showScreen('dev');
-    if (elements.devBackBtn) elements.devBackBtn.onclick = () => showScreen('home');
-
-    console.log('Reversa System Ready.');
-}
-
-// 起動イベント登録
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
-} else {
-    initApp();
+    if (elements.accuracyText) elements.accuracyText.textContent = accuracy + "%";
+    if (elements.accuracyPath) elements.accuracyPath.style.strokeDasharray = accuracy + ", 100";
+    if (elements.resultMessage) elements.resultMessage.textContent = accuracy === 100 ? '全問正解！🎉' : 'お疲れ様でした！';
 }
