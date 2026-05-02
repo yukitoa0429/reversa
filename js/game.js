@@ -458,9 +458,56 @@ function submitAnswer(rawAnswer) {
     currentState.autoAdvanceTimer = setTimeout(() => nextQuestion(), 3900);
 }
 
-function nextQuestion() {
     if (currentState.autoAdvanceTimer) clearTimeout(currentState.autoAdvanceTimer);
     if (currentState.currentQuestion >= QUESTIONS_PER_TURN) showResult(); else startQuestion();
+}
+
+/**
+ * アプリの初期化処理
+ * ページ読み込み時にボタンのクリックイベントなどを紐付けます。
+ */
+function initApp() {
+    // 難易度選択ボタンの紐付け
+    if (elements.btnLevelBeginner) elements.btnLevelBeginner.onclick = () => startGame('beginner');
+    if (elements.btnLevelIntermediate) elements.btnLevelIntermediate.onclick = () => startGame('intermediate');
+    if (elements.btnLevelAdvanced) elements.btnLevelAdvanced.onclick = () => startGame('advanced');
+
+    // ゲーム中の操作ボタンの紐付け
+    if (elements.btnStartAfterLoad) {
+        elements.btnStartAfterLoad.onclick = () => {
+            showScreen('game');
+            startQuestion();
+        };
+    }
+    if (elements.btnNext) elements.btnNext.onclick = () => nextQuestion();
+    if (elements.btnRestart) elements.btnRestart.onclick = () => showScreen('home');
+    if (elements.btnExportLog) elements.btnExportLog.onclick = () => exportLogs();
+    if (elements.btnRetryRecord) elements.btnRetryRecord.onclick = () => startRecording();
+    if (elements.btnSkipQuestion) elements.btnSkipQuestion.onclick = () => skipQuestion();
+    if (elements.btnPlayMaster) elements.btnPlayMaster.onclick = () => playMasterAudio();
+    if (elements.btnStartRecord) elements.btnStartRecord.onclick = () => startRecording();
+
+    // 開発者メニューの紐付け
+    if (elements.openDevBtn) elements.openDevBtn.onclick = () => {
+        showScreen('dev');
+        if (typeof initDevStudio === 'function') initDevStudio();
+    };
+    if (elements.devBackBtn) elements.devBackBtn.onclick = () => showScreen('home');
+
+    // 初期画面を表示
+    showScreen('home');
+}
+
+// 開発者スタジオの動的インポート（必要な場合のみ）
+import { initDevStudio } from './dev.js';
+import { startRecording, stopRecording, playSE, playBlob, getAudioBuffer, playBuffer, getAudioBlob } from './audio.js';
+import { QUESTION_DATABASE } from '../questions.js';
+
+// DOMの読み込み完了を待ってから初期化を実行
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
 }
 
 function showResult() {
