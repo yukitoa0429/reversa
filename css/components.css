@@ -1,3 +1,12 @@
+/* 
+ * Reversa - 共通コンポーネント (Components)
+ * 
+ * 【役割】
+ * アプリ内で繰り返し使われる「部品」のデザインを定義します。
+ * ・チョーク質感のボタン、ガラス風のカードパネル。
+ * ・トグルスイッチ、波形表示キャンバス、ローディングバー。
+ * ・各パーツのホバーエフェクト（マウスを乗せた時の動き）。
+ */
 /* Blackboard Card (Simplified from Glass) */
 .glass-card {
     background: transparent;

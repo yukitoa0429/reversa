@@ -1,3 +1,12 @@
+/* 
+ * Reversa - ホーム画面専用スタイル (Home Screen)
+ * 
+ * 【役割】
+ * 起動直後のタイトル画面のデザインを定義します。
+ * ・タイトルの大きなフォント。
+ * ・難易度選択エリアのレイアウト。
+ * ・設定（チェックボックス）の配置。
+ */
 .home-instruction {
     font-size: 1.1rem !important;
     font-weight: 400 !important;
