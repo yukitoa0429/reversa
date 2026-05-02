@@ -7,6 +7,8 @@
  * ・難易度選択エリアのレイアウト。
  * ・設定（チェックボックス）の配置。
  */
+
+/* ホーム画面の説明テキスト */
 .home-instruction {
     font-size: 1.1rem !important;
     font-weight: 400 !important;
@@ -20,7 +22,7 @@
     color: var(--text-secondary);
 }
 
-/* Level Grid */
+/* 難易度（レベル）選択用のグリッド配置 */
 .level-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -29,6 +31,7 @@
     margin-top: 20px;
 }
 
+/* 難易度ボタン（チョーク質感の四角いボタン） */
 .level-button {
     background: transparent;
     border: 2px solid var(--chalk-white);
@@ -43,6 +46,7 @@
     box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
 }
 
+/* ボタンの外側の細い枠線（デザイン上の装飾） */
 .level-button::before {
     content: '';
     position: absolute;
@@ -51,6 +55,7 @@
     pointer-events: none;
 }
 
+/* ホバー（マウスを乗せた時）の演出 */
 .level-button:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: translate(-2px, -2px);
@@ -59,8 +64,19 @@
     border-color: var(--chalk-yellow);
 }
 
+/* 選択中のボタンのスタイル */
 .level-button.active {
     background: rgba(255, 255, 255, 0.15);
     border-color: var(--chalk-yellow);
     color: var(--chalk-yellow);
+}
+
+/* アプリ下部の設定エリア（チェックボックス等） */
+.home-settings {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
 }
