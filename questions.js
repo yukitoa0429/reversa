@@ -7,7 +7,7 @@
 const QUESTION_DATABASE = {
         "beginner": [
                 {
-                        "word": "きつね",
+                        "word": "狐",
                         "ruby": [
                                 "き",
                                 "つ",
@@ -17,7 +17,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "さくら",
+                        "word": "桜",
                         "ruby": [
                                 "さ",
                                 "く",
@@ -27,7 +27,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "りんご",
+                        "word": "リンゴ",
                         "ruby": [
                                 "り",
                                 "ん",
@@ -47,7 +47,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "くるま",
+                        "word": "車",
                         "ruby": [
                                 "く",
                                 "る",
@@ -57,7 +57,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "めがね",
+                        "word": "眼鏡",
                         "ruby": [
                                 "め",
                                 "が",
@@ -67,7 +67,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "からす",
+                        "word": "カラス",
                         "ruby": [
                                 "か",
                                 "ら",
@@ -77,7 +77,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "すずめ",
+                        "word": "スズメ",
                         "ruby": [
                                 "す",
                                 "ず",
@@ -87,7 +87,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "うさぎ",
+                        "word": "ウサギ",
                         "ruby": [
                                 "う",
                                 "さ",
@@ -97,7 +97,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "くじら",
+                        "word": "クジラ",
                         "ruby": [
                                 "く",
                                 "じ",
@@ -107,7 +107,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ひよこ",
+                        "word": "ヒヨコ",
                         "ruby": [
                                 "ひ",
                                 "よ",
@@ -117,7 +117,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "かえる",
+                        "word": "カエル",
                         "ruby": [
                                 "か",
                                 "え",
@@ -127,7 +127,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "めだか",
+                        "word": "メダカ",
                         "ruby": [
                                 "め",
                                 "だ",
@@ -137,7 +137,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "さかな",
+                        "word": "魚",
                         "ruby": [
                                 "さ",
                                 "か",
@@ -147,7 +147,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ごはん",
+                        "word": "ご飯",
                         "ruby": [
                                 "ご",
                                 "は",
@@ -157,7 +157,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "たまご",
+                        "word": "卵",
                         "ruby": [
                                 "た",
                                 "ま",
@@ -177,7 +177,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ぽてと",
+                        "word": "ポテト",
                         "ruby": [
                                 "ぽ",
                                 "て",
@@ -187,7 +187,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "つくえ",
+                        "word": "机",
                         "ruby": [
                                 "つ",
                                 "く",
@@ -197,7 +197,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "かばん",
+                        "word": "カバン",
                         "ruby": [
                                 "か",
                                 "ば",
@@ -207,7 +207,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "さいふ",
+                        "word": "財布",
                         "ruby": [
                                 "さ",
                                 "い",
@@ -217,7 +217,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "いちご",
+                        "word": "苺",
                         "ruby": [
                                 "い",
                                 "ち",
@@ -227,7 +227,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "すいか",
+                        "word": "スイカ",
                         "ruby": [
                                 "す",
                                 "い",
@@ -237,7 +237,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ばなな",
+                        "word": "バナナ",
                         "ruby": [
                                 "ば",
                                 "な",
@@ -247,7 +247,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "めろん",
+                        "word": "メロン",
                         "ruby": [
                                 "め",
                                 "ろ",
@@ -257,7 +257,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ぶどう",
+                        "word": "葡萄",
                         "ruby": [
                                 "ぶ",
                                 "ど",
@@ -267,7 +267,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "れたす",
+                        "word": "レタス",
                         "ruby": [
                                 "れ",
                                 "た",
@@ -277,7 +277,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "とまと",
+                        "word": "トマト",
                         "ruby": [
                                 "と",
                                 "ま",
@@ -287,7 +287,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "なすび",
+                        "word": "茄子",
                         "ruby": [
                                 "な",
                                 "す",
@@ -297,7 +297,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "きのこ",
+                        "word": "キノコ",
                         "ruby": [
                                 "き",
                                 "の",
@@ -307,7 +307,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "たけのこ",
+                        "word": "筍",
                         "ruby": [
                                 "た",
                                 "け",
@@ -318,7 +318,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "はさみ",
+                        "word": "ハサミ",
                         "ruby": [
                                 "は",
                                 "さ",
@@ -328,7 +328,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "とけい",
+                        "word": "時計",
                         "ruby": [
                                 "と",
                                 "け",
@@ -338,7 +338,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "てれび",
+                        "word": "テレビ",
                         "ruby": [
                                 "て",
                                 "れ",
@@ -348,7 +348,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "らじお",
+                        "word": "ラジオ",
                         "ruby": [
                                 "ら",
                                 "じ",
@@ -358,7 +358,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ばいく",
+                        "word": "バイク",
                         "ruby": [
                                 "ば",
                                 "い",
@@ -368,7 +368,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ふねだ",
+                        "word": "船だ",
                         "ruby": [
                                 "ふ",
                                 "ね",
@@ -378,7 +378,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "そらだ",
+                        "word": "空だ",
                         "ruby": [
                                 "そ",
                                 "ら",
@@ -388,7 +388,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "うみだ",
+                        "word": "海だ",
                         "ruby": [
                                 "う",
                                 "み",
@@ -398,7 +398,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "やまだ",
+                        "word": "山だ",
                         "ruby": [
                                 "や",
                                 "ま",
@@ -408,7 +408,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "かわだ",
+                        "word": "川だ",
                         "ruby": [
                                 "か",
                                 "わ",
@@ -418,7 +418,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "はなだ",
+                        "word": "花だ",
                         "ruby": [
                                 "は",
                                 "な",
@@ -428,7 +428,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "もりだ",
+                        "word": "森だ",
                         "ruby": [
                                 "も",
                                 "り",
@@ -438,7 +438,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "こめだ",
+                        "word": "米だ",
                         "ruby": [
                                 "こ",
                                 "め",
@@ -448,7 +448,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "かめだ",
+                        "word": "亀だ",
                         "ruby": [
                                 "か",
                                 "め",
@@ -458,7 +458,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ありだ",
+                        "word": "蟻だ",
                         "ruby": [
                                 "あ",
                                 "り",
@@ -468,7 +468,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "むしだ",
+                        "word": "虫だ",
                         "ruby": [
                                 "む",
                                 "し",
@@ -478,7 +478,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "くまき",
+                        "word": "熊木",
                         "ruby": [
                                 "く",
                                 "ま",
@@ -488,7 +488,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "しかき",
+                        "word": "鹿木",
                         "ruby": [
                                 "し",
                                 "か",
@@ -498,7 +498,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "とりき",
+                        "word": "鳥木",
                         "ruby": [
                                 "と",
                                 "り",
@@ -510,7 +510,7 @@ const QUESTION_DATABASE = {
         ],
         "intermediate": [
                 {
-                        "word": "かたつむり",
+                        "word": "カタツムリ",
                         "ruby": [
                                 "か",
                                 "た",
@@ -522,7 +522,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ひまわり",
+                        "word": "向日葵",
                         "ruby": [
                                 "ひ",
                                 "ま",
@@ -533,7 +533,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "たんぽぽ",
+                        "word": "タンポポ",
                         "ruby": [
                                 "た",
                                 "ん",
@@ -544,7 +544,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "あさがお",
+                        "word": "朝顔",
                         "ruby": [
                                 "あ",
                                 "さ",
@@ -566,7 +566,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "おべんとう",
+                        "word": "お弁当",
                         "ruby": [
                                 "お",
                                 "べ",
@@ -578,7 +578,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "せんたくき",
+                        "word": "洗濯機",
                         "ruby": [
                                 "せ",
                                 "ん",
@@ -590,7 +590,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "れいぞうこ",
+                        "word": "冷蔵庫",
                         "ruby": [
                                 "れ",
                                 "い",
@@ -602,7 +602,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "どうぶつえん",
+                        "word": "動物園",
                         "ruby": [
                                 "ど",
                                 "う",
@@ -615,7 +615,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "しんかんせん",
+                        "word": "新幹線",
                         "ruby": [
                                 "し",
                                 "ん",
@@ -628,7 +628,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ひこうき",
+                        "word": "飛行機",
                         "ruby": [
                                 "ひ",
                                 "こ",
@@ -639,7 +639,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "がっこう",
+                        "word": "学校",
                         "ruby": [
                                 "が",
                                 "っ",
@@ -650,7 +650,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "こうえん",
+                        "word": "公園",
                         "ruby": [
                                 "こ",
                                 "う",
@@ -661,7 +661,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "すべりだい",
+                        "word": "滑り台",
                         "ruby": [
                                 "す",
                                 "べ",
@@ -673,7 +673,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ぶらんこ",
+                        "word": "ブランコ",
                         "ruby": [
                                 "ぶ",
                                 "ら",
@@ -684,7 +684,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "すいぞくかん",
+                        "word": "水族館",
                         "ruby": [
                                 "す",
                                 "い",
@@ -697,7 +697,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "はくぶつかん",
+                        "word": "博物館",
                         "ruby": [
                                 "は",
                                 "く",
@@ -710,7 +710,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "たいよう",
+                        "word": "太陽",
                         "ruby": [
                                 "た",
                                 "い",
@@ -721,7 +721,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "おつきさま",
+                        "word": "お月様",
                         "ruby": [
                                 "お",
                                 "つ",
@@ -733,18 +733,19 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "おほしさま",
+                        "word": "お星様",
                         "ruby": [
                                 "お",
                                 "ほ",
                                 "し",
-                                "さま"
+                                "さ",
+                                "ま"
                         ],
-                        "reverse": "さましほお",
+                        "reverse": "まさしほお",
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "あまのがわ",
+                        "word": "天の川",
                         "ruby": [
                                 "あ",
                                 "ま",
@@ -756,7 +757,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "なつやすみ",
+                        "word": "夏休み",
                         "ruby": [
                                 "な",
                                 "つ",
@@ -768,7 +769,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ふゆやすみ",
+                        "word": "冬休み",
                         "ruby": [
                                 "ふ",
                                 "ゆ",
@@ -780,7 +781,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "あめふり",
+                        "word": "雨降り",
                         "ruby": [
                                 "あ",
                                 "め",
@@ -791,7 +792,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ゆきだるま",
+                        "word": "雪だるま",
                         "ruby": [
                                 "ゆ",
                                 "き",
@@ -803,7 +804,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "かみなり",
+                        "word": "雷",
                         "ruby": [
                                 "か",
                                 "み",
@@ -814,7 +815,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "にんじん",
+                        "word": "人参",
                         "ruby": [
                                 "に",
                                 "ん",
@@ -825,7 +826,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "とうもろこし",
+                        "word": "トウモロコシ",
                         "ruby": [
                                 "と",
                                 "う",
@@ -838,7 +839,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "さつまいも",
+                        "word": "サツマイモ",
                         "ruby": [
                                 "さ",
                                 "つ",
@@ -850,7 +851,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ほうれんそう",
+                        "word": "ほうれん草",
                         "ruby": [
                                 "ほ",
                                 "う",
@@ -863,7 +864,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "たけのこ",
+                        "word": "筍",
                         "ruby": [
                                 "た",
                                 "け",
@@ -874,7 +875,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "まつたけ",
+                        "word": "松茸",
                         "ruby": [
                                 "ま",
                                 "つ",
@@ -885,7 +886,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "しいたけ",
+                        "word": "椎茸",
                         "ruby": [
                                 "し",
                                 "い",
@@ -896,7 +897,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "えのきだけ",
+                        "word": "えのき茸",
                         "ruby": [
                                 "え",
                                 "の",
@@ -908,7 +909,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "はくさい",
+                        "word": "白菜",
                         "ruby": [
                                 "は",
                                 "く",
@@ -919,7 +920,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "こまつな",
+                        "word": "小松菜",
                         "ruby": [
                                 "こ",
                                 "ま",
@@ -930,7 +931,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ちんげんさい",
+                        "word": "青梗菜",
                         "ruby": [
                                 "ち",
                                 "ん",
@@ -943,7 +944,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "れたす",
+                        "word": "レタス",
                         "ruby": [
                                 "れ",
                                 "た",
@@ -953,7 +954,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "とまと",
+                        "word": "トマト",
                         "ruby": [
                                 "と",
                                 "ま",
@@ -965,7 +966,7 @@ const QUESTION_DATABASE = {
         ],
         "advanced": [
                 {
-                        "word": "じどうはんばいき",
+                        "word": "自動販売機",
                         "ruby": [
                                 "じ",
                                 "ど",
@@ -980,7 +981,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "しんぶんをよむ",
+                        "word": "新聞を読む",
                         "ruby": [
                                 "し",
                                 "ん",
@@ -994,7 +995,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ごはんをたべる",
+                        "word": "ご飯を食べる",
                         "ruby": [
                                 "ご",
                                 "は",
@@ -1008,7 +1009,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "おふろにはいる",
+                        "word": "お風呂に入る",
                         "ruby": [
                                 "お",
                                 "ふ",
@@ -1022,7 +1023,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "あしたさんぽにいく",
+                        "word": "明日散歩に行く",
                         "ruby": [
                                 "あ",
                                 "し",
@@ -1038,7 +1039,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ほんをたくさんよむ",
+                        "word": "本をたくさん読む",
                         "ruby": [
                                 "ほ",
                                 "ん",
@@ -1054,7 +1055,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "うみをながめる",
+                        "word": "海を眺める",
                         "ruby": [
                                 "う",
                                 "み",
@@ -1068,7 +1069,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "たかいやまをのぼる",
+                        "word": "高い山を登る",
                         "ruby": [
                                 "た",
                                 "か",
@@ -1084,7 +1085,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "おんがくをきく",
+                        "word": "音楽を聴く",
                         "ruby": [
                                 "お",
                                 "ん",
@@ -1098,7 +1099,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ぴあのをたのしくひく",
+                        "word": "ピアノを楽しく弾く",
                         "ruby": [
                                 "ぴ",
                                 "あ",
@@ -1115,7 +1116,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ほっかいどうにいく",
+                        "word": "北海道に行く",
                         "ruby": [
                                 "ほ",
                                 "っ",
@@ -1131,7 +1132,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "せんたくをする",
+                        "word": "洗濯をする",
                         "ruby": [
                                 "せ",
                                 "ん",
@@ -1145,7 +1146,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "へやのそうじをする",
+                        "word": "部屋の掃除をする",
                         "ruby": [
                                 "へ",
                                 "や",
@@ -1161,7 +1162,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "かいものにいく",
+                        "word": "買い物に行く",
                         "ruby": [
                                 "か",
                                 "い",
@@ -1175,7 +1176,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "おかあさんにかけ",
+                        "word": "お母さんに電話",
                         "ruby": [
                                 "お",
                                 "か",
@@ -1183,14 +1184,15 @@ const QUESTION_DATABASE = {
                                 "さ",
                                 "ん",
                                 "に",
-                                "か",
-                                "け"
+                                "で",
+                                "ん",
+                                "わ"
                         ],
-                        "reverse": "けかにんさあかお",
+                        "reverse": "わんでにんさあかお",
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "でんわをかける",
+                        "word": "電話をかける",
                         "ruby": [
                                 "で",
                                 "ん",
@@ -1204,7 +1206,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "てれびをじっとみる",
+                        "word": "テレビをじっと見る",
                         "ruby": [
                                 "て",
                                 "れ",
@@ -1220,7 +1222,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ぱそこんをうつ",
+                        "word": "パソコンを打つ",
                         "ruby": [
                                 "ぱ",
                                 "そ",
@@ -1234,7 +1236,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "しけんをうける",
+                        "word": "試験を受ける",
                         "ruby": [
                                 "し",
                                 "け",
@@ -1248,7 +1250,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "うんどうをする",
+                        "word": "運動をする",
                         "ruby": [
                                 "う",
                                 "ん",
@@ -1262,7 +1264,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "あさのさんぽをする",
+                        "word": "朝の散歩をする",
                         "ruby": [
                                 "あ",
                                 "さ",
@@ -1278,7 +1280,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "こうえんであそぶ",
+                        "word": "公園で遊ぶ",
                         "ruby": [
                                 "こ",
                                 "う",
@@ -1293,7 +1295,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "おかしをたべる",
+                        "word": "お菓子を食べる",
                         "ruby": [
                                 "お",
                                 "か",
@@ -1307,7 +1309,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "あしたははれだ",
+                        "word": "明日は晴れだ",
                         "ruby": [
                                 "あ",
                                 "し",
@@ -1381,7 +1383,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "ゆめのなかまで",
+                        "word": "夢の中まで",
                         "ruby": [
                                 "ゆ",
                                 "め",
@@ -1395,7 +1397,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "さよならのうた",
+                        "word": "さよならの歌",
                         "ruby": [
                                 "さ",
                                 "よ",
@@ -1409,7 +1411,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "あかいふうせん",
+                        "word": "赤い風船",
                         "ruby": [
                                 "あ",
                                 "か",
@@ -1423,7 +1425,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "あおいとりさん",
+                        "word": "青い鳥さん",
                         "ruby": [
                                 "あ",
                                 "お",
@@ -1437,7 +1439,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "きいろいお花",
+                        "word": "黄色いお花",
                         "ruby": [
                                 "き",
                                 "い",
@@ -1451,7 +1453,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "しろいくもさん",
+                        "word": "白い雲さん",
                         "ruby": [
                                 "し",
                                 "ろ",
@@ -1465,7 +1467,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "くろいねこさん",
+                        "word": "黒い猫さん",
                         "ruby": [
                                 "く",
                                 "ろ",
@@ -1479,7 +1481,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "きらきらひかる",
+                        "word": "キラキラ光る",
                         "ruby": [
                                 "き",
                                 "ら",
@@ -1493,7 +1495,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "たのしいおんがく",
+                        "word": "楽しい音楽",
                         "ruby": [
                                 "た",
                                 "の",
@@ -1508,7 +1510,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "おいしいおやつ",
+                        "word": "美味しいおやつ",
                         "ruby": [
                                 "お",
                                 "い",
@@ -1522,7 +1524,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "げんきなこども",
+                        "word": "元気な子供",
                         "ruby": [
                                 "げ",
                                 "ん",
@@ -1536,7 +1538,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "やさしいお母さん",
+                        "word": "優しいお母さん",
                         "ruby": [
                                 "や",
                                 "さ",
@@ -1552,7 +1554,7 @@ const QUESTION_DATABASE = {
                         "bg": "bg_beginner_1.png"
                 },
                 {
-                        "word": "つよいお父さん",
+                        "word": "強いお父さん",
                         "ruby": [
                                 "つ",
                                 "よ",
