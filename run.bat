@@ -2,43 +2,43 @@
 setlocal
 
 :: ==================================================
-:: Reversa 一括起動スクリプト
+:: Reversa Startup Script
 :: 
-:: 【使い方】
-:: このファイルをダブルクリックするだけで、以下の準備が自動で行われます：
-:: 1. Python環境のチェック
-:: 2. バックエンド（音声解析サーバー：Port 8081）の起動
-:: 3. フロントエンド（アプリ画面：Port 8000）の起動
-:: 4. ブラウザで自動的にアプリを表示
+:: [Usage]
+:: Just double-click this file to:
+:: 1. Check Python environment
+:: 2. Start Smart Audio Server (Port 8081)
+:: 3. Start Frontend Server (Port 8000)
+:: 4. Open app in your browser automatically
 :: ==================================================
 
 echo --------------------------------------------------
-echo   Reversa ローカル開発サーバー 起動
+echo   Reversa Local Development Server
 echo --------------------------------------------------
 echo.
 
-:: Pythonがインストールされているか確認
+:: Check if Python is installed
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [エラー] Python が見つかりませんでした。
-    echo Python をインストールし、PATH を通してから再度実行してください。
+    echo [ERROR] Python not found.
+    echo Please install Python and add it to your PATH.
     pause
     exit /b
 )
 
-echo サーバーを順次起動しています...
+echo Starting servers...
 echo.
 
-:: [1/2] バックエンド音声サーバーの起動（別ウィンドウ）
-echo [1/2] 音声解析サーバー (Port 8081) を起動中...
-start "Reversa 音声解析サーバー" cmd /k "chcp 65001 > nul && python server.py"
+:: [1/2] Start Backend Audio Server (New Window)
+echo [1/2] Starting Audio Analysis Server (Port 8081)...
+start "Reversa Audio Server" cmd /k "chcp 65001 > nul && python server.py"
 
-:: [2/2] フロントエンドサーバーの起動とブラウザ表示
-echo [2/2] アプリ画面サーバー (Port 8000) を起動中...
+:: [2/2] Start Frontend Server and Open Browser
+echo [2/2] Starting App Server (Port 8000)...
 echo.
-echo ブラウザでアプリを表示します: http://localhost:8000/index.html
+echo Opening app: http://localhost:8000/index.html
 echo.
 start http://localhost:8000/index.html
 
-:: Python標準のHTTPサーバーを起動（このウィンドウで継続実行）
+:: Start Python's built-in HTTP server (Block this window)
 python -m http.server 8000
