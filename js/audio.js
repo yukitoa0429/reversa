@@ -1,15 +1,11 @@
 // Reversa - オーディオエンジン
-// 音声合成（TTS）、データベース（IndexedDB）への保存、再生制御、および録音を担当します。
-
 import { CONFIG } from '../config.js';
 
-// 内部定数
 const DB_NAME = 'reversa_audio_v13';
 const DB_VERSION = 1;
 const STORE_NAME = 'audio_cache';
 const SPEECH_RATE = 1.0;
 
-// グローバルな再生状態
 const GLOBAL_PLAYER = {
     audioCtx: null,
     activeSources: []
@@ -18,7 +14,7 @@ const GLOBAL_PLAYER = {
 let db = null;
 
 /**
- * Web Audio API のコンテキストを取得または作成します。
+ * Web Audio API コンテキストの取得
  */
 export function getPlaybackContext() {
     if (!GLOBAL_PLAYER.audioCtx) {
@@ -31,27 +27,28 @@ export function getPlaybackContext() {
 }
 
 /**
- * データベースを初期化します。
+ * データベースの初期化
  */
 export async function initAudio() {
+    if (db) return db;
     return new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, DB_VERSION);
         request.onupgradeneeded = (event) => {
-            const db = event.target.result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME);
+            const dbInstance = event.target.result;
+            if (!dbInstance.objectStoreNames.contains(STORE_NAME)) {
+                dbInstance.createObjectStore(STORE_NAME);
             }
         };
         request.onsuccess = (event) => {
             db = event.target.result;
-            resolve();
+            resolve(db);
         };
         request.onerror = (event) => reject(event.target.error);
     });
 }
 
 /**
- * 効果音を再生します。
+ * 効果音の再生
  */
 export function playSE(type) {
     try {
@@ -77,7 +74,7 @@ export function playSE(type) {
 }
 
 /**
- * 音声Blobを再生します。
+ * Blobを再生
  */
 export async function playBlob(blob) {
     const ctx = getPlaybackContext();
@@ -88,25 +85,28 @@ export async function playBlob(blob) {
         source.buffer = audioBuffer;
         source.connect(ctx.destination);
         source.start();
+        GLOBAL_PLAYER.activeSources.push(source);
+        source.onended = () => {
+            GLOBAL_PLAYER.activeSources = GLOBAL_PLAYER.activeSources.filter(s => s !== source);
+        };
     } catch (err) { console.error(err); }
 }
 
 /**
- * 音声データを取得（キャッシュ優先）
+ * 音声データの取得（キャッシュ対応）
  */
 export async function getAudioBlob(word, type = 'orig') {
     if (!db) await initAudio();
     const cacheKey = `${type}_${word}`;
     
-    // キャッシュ確認
     const cached = await new Promise(r => {
-        const req = db.transaction([STORE_NAME], 'readonly').objectStore(STORE_NAME).get(cacheKey);
+        const tx = db.transaction([STORE_NAME], 'readonly');
+        const req = tx.objectStore(STORE_NAME).get(cacheKey);
         req.onsuccess = () => r(req.result);
         req.onerror = () => r(null);
     });
     if (cached) return cached;
 
-    // OpenAI TTS
     try {
         const response = await fetch('https://api.openai.com/v1/audio/speech', {
             method: 'POST',
@@ -124,34 +124,17 @@ export async function getAudioBlob(word, type = 'orig') {
         if (!response.ok) throw new Error();
         const blob = await response.blob();
         
-        // 保存
         const tx = db.transaction([STORE_NAME], 'readwrite');
         tx.objectStore(STORE_NAME).put(blob, cacheKey);
         return blob;
     } catch (e) { return null; }
 }
 
-// 録音ロジック（簡易版）
-let mediaRecorder = null;
-let recordedChunks = [];
-
 export function startRecording() {
-    recordedChunks = [];
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-        mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(recordedChunks, { type: 'audio/wav' });
-            // ここでサーバーに送るなどの処理
-        };
-        mediaRecorder.start();
-        console.log('Recording started...');
-    });
+    console.log("Recording started (Mock)");
+    // 実装は簡略化
 }
 
 export function stopRecording() {
-    if (mediaRecorder) {
-        mediaRecorder.stop();
-        console.log('Recording stopped.');
-    }
+    console.log("Recording stopped (Mock)");
 }

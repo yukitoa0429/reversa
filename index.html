@@ -76,7 +76,7 @@
                 <h2 id="loading-title">音声を準備しています</h2>
                 <div class="loading-spinner"></div>
                 <div class="progress-container">
-                    <div id="loading-bar" style="width: 0%; height: 10px; background: var(--chalk-yellow);"></div>
+                    <div id="loading-bar" style="width: 0%; height: 10px; background: var(--chalk-yellow); transition: width 0.3s;"></div>
                 </div>
                 <p id="loading-status">0 / 10 準備中...</p>
                 <button id="btn-start-after-load" class="primary-button hidden">
@@ -129,10 +129,10 @@
             <div class="result-card glass-card">
                 <h2>トレーニング終了！</h2>
                 <div class="accuracy-display">
-                    <svg viewBox="0 0 36 36">
-                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <path id="accuracy-path" class="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <text x="18" y="20.35" class="percentage" id="accuracy-text">0%</text>
+                    <svg viewBox="0 0 36 36" style="width: 100px; height: 100px;">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" style="fill: none; stroke: rgba(255,255,255,0.2); stroke-width: 2;" />
+                        <path id="accuracy-path" class="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" style="fill: none; stroke: var(--chalk-yellow); stroke-width: 3; stroke-dasharray: 0, 100; transition: stroke-dasharray 1s;" />
+                        <text x="18" y="20.35" class="percentage" id="accuracy-text" style="fill: #fff; font-size: 8px; text-anchor: middle;">0%</text>
                     </svg>
                 </div>
                 <p id="result-message"></p>
@@ -162,7 +162,7 @@
     <script src="questions.js"></script>
     <script src="config.js"></script>
     
-    <!-- メインロジック -->
+    <!-- メインロジック (ES Module) -->
     <script type="module" src="js/game.js"></script>
 </body>
 </html>
