@@ -7,6 +7,8 @@
  * ・履歴リスト（一問ごとの正誤と音声再生ボタン）。
  * ・再挑戦ボタンやログ出力ボタン。
  */
+
+/* 結果画面のメインカード */
 .result-card {
     padding: 5px 15px !important;
 }
@@ -17,25 +19,28 @@
     margin-bottom: 5px;
 }
 
+/* アクションボタン（再挑戦・ログ出力）の並び */
 .result-actions {
     display: flex;
     gap: 15px;
     margin-top: 10px;
 }
 
-/* Accuracy Chart (Chalk Style) */
+/* 正答率を表示する円形チャート（チョーク風） */
 .accuracy-display {
     width: 100px;
     height: 100px;
     margin: 5px auto;
 }
 
+/* 円の背景（薄いグレーの輪） */
 .circle-bg {
     fill: none;
     stroke: rgba(255, 255, 255, 0.2);
     stroke-width: 2;
 }
 
+/* 進捗を示す円（黄色いチョーク色） */
 .circle {
     fill: none;
     stroke: var(--chalk-yellow);
@@ -44,6 +49,7 @@
     transition: stroke-dasharray 1s ease-out;
 }
 
+/* 中央のパーセントテキスト */
 .percentage {
     fill: #fff;
     font-family: 'Outfit', sans-serif;
@@ -52,13 +58,14 @@
     font-weight: 600;
 }
 
+/* 褒め言葉・フィードバックメッセージ */
 #result-message {
     font-size: 1.2rem;
     margin-bottom: 0;
     min-height: 1.5rem;
 }
 
-/* === Result History List === */
+/* === 回答履歴リスト === */
 .history-list {
     margin: 5px 0;
     max-height: 140px;
@@ -74,7 +81,7 @@
     flex-shrink: 0;
 }
 
-/* Scrollbar Style */
+/* カスタムスクロールバー（黒板に馴染む薄いグレー） */
 .history-list::-webkit-scrollbar {
     width: 6px;
 }
@@ -87,6 +94,7 @@
     border-radius: 4px;
 }
 
+/* 履歴の一行（一問分）の枠 */
 .history-item {
     display: flex;
     align-items: center;
@@ -105,6 +113,7 @@
     flex-grow: 1;
 }
 
+/* 問題番号 */
 .history-index {
     font-size: 1.1rem;
     font-weight: bold;
@@ -113,6 +122,7 @@
     text-align: right;
 }
 
+/* 正誤アイコン（丸・バツ） */
 .history-icon {
     font-size: 1.5rem;
     font-weight: bold;
@@ -124,6 +134,7 @@
     color: #f44336;
 }
 
+/* 回答テキスト表示 */
 .history-text {
     display: flex;
     flex-direction: column;
@@ -141,6 +152,7 @@
     color: #ffffff;
 }
 
+/* 音声再生ボタン（再生アイコン付き） */
 .btn-history-play {
     background: rgba(255, 255, 255, 0.2);
     border: none;
