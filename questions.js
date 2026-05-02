@@ -4,7 +4,7 @@
  * 中級：4〜6文字
  * 上級：7〜10文字
  */
-const QUESTION_DATABASE = {
+var QUESTION_DATABASE = {
         "beginner": [
                 {
                         "word": "狐",

@@ -104,7 +104,7 @@
                     <div id="loading-bar" class="loading-bar"></div>
                 </div>
                 <p id="loading-status">0 / 3 完了</p>
-                <button id="btn-start-after-load" class="start-button hidden">トレーニングを開始する</button>
+                <button id="btn-start-after-load" class="start-button hidden" onclick="startQuestion()">トレーニングを開始する</button>
             </div>
         </section>
 
@@ -137,8 +137,8 @@
                     </div>
 
                     <div id="action-choice-group" class="action-choice-group hidden">
-                        <button id="btn-retry-record" class="choice-button primary">🎙️ 音声を聞き直して答える</button>
-                        <button id="btn-skip-question" class="choice-button secondary">⏭️ スキップする</button>
+                        <button id="btn-retry-record" class="choice-button primary" onclick="startQuestion()">🎙️ 音声を聞き直して答える</button>
+                        <button id="btn-skip-question" class="choice-button secondary" onclick="nextQuestion()">⏭️ スキップする</button>
                     </div>
                 </div>
 
@@ -158,7 +158,7 @@
                             <span id="display-user-answer" class="text-wrong medium-text strikethrough">-</span>
                         </div>
                     </div>
-                    <button id="btn-next" class="primary-button">次へ</button>
+                    <button id="btn-next" class="start-button" onclick="nextQuestion()">次へ</button>
                 </div>
             </div>
         </section>
