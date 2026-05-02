@@ -1,21 +1,9 @@
 <!DOCTYPE html>
-<!--
-    Reversa - メインアプリケーション画面
-    
-    【画面構成】
-    1. ホーム画面 (#screen-home): 難易度（初級・中級・上級）の選択と基本設定
-    2. 読み込み画面 (#screen-loading): AI音声パーツの事前生成・進捗表示
-    3. ゲーム画面 (#screen-game): メインのトレーニング（問題表示、VAD録音、AI判定）
-    4. 結果画面 (#screen-result): 最終スコア、正答率グラフ、回答履歴の表示
-    5. 開発者スタジオ (#screen-dev): メンテナンス用の音声素材録音・テストツール
--->
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reversa | 逆暗証トレーニング</title>
-    <meta name="description" content="聴覚だけで文字を記憶し、逆から答える。Whisper APIを用いた高精度な脳トレ。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Frederick+the+Great&family=Kiwi+Maru:wght@300;400;500&family=Outfit:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -26,21 +14,19 @@
     <link rel="stylesheet" href="css/screens/game.css">
     <link rel="stylesheet" href="css/screens/result.css">
 </head>
-
 <body>
     <div class="background">
-        <!-- Dynamic Background Layer -->
         <div id="dynamic-bg" class="dynamic-bg"></div>
     </div>
 
     <main class="container">
-        <!-- Character Flash Overlay -->
+        <!-- 文字フラッシュ演出用 -->
         <div id="flash-container" class="flash-container hidden">
             <div id="flash-character" class="flash-character"></div>
-            <div class="flash-label">Listen</div>
+            <div class="flash-label">聞いて</div>
         </div>
 
-        <!-- Level Selection Screen -->
+        <!-- 1. ホーム画面 -->
         <section id="screen-home" class="screen active">
             <header>
                 <h1>Reversa</h1>
@@ -52,224 +38,131 @@
                     文字数を選択してください。<br>
                     <small>1セット10問です。</small>
                 </h2>
-                <div class="theme-grid" id="theme-options">
-                    <button class="theme-card beginner-card" onclick="startGame('beginner')">
-                        <h3>初級編</h3>
-                        <p>和の幻想</p>
+                <div class="level-grid">
+                    <button class="level-button beginner-card" id="btn-beginner">
+                        初級編<br><small>和の幻想</small>
                     </button>
-                    <button class="theme-card intermediate-card" onclick="startGame('intermediate')">
-                        <h3>中級編</h3>
-                        <p>日常と自然</p>
+                    <button class="level-button intermediate-card" id="btn-intermediate">
+                        中級編<br><small>日常と自然</small>
                     </button>
-                    <button class="theme-card advanced-card" onclick="startGame('advanced')">
-                        <h3>上級編</h3>
-                        <p>長い言葉</p>
+                    <button class="level-button advanced-card" id="btn-advanced">
+                        上級編<br><small>長い言葉</small>
                     </button>
                 </div>
-                <div class="mode-settings">
+                <div class="home-settings">
                     <div class="toggle-container">
-                        <span class="toggle-label">🔇 音声なしモード</span>
-                        <label class="switch">
-                            <input type="checkbox" id="check-silent">
-                            <span class="slider round"></span>
-                        </label>
+                        <span>🔇 音声なしモード</span>
+                        <input type="checkbox" id="check-silent">
                     </div>
                     <div class="toggle-container">
-                        <span class="toggle-label">🙈 文字を隠す (聴覚のみモード)</span>
-                        <label class="switch">
-                            <input type="checkbox" id="check-blind" checked>
-                            <span class="slider round"></span>
-                        </label>
+                        <span>🙈 文字を隠す</span>
+                        <input type="checkbox" id="check-blind" checked>
                     </div>
                     <div class="toggle-container">
-                        <span class="toggle-label">🗣️ 連続音モード (自然な読み上げ)</span>
-                        <label class="switch">
-                            <input type="checkbox" id="check-natural" checked>
-                            <span class="slider round"></span>
-                        </label>
+                        <span>🗣️ 連続音モード</span>
+                        <input type="checkbox" id="check-natural" checked>
                     </div>
                 </div>
             </div>
             <div class="home-footer">
                 <span class="version-tag">0.2.0</span>
-                <button id="btn-open-dev" class="dev-link-button">開発者メニュー 🛠️</button>
+                <button id="btn-open-dev" class="secondary-button">開発者メニュー 🛠️</button>
             </div>
         </section>
 
+        <!-- 2. ローディング画面 -->
         <section id="screen-loading" class="screen">
-            <div class="glass-card loading-card">
+            <div class="glass-card">
+                <h2 id="loading-title">音声を準備しています</h2>
                 <div class="loading-spinner"></div>
-                <h2 id="loading-title"></h2>
-                <div class="loading-progress-container">
-                    <div id="loading-bar" class="loading-bar"></div>
+                <div class="progress-container">
+                    <div id="loading-bar" style="width: 0%; height: 10px; background: var(--chalk-yellow);"></div>
                 </div>
-                <p id="loading-status">0 / 3 完了</p>
-                <button id="btn-start-after-load" class="start-button hidden">トレーニングを開始する</button>
+                <p id="loading-status">0 / 10 準備中...</p>
+                <button id="btn-start-after-load" class="primary-button hidden">
+                    トレーニングを開始 🚀
+                </button>
             </div>
         </section>
 
-        <!-- Game Screen -->
+        <!-- 3. ゲーム画面 -->
         <section id="screen-game" class="screen">
-            <div class="status-bar">
-                <span id="label-level">Level: 3</span>
-                <span id="label-progress">1 / 10</span>
-                <span id="label-score">Score: 0</span>
-            </div>
-            <div class="glass-card game-card">
-                <!-- Status: Reading -->
+            <div class="game-card">
+                <div class="status-bar">
+                    <span id="label-level">LEVEL</span>
+                    <span id="label-progress">0 / 10</span>
+                    <span id="label-score">Score: 0</span>
+                </div>
+
+                <!-- 待機中アニメーション -->
                 <div id="voice-indicator" class="voice-indicator">
-                    <p id="game-status" class="hidden"></p>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <p>再生中...</p>
                 </div>
 
-                <!-- Status: Recording (Whisper) -->
+                <!-- 録音中演出 -->
                 <div id="recording-container" class="recognition-container hidden">
-                    <div id="mic-area" class="mic-area">
-                        <div class="recording-visualizer">
-                            <canvas id="game-waveform-canvas" class="game-waveform"></canvas>
-                            <div class="pulse-ring"></div>
-                            <div class="mic-icon" id="mic-icon-static">🎤</div>
-                        </div>
+                    <div class="mic-area">
+                        <div class="pulse-ring"></div>
+                        <p id="recording-status">お答えください</p>
+                        <canvas id="game-waveform-canvas" class="game-waveform"></canvas>
                     </div>
-                    <p class="recording-status" id="recording-status">準備ができたら開始してください</p>
-                    <div class="recording-timer-group">
-                        <p class="recording-timer-text" id="recording-timer-text">自動停止まで：<span id="recording-countdown">3</span>秒</p>
-                        <div class="recording-timer-bar-bg" id="recording-timer-bar"></div>
-                    </div>
-
-                    <div id="action-choice-group" class="action-choice-group hidden">
-                        <button id="btn-retry-record" class="choice-button primary">🎙️ 音声を聞き直して答える</button>
-                        <button id="btn-skip-question" class="choice-button secondary">⏭️ スキップする</button>
-                    </div>
+                    <button id="btn-skip-question" class="stop-button">スキップ</button>
                 </div>
 
-                <!-- Status: Feedback -->
+                <!-- 判定フィードバック -->
                 <div id="feedback-panel" class="feedback-panel hidden">
-                    <div class="feedback-badge-container">
-                        <div id="feedback-badge" class="feedback-badge">正解</div>
-                    </div>
-
-                    <div class="comparison-grid minimal">
-                        <div class="comparison-item">
-                            <span class="text-label">【正解】</span>
-                            <span id="display-correct-reverse" class="text-success large-text">-</span>
-                        </div>
-                        <div class="comparison-item hidden" id="user-answer-container">
-                            <span class="text-label text-wrong-label">【あなたの声】</span>
-                            <span id="display-user-answer" class="text-wrong medium-text strikethrough">-</span>
-                        </div>
+                    <div id="feedback-badge" class="feedback-badge"></div>
+                    <div id="user-answer-container">
+                        <p>あなたの回答: <span id="display-user-answer"></span></p>
+                        <p>正解: <span id="display-correct-reverse" class="text-success"></span></p>
                     </div>
                     <button id="btn-next" class="primary-button">次へ</button>
                 </div>
             </div>
         </section>
 
-        <!-- Result Screen -->
+        <!-- 4. リザルト画面 -->
         <section id="screen-result" class="screen">
-            <div class="glass-card result-card">
-                <h2>結果発表</h2>
+            <div class="result-card glass-card">
+                <h2>トレーニング終了！</h2>
                 <div class="accuracy-display">
-                    <svg viewBox="0 0 36 36" class="circular-chart">
-                        <path class="circle-bg"
-                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <path id="accuracy-path" class="circle" stroke-dasharray="0, 100"
-                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <svg viewBox="0 0 36 36">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path id="accuracy-path" class="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <text x="18" y="20.35" class="percentage" id="accuracy-text">0%</text>
                     </svg>
                 </div>
                 <p id="result-message"></p>
                 <div id="result-history-list" class="history-list"></div>
                 <div class="result-actions">
-                    <button id="btn-restart" class="primary-button">再挑戦</button>
-                    <button id="btn-export-log" class="secondary-button">解析用ログを保存</button>
+                    <button id="btn-restart" class="primary-button">もう一度</button>
+                    <button id="btn-export-log" class="secondary-button">ログを保存</button>
                 </div>
             </div>
         </section>
 
-        <!-- Developer Studio Screen -->
+        <!-- 5. 開発者スタジオ -->
         <section id="screen-dev" class="screen">
-            <div class="dev-layout">
-                <aside class="dev-sidebar">
-                    <h3>Recording Studio</h3>
-                    <button id="btn-dev-back" class="secondary-button mini-btn">← 戻る</button>
-                    <nav class="dev-nav">
-                        <button class="nav-item active" data-tab="moras">50音</button>
-                        <button class="nav-item" data-tab="words">単語</button>
-                        <button class="nav-item" data-tab="pilot">🚀 パイロット</button>
-                    </nav>
-                    <div id="dev-list-container" class="dev-list-container">
-                        <!-- JSで生成 -->
-                    </div>
-                </aside>
-                <main class="dev-main">
-                    <div id="dev-recording-card" class="glass-card dev-card">
-                        <div class="target-display">
-                            <div class="dev-target-card">
-                                <div class="pilot-progress hidden" id="pilot-progress">
-                                    <span class="progress-label">進捗:</span>
-                                    <span id="pilot-status">0 / 40</span>
-                                    <div class="progress-bar-bg">
-                                        <div id="pilot-bar" class="progress-bar-fill"></div>
-                                    </div>
-                                </div>
-                                <h2 id="dev-target-text" class="dev-target-text">準備中</h2>
-                            </div>
-
-                            <!-- NEW: Rhythm/Metronome UI -->
-                            <div id="metronome-area" class="metronome-container hidden">
-                                <div class="pendulum"></div>
-                                <div id="recording-beat-indicator" class="beat-indicator"></div>
-                                <div id="rhythm-countdown" class="rhythm-countdown"></div>
-                            </div>
-
-                            <!-- NEW: Static Waveform Review -->
-                            <div id="waveform-preview" class="waveform-container hidden">
-                                <canvas id="waveform-canvas-static"></canvas>
-                                <div class="trim-guides">
-                                    <div class="guide-start"></div>
-                                    <div class="guide-end"></div>
-                                </div>
-                            </div>
-
-                            <div class="wave-visualizer">
-                                <canvas id="waveform-canvas"></canvas>
-                            </div>
-                            <div class="dev-actions">
-                                <button id="btn-record-dev" class="record-button">🔴 手動録音</button>
-                                <button id="btn-record-rhythm" class="rhythm-button">⚖️ リズム録音</button>
-                                <button id="btn-play-dev" class="play-button hidden">▶ 再生確認</button>
-                                <button id="btn-save-dev" class="save-button hidden">💾 保存して次へ</button>
-                            </div>
-                            <div class="dev-tools">
-                                <button id="btn-test-mora" class="tool-button">あいうえお 🔊</button>
-                                <button id="btn-test-ka" class="tool-button">かきくけこ 🔊</button>
-                                <button id="btn-test-sa" class="tool-button">さしすせそ 🔊</button>
-                                <button id="btn-test-ta" class="tool-button">たちつてと 🔊</button>
-                                <button id="btn-test-na" class="tool-button">なにぬねの 🔊</button>
-                                <button id="btn-test-ha" class="tool-button">はひふへほ 🔊</button>
-                                <button id="btn-test-ma" class="tool-button">まみむめも 🔊</button>
-                                <button id="btn-test-ya" class="tool-button">やゆよ 🔊</button>
-                                <button id="btn-test-wa" class="tool-button">わをん 🔊</button>
-                                <button id="btn-test-hashi" class="tool-button">はし 🔊</button>
-                            </div>
-                            <p id="dev-status" class="status-msg">リストから文字を選んでください</p>
-                        </div>
-                </main>
+            <div class="dev-layout glass-card">
+                <header>
+                    <h2>開発者スタジオ</h2>
+                    <button id="btn-dev-back" class="secondary-button">戻る</button>
+                </header>
+                <div class="dev-main">
+                    <p id="dev-status">メンテナンスモード</p>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- Configure Secrets & Dependencies -->
-    <script src="questions.js?v=20260429_1124"></script>
-    <script src="config.js?v=20260429_1201"></script>
-    <!-- Reversa Scripts -->
-    <script src="js/constants.js"></script>
-    <script src="js/state.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/game.js"></script>
-    <script src="js/dev.js"></script>
-    <script src="js/main.js?v=20260429_1402"></script>
+    <!-- 依存関係 -->
+    <script src="questions.js"></script>
+    <script src="config.js"></script>
+    
+    <!-- メインロジック -->
+    <script type="module" src="js/game.js"></script>
 </body>
-
 </html>
