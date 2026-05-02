@@ -7,7 +7,8 @@
  * ・トグルスイッチ、波形表示キャンバス、ローディングバー。
  * ・各パーツのホバーエフェクト（マウスを乗せた時の動き）。
  */
-/* Blackboard Card (Simplified from Glass) */
+
+/* 黒板上の情報カード（従来のガラスデザインを黒板風に簡略化したもの） */
 .glass-card {
     background: transparent;
     border: none;
@@ -35,7 +36,7 @@
     display: none;
 }
 
-/* Chalk Buttons */
+/* チョーク質感の共通ボタン（メイン、開始、停止、選択肢など） */
 .primary-button, .start-button, .stop-button, .choice-button, .secondary-button {
     background: transparent;
     border: 2px solid var(--chalk-white);
@@ -53,6 +54,7 @@
     gap: 10px;
 }
 
+/* ボタンのホバー（マウスを乗せた時）の演出 */
 .primary-button:hover, .start-button:hover, .choice-button:hover, .secondary-button:hover {
     background: rgba(255,255,255,0.1);
     color: var(--chalk-yellow);
@@ -61,7 +63,7 @@
     box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
 }
 
-/* Loading Spinner */
+/* 読込中のスピナー（回転する円） */
 .loading-spinner {
     width: 40px;
     height: 40px;
