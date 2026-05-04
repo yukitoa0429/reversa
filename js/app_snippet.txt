@@ -1,0 +1,71 @@
+﻿
+    for (let i = 0; i < QUESTIONS_PER_TURN; i++) {
+        const q = getNextQuestion(theme);
+        if (q) currentState.allSequences.push(q);
+    }
+
+    showScreen('loading');
+    await preloadAudios(currentState.allSequences);
+}
+
+/**
+ * Enhanced Audio Fetching: IndexedDB (Cache) -> Cloud (OpenAI TTS) -> Local Assets
+ * ユーザーの録音データよりも高品質なAIボイスを優先的に使用するように設定しました。
+ */
+async function getAudioBlob(word, type = 'orig') {
+    // 以前の不完全な発音キャッシュを使わないよう、キーを「v13_」に更新
+    const prefix = (type === 'rev') ? 'v13_rev_' : `v13_${type}_`;
+    const cacheKey = `${prefix}${word}`;
+
+    // 1. IndexedDBキャッシュをまず探す
+    const cachedBlob = await getCachedAudio(cacheKey);
+    if (cachedBlob) return cachedBlob;
+
+    // 2. クラウド優先 (OpenAI TTS)
+    try {
+        // 【修正】orig（連続音）の場合は分解せず、そのまま自然に発音させる
+        let textToSpeak = (type === 'rev' || type === 'orig') ? word : word.split('').join('  ');
+
+        // 【発音改善】「ん」一文字だとAIが無視してしまうことがあるため、少し伸ばす
+        if (textToSpeak.trim() === 'ん' || textToSpeak.trim() === 'ン') {
+            textToSpeak = 'んー';
+        }
+
+        // 【キンキン音対策】単音（parts）の場合は少し速度を落とし、語尾に読点を加えて落ち着かせる
+        let currentSpeed = SPEECH_RATE;
+        if (type === 'parts') {
+            currentSpeed = 0.95; // わずかに低速化して安定させる
+            if (!textToSpeak.includes('、')) textToSpeak += '、';
+        }
+
+        // カタカナに変換して発音を安定させる
+        textToSpeak = hiraganaToKatakana(textToSpeak);
+
+        const response = await fetch('https://api.openai.com/v1/audio/speech', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${CONFIG.OPEN_API_KEY || CONFIG.OPENAI_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'tts-1',
+                input: textToSpeak,
+                voice: "onyx",
+                speed: currentSpeed
+            })
+        });
+
+        if (!response.ok) throw new Error(`OpenAI API error: ${response.status}`);
+
+        const blob = await response.blob();
+
+        // キャッシュに保存
+        await saveCachedAudio(cacheKey, blob);
+
+        return blob;
+    } catch (e) {
+        console.warn("Cloud TTS failed, falling back to local/other", e);
+    }
+
+    // 3. 最終手段: ローカルアセット（以前の録音データ）
+    const extensions = ['wav', 'mp3'];

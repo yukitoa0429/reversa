@@ -1,0 +1,1000 @@
+﻿let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }/let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }/let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Rlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }elet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }vlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }elet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }rlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }slet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }alet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }-let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Olet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }plet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }elet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }nlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Alet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Ilet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Wlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }hlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }ilet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }slet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }plet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }elet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }rlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }&let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Tlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Tlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Slet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Llet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }olet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }glet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }ilet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }clet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }wlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }ilet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }tlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }hlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Plet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }elet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }rlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }slet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }ilet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }slet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }tlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }elet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }nlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }tlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Clet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }alet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }clet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }hlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }ilet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }nlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }glet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }(let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Ilet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }nlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }dlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }elet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }xlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }elet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }dlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Dlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Blet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        })let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }
+let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }
+let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }/let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }/let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }-let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }-let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }-let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Clet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }olet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }nlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }slet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }tlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }alet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }nlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }tlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }slet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }&let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Dlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }alet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }tlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }alet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }-let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }-let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }-let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }
+let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }clet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }olet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }nlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }slet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }tlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Wlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Olet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Rlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Dlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }_let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Llet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Ilet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Blet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Rlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Alet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Rlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }Ylet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }=let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }{let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }
+let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }3let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }:let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        } let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }[let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }'let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }きlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }つlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }ねlet textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        }'let textToSpeak;
+        if (type === "rev" || type === "orig") {
+            // ruby(ふりがな配列)がある場合はそれを使い、カタカナ化 + 句点でイントネーションを固定
+            const baseText = Array.isArray(ruby) ? ruby.join("") : word;
+            textToSpeak = hiraganaToKatakana(baseText) + "。";
+        } else {
+            textToSpeak = word.split("").join("  ");
+        },let textToSpeak;
+        if (type === "rev" || type === "orig") {

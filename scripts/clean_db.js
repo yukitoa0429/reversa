@@ -1,59 +1,57 @@
 /**
- * Reversa - 問題データベース・クリーンアップスクリプト
+ * Reversa - Question Database Cleanup Script (Robust & Stable ASCII version)
  * 
- * 【目的】
- * questions.js 内の問題データを自動的にメンテナンスし、データの品質を維持します。
- * 
- * 【主な機能】
- * 1. 仕様外の文字の排除: 現在の判定ロジックで対応していない「ゃゅょ（拗音）」や「ー（長音）」等を含む問題を自動削除します。
- * 2. 逆順読みの自動修正: 人間が入力した「reverse」フィールドのタイポを、プログラムが計算した正確な逆順データで上書きします。
- * 
- * 【使い方】
- * ターミナルで `node scripts/clean_db.js` を実行してください。
+ * [Purpose]
+ * Cleans questions.js by removing items with unsupported characters 
+ * and fixing reverse sequence typos.
  */
 
 const fs = require('fs');
 
-// 対象となる問題データのパス
 const filePath = 'c:/AntigravityProjects/reversa/questions.js';
+
+if (!fs.existsSync(filePath)) {
+    console.error("File not found:", filePath);
+    process.exit(1);
+}
+
 const content = fs.readFileSync(filePath, 'utf-8');
 
-// 正規表現を使用して QUESTION_DATABASE オブジェクトの部分を抽出します
-const match = content.match(/const QUESTION_DATABASE = (\{[\s\S]*?\});/);
+// Robust extraction: Supports var, const, or let QUESTION_DATABASE
+const match = content.match(/(var|const|let)\s+QUESTION_DATABASE\s*=\s*(\{[\s\S]*?\});/);
 if (!match) {
-    console.error("QUESTION_DATABASE が見つかりませんでした。");
+    console.error("QUESTION_DATABASE not found in questions.js. Please check variable name.");
     process.exit(1);
 }
 
-// 抽出した文字列をオブジェクトとして評価します
+const varKeyword = match[1]; // Keep original keyword (var/const/let)
 let db;
 try {
-    eval('db = ' + match[1]);
+    eval('db = ' + match[2]);
 } catch (e) {
-    console.error("オブジェクトの解析中にエラーが発生しました:", e);
+    console.error("Parsing error:", e);
     process.exit(1);
 }
 
-// 排除対象とする文字（現在対応していない特殊な音）
-const invalidChars = ['ゃ','ゅ','ょ','ぁ','ぃ','ぅ','ぇ','ぉ','ー'];
+const invalidChars = ['\u3083', '\u3085', '\u3087', '\u3041', '\u3043', '\u3045', '\u3047', '\u3049', '\u30fc'];
+
 let removedCount = 0;
 let fixedCount = 0;
 
-// 各難易度（レベル）ごとにループ処理
 for (const level of Object.keys(db)) {
     const items = db[level];
+    if (!Array.isArray(items)) continue;
+
     const cleanedItems = [];
-    
     for (const item of items) {
         const rubyStr = item.ruby.join('');
         
-        // 1. 仕様外の文字が含まれているかチェック
-        if (invalidChars.some(c => rubyStr.includes(c))) {
+        const hasInvalid = invalidChars.some(c => rubyStr.includes(c));
+        if (hasInvalid) {
             removedCount++;
-            continue; // この項目は削除（新しいリストに追加しない）
+            continue;
         }
         
-        // 2. 逆順データ（reverse）の正確性をチェックし、必要なら修正
         const correctReverse = [...item.ruby].reverse().join('');
         if (item.reverse !== correctReverse) {
             item.reverse = correctReverse;
@@ -65,20 +63,15 @@ for (const level of Object.keys(db)) {
     db[level] = cleanedItems;
 }
 
-// 実行結果をログに出力
-console.log(`削除完了: 仕様外の文字（拗音・長音など）を含む ${removedCount} 件を削除しました。`);
-console.log(`修正完了: 逆順データのタイポ ${fixedCount} 件を自動修正しました。`);
-for (const level of Object.keys(db)) {
-    console.log(`- ${level}: 残り ${db[level].length} 件`);
-}
-
-// オブジェクトを再び JavaScript ファイルの形式に整形して書き戻します
-const newJsonStr = JSON.stringify(db, null, 4).replace(/    /g, '        ');
-const newContent = content.substring(0, match.index) + "const QUESTION_DATABASE = " + newJsonStr + ";\n" + content.substring(match.index + match[0].length);
+const newJsonStr = JSON.stringify(db, null, 8).replace(/        /g, '\t');
+const newContent = content.substring(0, match.index) + varKeyword + " QUESTION_DATABASE = " + newJsonStr + ";\n" + content.substring(match.index + match[0].length);
 
 try {
     fs.writeFileSync(filePath, newContent, 'utf-8');
-    console.log("\nquestions.js の更新が正常に完了しました。✨");
+    console.log("Cleanup Results:");
+    console.log("- Removed (Unsupported Chars): " + removedCount);
+    console.log("- Fixed (Reverse Typos): " + fixedCount);
+    console.log("\nquestions.js updated successfully! ✨");
 } catch (err) {
-    console.error("ファイル書き込み中にエラーが発生しました:", err);
+    console.error("Write error:", err);
 }
