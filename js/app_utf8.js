@@ -1,4 +1,4 @@
-// Reversa - OpenAI Whisper & TTS Logic with Persistent Caching (IndexedDB)
+﻿// Reversa - OpenAI Whisper & TTS Logic with Persistent Caching (IndexedDB)
 
 // --- Constants & Data ---
 const WORD_LIBRARY = {
@@ -175,7 +175,6 @@ const elements = {
     feedbackBadge: document.getElementById('feedback-badge'),
     displayCorrectReverse: document.getElementById('display-correct-reverse'),
     displayUserAnswer: document.getElementById('display-user-answer'),
-        displayUserComparison: document.getElementById('display-user-comparison'),
     userAnswerContainer: document.getElementById('user-answer-container'),
     btnNext: document.getElementById('btn-next'),
     btnRestart: document.getElementById('btn-restart'),
@@ -677,14 +676,14 @@ async function readSequenceNatural(word) {
         const blob = await getAudioBlob(word, 'orig', null, currentState.currentQuestion.phonetic);
         elements.gameStatus.textContent = '読み上げ中...';
         playSE('start');
-        await sleep(500);
+        await sleep(800);
 
         elements.flashCharacter.textContent = currentState.isBlind ? '🔊' : word;
         elements.flashCharacter.classList.add('active');
 
         if (blob) {
             await playBlob(blob);
-            await sleep(500);
+            await sleep(800);
         } else {
             throw new Error("Natural voice blob is null");
         }
@@ -1125,7 +1124,7 @@ function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
  */
 function normalizeText(text) {
     if (!text) return "";
-    let res = katakanaToHiragana(text.trim().toLowerCase());
+    let res = text.trim().toLowerCase();
 
     // 1. Remove Prefixes/Suffixes and Quotes/Brackets
     res = res.replace(/^(答えは|回答は|単語は|いうのは|それは|正解は)[、。\s:：]*/g, "");
@@ -1146,25 +1145,6 @@ function normalizeText(text) {
  * 日本語の音の数（モーラ数）を正確にカウントする
  * 「きょう」→ 2音、「きよう」→ 3音
  */
-
-function splitIntoMoras(text) {
-    if (!text) return [];
-    let hira = katakanaToHiragana(text);
-    hira = normalizeText(hira);
-    const res = [];
-    for (let i = 0; i < hira.length; i++) {
-        const char = hira[i];
-        const next = hira[i + 1];
-        if (next && /[ゃゅょぁぃぅぇぉ]/.test(next)) {
-            res.push(char + next);
-            i++;
-        } else {
-            res.push(char);
-        }
-    }
-    return res;
-}
-
 function getMoraCount(text) {
     if (!text) return 0;
     // 1. カタカナをひらがなに変換
@@ -1192,39 +1172,8 @@ function submitAnswer(rawAnswer) {
     }
 
     const cleanedAnswer = normalizeText(rawAnswer);
-    const userMoras = splitIntoMoras(rawAnswer);
-    const correctMoras = splitIntoMoras(currentState.correctAnswer);
-    console.log(`正解: ${correctMoras.join('')}, 回答: ${userMoras.join('')}`);
-    
-    let resultHTML = '';
-    let isCorrect = (userMoras.length === correctMoras.length);
-    let errorIndices = [];
-
-    correctMoras.forEach((correctMora, i) => {
-        const userMora = userMoras[i] || '';
-        if (userMora === correctMora) {
-            resultHTML += `<span>${userMora}</span>`;
-        } else {
-            resultHTML += `<span class="wrong-mora" style="color: #ff4d4d; text-decoration: underline; font-weight: bold;">${userMora || '＿'}</span>`;
-            isCorrect = false;
-            errorIndices.push(i + 1);
-        }
-    });
-
-    if (userMoras.length > correctMoras.length) {
-        isCorrect = false;
-        for (let i = correctMoras.length; i < userMoras.length; i++) {
-            resultHTML += `<span style="color: #ff4d4d; opacity: 0.7;">${userMoras[i]}</span>`;
-        }
-    }
-
-    if (errorIndices.length > 0) {
-        console.log(`間違い箇所: ${errorIndices.join(', ')}文字目`);
-    }
-
-    if (elements.displayUserComparison) {
-        elements.displayUserComparison.innerHTML = resultHTML || '(無音・認識不能)';
-    }
+    const normalizedCorrect = normalizeText(currentState.correctAnswer);
+    const isCorrect = (cleanedAnswer === normalizedCorrect) && (cleanedAnswer.length === normalizedCorrect.length);
 
     if (isCorrect) {
         playSE('correct'); // ピンポン♪
@@ -1256,7 +1205,7 @@ function submitAnswer(rawAnswer) {
             elements.userAnswerContainer.classList.remove('hidden');
         }
         if (elements.displayUserAnswer) {
-            elements.displayUserAnswer.innerHTML = resultHTML || '(無音・認識不能)';
+            elements.displayUserAnswer.textContent = cleanedAnswer || '(無音・認識不能)';
         }
     }
 
